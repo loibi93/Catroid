@@ -153,6 +153,12 @@ public final class Constants {
 	public static final String PROJECT_OPENED_FROM_PROJECTS_LIST = "projectList";
 	public static final String MEDIA_TYPE_LOOK = "look";
 	public static final String MEDIA_TYPE_SOUND = "sound";
+	public static String COLLIDES_WITH_TAG = "";
+	public static String COLLISION_TYPE_TAPPED = "";
+	public static String COLLISION_TYPE_EDGE = "";
+	public static final int COLLISION_WITH_FINGER_AREA_SIZE = 100;
+	public static final int COLLISION_WITH_FINGER_PIXEL_TRESHHOLD = 20;
+	public static final int COLLISION_MASK_SIZE = 32;
 	public static final String NO_VARIABLE_SELECTED = "No variable set";
 
 	//Services + Notifications

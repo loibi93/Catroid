@@ -39,8 +39,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
 import org.catrobat.catroid.ui.SettingsActivity;
+import org.catrobat.catroid.ui.dialogs.FormulaEditorChooseSpriteDialog;
 
 import java.util.Arrays;
 
@@ -59,7 +61,7 @@ public class FormulaEditorListFragment extends ListFragment implements Dialog.On
 	private static final int[] OBJECT_ITEMS = {R.string.formula_editor_object_x, R.string.formula_editor_object_y,
 			R.string.formula_editor_object_transparency, R.string.formula_editor_object_brightness,
 			R.string.formula_editor_object_size, R.string.formula_editor_object_rotation,
-			R.string.formula_editor_object_layer};
+			R.string.formula_editor_object_layer, R.string.formula_editor_function_collision};
 
 	private static final int[] LOGIC_ITEMS = {R.string.formula_editor_logic_equal,
 			R.string.formula_editor_logic_notequal, R.string.formula_editor_logic_lesserthan,
@@ -98,7 +100,7 @@ public class FormulaEditorListFragment extends ListFragment implements Dialog.On
 	private static final int[] DEFAULT_SENSOR_ITEMS = {R.string.formula_editor_sensor_x_acceleration,
 			R.string.formula_editor_sensor_y_acceleration, R.string.formula_editor_sensor_z_acceleration,
 			R.string.formula_editor_sensor_compass_direction, R.string.formula_editor_sensor_x_inclination,
-			R.string.formula_editor_sensor_y_inclination, R.string.formula_editor_sensor_loudness };
+			R.string.formula_editor_sensor_y_inclination, R.string.formula_editor_sensor_loudness, R.string.formula_editor_function_collision};
 
 	private static final int[] NXT_SENSOR_ITEMS = {R.string.formula_editor_sensor_lego_nxt_1,
 			R.string.formula_editor_sensor_lego_nxt_2, R.string.formula_editor_sensor_lego_nxt_3,
@@ -138,14 +140,35 @@ public class FormulaEditorListFragment extends ListFragment implements Dialog.On
 		FormulaEditorFragment formulaEditor = (FormulaEditorFragment) getActivity().getFragmentManager()
 				.findFragmentByTag(FormulaEditorFragment.FORMULA_EDITOR_FRAGMENT_TAG);
 		if (formulaEditor != null) {
-			formulaEditor.addResourceToActiveFormula(itemsIds[position]);
-			formulaEditor.updateButtonsOnKeyboardAndInvalidateOptionsMenu();
+			if (itemsIds[position] == R.string.formula_editor_function_collision) {
+				showChooseSpriteDialog(formulaEditor, position);
+			} else {
+				formulaEditor.addResourceToActiveFormula(itemsIds[position]);
+				formulaEditor.updateButtonsOnKeyboardAndInvalidateOptionsMenu();
+			}
 		}
 		KeyEvent keyEvent = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
 		onKey(null, keyEvent.getKeyCode(), keyEvent);
 	}
 
 	public FormulaEditorListFragment() {
+	}
+
+	private void showChooseSpriteDialog(FormulaEditorFragment fragment, final int pos) {
+		final FormulaEditorFragment formulaEditor = fragment;
+		final int position = pos;
+		final FormulaEditorChooseSpriteDialog dialog = FormulaEditorChooseSpriteDialog.newInstance();
+		dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+			@Override
+			public void onDismiss(DialogInterface dialogInterface) {
+				if (dialog.getSuccessStatus()) {
+						String formula = ProjectManager.getInstance().getCurrentSprite().getName() + " " +
+								getActivity().getString(itemsIds[pos]) + " " + dialog.getSprite();
+					formulaEditor.addCollideFormulaToActiveFormula(formula);
+				}
+			}
+		});
+		dialog.showDialog(this);
 	}
 
 	@Override

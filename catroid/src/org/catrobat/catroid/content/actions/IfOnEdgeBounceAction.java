@@ -26,12 +26,16 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.content.Sprite;
+import org.catrobat.catroid.sensing.CollisionDetection;
 
 public class IfOnEdgeBounceAction extends TemporalAction {
 	private Sprite sprite;
 
 	@Override
 	protected void update(float percent) {
+		if (CollisionDetection.checkEdgeCollision(sprite.look) == 0d) {
+			return;
+		}
 		float width = sprite.look.getWidthInUserInterfaceDimensionUnit();
 		float height = sprite.look.getHeightInUserInterfaceDimensionUnit();
 		float xPosition = sprite.look.getXInUserInterfaceDimensionUnit();

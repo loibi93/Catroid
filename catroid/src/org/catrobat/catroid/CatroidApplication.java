@@ -28,6 +28,8 @@ import android.util.Log;
 
 import com.parrot.freeflight.settings.ApplicationSettings;
 
+import org.catrobat.catroid.common.Constants;
+
 public class CatroidApplication extends Application {
 
 	private static final String TAG = CatroidApplication.class.getSimpleName();
@@ -45,6 +47,9 @@ public class CatroidApplication extends Application {
 		Log.d(TAG, "CatroidApplication onCreate");
 		settings = new ApplicationSettings(this);
 		CatroidApplication.context = getApplicationContext();
+		Constants.COLLIDES_WITH_TAG = getBaseContext().getString(R.string.formula_editor_function_collision);
+		Constants.COLLISION_TYPE_TAPPED = getBaseContext().getString(R.string.formula_editor_collision_type_tapped);
+		Constants.COLLISION_TYPE_EDGE = getBaseContext().getString(R.string.formula_editor_collision_type_edge);
 	}
 
 	public ApplicationSettings getParrotApplicationSettings() {

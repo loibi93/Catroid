@@ -57,6 +57,10 @@ import org.catrobat.catroid.common.SoundInfo;
 import org.catrobat.catroid.content.Project;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.bricks.Brick;
+import org.catrobat.catroid.content.bricks.FormulaBrick;
+import org.catrobat.catroid.content.bricks.UserBrick;
+import org.catrobat.catroid.formulaeditor.DataContainer;
+import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.DataContainer;
 import org.catrobat.catroid.io.LoadProjectTask;
 import org.catrobat.catroid.io.LoadProjectTask.OnLoadProjectCompleteListener;
@@ -79,6 +83,7 @@ import org.catrobat.catroid.utils.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class SpritesListFragment extends ScriptActivityFragment implements SpriteBaseAdapter.OnSpriteEditListener,
@@ -600,6 +605,7 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 			if (intent.getAction().equals(ScriptActivity.ACTION_SPRITE_RENAMED)) {
 				String newSpriteName = intent.getExtras().getString(RenameSpriteDialog.EXTRA_NEW_SPRITE_NAME);
 				spriteToEdit.setName(newSpriteName);
+				renameSpritesInCollisionFormulas(spriteToEdit.getName(), newSpriteName, getActivity());
 			}
 		}
 	}
@@ -856,5 +862,24 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 			}
 		}
 		return newName;
+	}
+
+	private void renameSpritesInCollisionFormulas(String oldName, String newName, Context context) {
+		if (ProjectManager.getInstance().getCurrentScript() == null) {
+			return;
+		}
+		List<Brick> brickList = ProjectManager.getInstance().getCurrentScript().getBrickList();
+		for (Brick brick : brickList) {
+			if (brick instanceof UserBrick) {
+				List<Formula> formulaList = ((UserBrick) brick).getFormulas();
+				for (Formula formula : formulaList) {
+					formula.updateCollisionFormulas(oldName, newName, context);
+				}
+			}
+			if (brick instanceof FormulaBrick) {
+				Formula formula = ((FormulaBrick) brick).getFormula();
+				formula.updateCollisionFormulas(oldName, newName, context);
+			}
+		}
 	}
 }
