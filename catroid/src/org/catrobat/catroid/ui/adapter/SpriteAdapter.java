@@ -44,14 +44,47 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.ui.controller.BackPackSpriteController;
 import org.catrobat.catroid.ui.fragment.SpritesListFragment;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class SpriteAdapter extends SpriteBaseAdapter implements ActionModeActivityAdapterInterface {
 
+	final int INVALID_ID = -1;
+
 	SpritesListFragment spritesListFragment;
+
+	HashMap<Sprite, Integer> idMap = new HashMap<Sprite, Integer>();
 
 	public SpriteAdapter(Context context, int resource, int textViewResourceId, List<Sprite> objects) {
 		super(context, resource, textViewResourceId, objects);
+		for (int i = 0; i < objects.size(); ++i) {
+			idMap.put(objects.get(i), i);
+		}
+	}
+
+	@Override
+	public long getItemId(int position) {
+		if (position < 0 || position >= idMap.size()) {
+			return INVALID_ID;
+		}
+		Sprite item = getItem(position);
+		return idMap.get(item);
+	}
+
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+		if (getCount() != idMap.size()) {
+			idMap.clear();
+			for (int i = 0; i < getCount(); i++) {
+				idMap.put(getItem(i), i);
+			}
+		}
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		return true;
 	}
 
 	@Override

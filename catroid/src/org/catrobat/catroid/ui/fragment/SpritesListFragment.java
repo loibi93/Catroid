@@ -37,15 +37,12 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
@@ -64,6 +61,7 @@ import org.catrobat.catroid.io.StorageHandler;
 import org.catrobat.catroid.ui.BackPackActivity;
 import org.catrobat.catroid.ui.BottomBar;
 import org.catrobat.catroid.ui.CapitalizedTextView;
+import org.catrobat.catroid.ui.DynamicListView;
 import org.catrobat.catroid.ui.ProgramMenuActivity;
 import org.catrobat.catroid.ui.ProjectActivity;
 import org.catrobat.catroid.ui.ScriptActivity;
@@ -77,7 +75,6 @@ import org.catrobat.catroid.ui.dialogs.RenameSpriteDialog;
 import org.catrobat.catroid.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -248,84 +245,6 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 		editor.commit();
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, view, menuInfo);
-
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-
-		spriteToEdit = spriteAdapter.getItem(info.position);
-		spritePosition = info.position;
-		spriteAdapter.addCheckedSprite(info.position);
-
-		if (ProjectManager.getInstance().getCurrentProject().getSpriteList().indexOf(spriteToEdit) == 0) {
-			return;
-		}
-
-		menu.setHeaderTitle(spriteToEdit.getName());
-
-		getActivity().getMenuInflater().inflate(R.menu.context_menu_default, menu);
-		menu.findItem(R.id.context_menu_copy).setVisible(true);
-		menu.findItem(R.id.context_menu_unpacking).setVisible(false);
-		menu.findItem(R.id.context_menu_backpack).setVisible(true);
-		menu.findItem(R.id.context_menu_move_up).setVisible(true);
-		menu.findItem(R.id.context_menu_move_down).setVisible(true);
-		menu.findItem(R.id.context_menu_move_to_top).setVisible(true);
-		menu.findItem(R.id.context_menu_move_to_bottom).setVisible(true);
-
-		menu.findItem(R.id.context_menu_move_down).setEnabled(!(spritePosition == spriteList.size() - 1));
-		menu.findItem(R.id.context_menu_move_to_bottom).setEnabled(!(spritePosition == spriteList.size() - 1));
-
-		menu.findItem(R.id.context_menu_move_up).setEnabled(!(spritePosition == 1));
-		menu.findItem(R.id.context_menu_move_to_top).setEnabled(!(spritePosition == 1));
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.context_menu_copy:
-				copySprite();
-				break;
-
-			case R.id.context_menu_backpack:
-				BackPackSpriteController.getInstance().backpack(spriteToEdit, false);
-				switchToBackPack();
-				break;
-
-			case R.id.context_menu_cut:
-				break;
-
-			case R.id.context_menu_insert_below:
-				break;
-
-			case R.id.context_menu_move:
-				break;
-
-			case R.id.context_menu_rename:
-				showRenameDialog();
-				break;
-
-			case R.id.context_menu_delete:
-				showConfirmDeleteDialog();
-				break;
-
-			case R.id.context_menu_move_down:
-				moveSpriteDown();
-				break;
-
-			case R.id.context_menu_move_up:
-				moveSpriteUp();
-				break;
-			case R.id.context_menu_move_to_bottom:
-				moveSpriteToBottom();
-				break;
-			case R.id.context_menu_move_to_top:
-				moveSpriteToTop();
-				break;
-		}
-		return super.onContextItemSelected(item);
-	}
-
 	public void switchToBackPack() {
 		Intent intent = new Intent(getActivity(), BackPackActivity.class);
 		intent.putExtra(BackPackActivity.EXTRA_FRAGMENT_POSITION, BackPackActivity.FRAGMENT_BACKPACK_SPRITES);
@@ -421,30 +340,6 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 	@Override
 	public void handleAddButton() {
 		//handled in ProjectActivity
-	}
-
-	private void moveSpriteDown() {
-		Collections.swap(spriteList, spritePosition + 1, spritePosition);
-		spriteAdapter.notifyDataSetChanged();
-	}
-
-	private void moveSpriteUp() {
-		Collections.swap(spriteList, spritePosition - 1, spritePosition);
-		spriteAdapter.notifyDataSetChanged();
-	}
-
-	private void moveSpriteToBottom() {
-		for (int i = spritePosition; i < spriteList.size() - 1; i++) {
-			Collections.swap(spriteList, i, i + 1);
-		}
-		spriteAdapter.notifyDataSetChanged();
-	}
-
-	private void moveSpriteToTop() {
-		for (int i = spritePosition; i > 1; i--) {
-			Collections.swap(spriteList, i, i - 1);
-		}
-		spriteAdapter.notifyDataSetChanged();
 	}
 
 	public void handleCheckBoxClick(View view) {
@@ -783,6 +678,8 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 
 	private void initListeners() {
 		spriteList = (ArrayList<Sprite>) ProjectManager.getInstance().getCurrentProject().getSpriteList();
+		((DynamicListView) getListView()).setDataList(spriteList);
+		((DynamicListView) getListView()).isForSpriteList();
 		spriteAdapter = new SpriteAdapter(getActivity(), R.layout.activity_project_spritelist_item,
 				R.id.project_activity_sprite_title, spriteList);
 		spriteAdapter.setSpritesListFragment(this);
