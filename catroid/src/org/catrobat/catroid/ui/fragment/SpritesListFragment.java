@@ -679,13 +679,13 @@ public class SpritesListFragment extends ScriptActivityFragment implements Sprit
 	private void initListeners() {
 		spriteList = (ArrayList<Sprite>) ProjectManager.getInstance().getCurrentProject().getSpriteList();
 		((DynamicListView) getListView()).setDataList(spriteList);
-		((DynamicListView) getListView()).isForSpriteList();
 		spriteAdapter = new SpriteAdapter(getActivity(), R.layout.activity_project_spritelist_item,
 				R.id.project_activity_sprite_title, spriteList);
 		spriteAdapter.setSpritesListFragment(this);
 
 		spriteAdapter.setOnSpriteEditListener(this);
 		setListAdapter(spriteAdapter);
+		((DynamicListView) getListView()).setForSpriteList(spriteAdapter);
 		getListView().setTextFilterEnabled(true);
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);

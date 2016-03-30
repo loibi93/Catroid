@@ -38,9 +38,13 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
-import org.catrobat.catroid.BuildConfig;
+import org.catrobat.catroid.ProjectManager;
+import org.catrobat.catroid.content.Sprite;
+import org.catrobat.catroid.ui.adapter.SpriteAdapter;
+import org.catrobat.catroid.utils.ToastUtil;
 
 import java.util.List;
 
@@ -49,9 +53,17 @@ public class DynamicListView extends ListView {
     private final int SMOOTH_SCROLL_AMOUNT_AT_EDGE = 15;
     private final int MOVE_DURATION = 100;
     private final int LINE_THICKNESS = 15;
+    private final int GROUPING_SENSITIVITY = 4;
 
     public List dataList;
+
     private boolean forSpriteList = false;
+    private boolean isOnTopOfAbove = false;
+    private boolean isOnTopOfBelow = false;
+    private boolean isPlusHoverCellActive = false;
+    private SpriteAdapter spriteAdapter;
+    private BitmapDrawable hoverCellWithPlus;
+    private BitmapDrawable hoverCellWithOutPlus;
 
     private int lastEventY = -1;
 
@@ -112,7 +124,9 @@ public class DynamicListView extends ListView {
 
                     View selectedView = getChildAt(itemNum);
                     mobileItemId = getAdapter().getItemId(pos);
-                    hoverCell = getAndAddHoverView(selectedView);
+                    hoverCellWithOutPlus = getAndAddHoverView(selectedView, false);
+                    hoverCellWithPlus = getAndAddHoverView(selectedView, true);
+                    hoverCell = hoverCellWithOutPlus;
                     selectedView.setVisibility(INVISIBLE);
 
                     cellIsMobile = true;
@@ -123,14 +137,14 @@ public class DynamicListView extends ListView {
                 }
             };
 
-    private BitmapDrawable getAndAddHoverView(View v) {
+    private BitmapDrawable getAndAddHoverView(View v, boolean withPlus) {
 
         int w = v.getWidth();
         int h = v.getHeight();
         int top = v.getTop();
         int left = v.getLeft();
 
-        Bitmap b = getBitmapWithBorder(v);
+        Bitmap b = getBitmapWithBorder(v, withPlus);
 
         BitmapDrawable drawable = new BitmapDrawable(getResources(), b);
 
@@ -142,7 +156,19 @@ public class DynamicListView extends ListView {
         return drawable;
     }
 
-    private Bitmap getBitmapWithBorder(View v) {
+    private void updateHoverView(boolean withPlus) {
+        if (withPlus && !isPlusHoverCellActive) {
+            hoverCell = hoverCellWithPlus;
+            isPlusHoverCellActive = true;
+        }
+
+        if (!withPlus && isPlusHoverCellActive) {
+            hoverCell = hoverCellWithOutPlus;
+            isPlusHoverCellActive = false;
+        }
+    }
+
+    private Bitmap getBitmapWithBorder(View v, boolean withPlus) {
         Bitmap bitmap = getBitmapFromView(v);
         Canvas can = new Canvas(bitmap);
 
@@ -151,7 +177,11 @@ public class DynamicListView extends ListView {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(LINE_THICKNESS);
-        paint.setColor(Color.rgb(5,34,44));
+        if (withPlus) {
+            paint.setColor(Color.GREEN);
+        } else {
+            paint.setColor(Color.rgb(5,34,44));
+        }
 
         can.drawBitmap(bitmap, 0, 0, null);
         can.drawRect(rect, paint);
@@ -226,6 +256,7 @@ public class DynamicListView extends ListView {
                 int deltaY = lastEventY - downY;
 
                 if (cellIsMobile) {
+                    if (forSpriteList) updateHoverView(isOnTopOfAbove || isOnTopOfBelow);
                     hoverCellCurrentBounds.offsetTo(hoverCellOriginalBounds.left,
                             hoverCellOriginalBounds.top + deltaY + totalOffset);
                     hoverCell.setBounds(hoverCellCurrentBounds);
@@ -270,6 +301,10 @@ public class DynamicListView extends ListView {
 
         boolean isBelow = (belowView != null) && (deltaYTotal > belowView.getTop());
         boolean isAbove = (aboveView != null) && (deltaYTotal < aboveView.getTop());
+        isOnTopOfAbove = (aboveView != null) && (deltaYTotal < aboveView.getTop() + aboveView.getHeight() / GROUPING_SENSITIVITY) &&
+                !isAbove && getPositionForView(aboveView) != 0;
+        isOnTopOfBelow = (belowView != null) && (deltaYTotal > belowView.getTop() - belowView.getHeight() / GROUPING_SENSITIVITY) &&
+                !isBelow;
 
         if (aboveView != null && (getPositionForView(aboveView) == 0 && isAbove && forSpriteList)) {
             return;
@@ -374,6 +409,20 @@ public class DynamicListView extends ListView {
             });
             hoverViewAnimator.start();
 
+            if (isOnTopOfAbove && forSpriteList) {
+                Sprite sprite1 = ProjectManager.getInstance().getCurrentProject().getSpriteList().get(getPositionForID(aboveItemId));
+                Sprite sprite2 = ProjectManager.getInstance().getCurrentProject().getSpriteList().get(getPositionForID(mobileItemId));
+                ProjectManager.getInstance().getCurrentProject().removeSprite(sprite2);
+                spriteAdapter.notifyDataSetChanged();
+                ToastUtil.showSuccess(getContext(), sprite2.getName() + " on top of " + sprite1.getName());
+            } else if (isOnTopOfBelow && forSpriteList) {
+                Sprite sprite1 = ProjectManager.getInstance().getCurrentProject().getSpriteList().get(getPositionForID(belowItemId));
+                Sprite sprite2 = ProjectManager.getInstance().getCurrentProject().getSpriteList().get(getPositionForID(mobileItemId));
+                ProjectManager.getInstance().getCurrentProject().removeSprite(sprite2);
+                spriteAdapter.notifyDataSetChanged();
+                ToastUtil.showSuccess(getContext(), sprite2.getName() + " on top of " + sprite1.getName());
+            }
+
         } else {
             touchEventsCancelled();
         }
@@ -436,8 +485,9 @@ public class DynamicListView extends ListView {
         dataList = data;
     }
 
-    public void isForSpriteList() {
+    public void setForSpriteList(SpriteAdapter adapter) {
         forSpriteList = true;
+        spriteAdapter = adapter;
     }
 
     private AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener () {
