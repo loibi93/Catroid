@@ -33,6 +33,7 @@ import org.catrobat.catroid.R;
 import org.catrobat.catroid.common.MessageContainer;
 import org.catrobat.catroid.content.bricks.Brick;
 import org.catrobat.catroid.content.bricks.FormulaBrick;
+import org.catrobat.catroid.content.bricks.PointToBrick;
 import org.catrobat.catroid.content.bricks.SceneStartBrick;
 import org.catrobat.catroid.content.bricks.SceneTransitionBrick;
 import org.catrobat.catroid.content.bricks.UserBrick;
@@ -317,6 +318,28 @@ public class Scene implements Serializable {
 	public Scene() {
 	}
 
+	public List<PointToBrick> getPointToBricks() {
+		List<PointToBrick> result = new ArrayList<>();
+		for (Sprite sprite : spriteList) {
+			for (Brick brick : sprite.getAllBricks()) {
+				if (brick instanceof PointToBrick) {
+					result.add((PointToBrick) brick);
+				}
+			}
+		}
+
+		return result;
+	}
+
+	public int getSpritePositionById(Sprite sprite) {
+		for (int pos = 0; pos < spriteList.size(); pos++) {
+			if (spriteList.get(pos).getId() == sprite.getId()) {
+				return pos;
+			}
+		}
+		return 0;
+	}
+
 	public synchronized void setProject(Project project) {
 		this.project = project;
 	}
@@ -449,8 +472,8 @@ public class Scene implements Serializable {
 		return spriteBySpriteName;
 	}
 
-	public synchronized void replaceBackgroundSprite(Sprite unpackedSprite) {
-		spriteList.set(0, unpackedSprite);
+	public synchronized Sprite replaceBackgroundSprite(Sprite unpackedSprite) {
+		return spriteList.set(0, unpackedSprite);
 	}
 
 	public boolean containsSprite(Sprite selectedSprite) {

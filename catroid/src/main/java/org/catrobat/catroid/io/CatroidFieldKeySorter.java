@@ -204,8 +204,10 @@ public class CatroidFieldKeySorter implements FieldKeySorter {
 				fieldKeyOrder[13] = fieldKey;
 			} else if (fieldKey.getFieldName().equals("cloneForScene")) {
 				fieldKeyOrder[14] = fieldKey;
-			} else if (fieldKey.getFieldName().equals("$change")) {
+			} else if (fieldKey.getFieldName().equals("id")) {
 				fieldKeyOrder[15] = fieldKey;
+			} else if (fieldKey.getFieldName().equals("$change")) {
+				fieldKeyOrder[16] = fieldKey;
 			}
 		}
 		for (FieldKey fieldKey : fieldKeyOrder) {

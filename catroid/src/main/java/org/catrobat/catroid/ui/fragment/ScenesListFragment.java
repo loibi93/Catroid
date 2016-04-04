@@ -276,6 +276,16 @@ public class ScenesListFragment extends ScriptActivityFragment implements SceneA
 		startActionMode(backPackModeCallBack, false);
 	}
 
+	@Override
+	public void startUndoActionMode() {
+		//Not implemented yet
+	}
+
+	@Override
+	public void startRedoActionMode() {
+		//Not implemented yet
+	}
+
 	private void startActionMode(ActionMode.Callback actionModeCallback, boolean isRenameMode) {
 		if (actionMode == null) {
 			if (sceneAdapter.getCount() == 1) {

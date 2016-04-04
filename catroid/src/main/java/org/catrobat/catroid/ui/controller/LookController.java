@@ -427,8 +427,6 @@ public final class LookController {
 						pathOfPocketPaintImage,
 						newFileName);
 
-				StorageHandler.getInstance().deleteFile(selectedLookData.getAbsolutePath(), false); //reduce usage in container or delete it
-
 				selectedLookData.setLookFilename(newLookFile.getName());
 				selectedLookData.resetThumbnailBitmap();
 			} catch (IOException ioException) {

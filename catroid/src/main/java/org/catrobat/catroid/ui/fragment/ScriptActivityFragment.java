@@ -53,6 +53,10 @@ public abstract class ScriptActivityFragment extends ListFragment {
 
 	public abstract void startBackPackActionMode();
 
+	public abstract void startUndoActionMode();
+
+	public abstract void startRedoActionMode();
+
 	public abstract void handleAddButton();
 
 	public abstract void handleCheckBoxClick(View view);

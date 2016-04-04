@@ -28,6 +28,7 @@ import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.content.Scene;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.io.StorageHandler;
+import org.catrobat.catroid.utils.IdPool;
 import org.catrobat.catroid.utils.Utils;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class SoundInfo implements Serializable, Comparable<SoundInfo>, Cloneable
 	private static final long serialVersionUID = 1L;
 	private static final String TAG = SoundInfo.class.getSimpleName();
 	public transient boolean isPlaying;
+	private transient int id = IdPool.getInstance().getNewId();
 	public transient boolean isBackpackSoundInfo;
 	private String name;
 	private String fileName;
@@ -90,6 +92,14 @@ public class SoundInfo implements Serializable, Comparable<SoundInfo>, Cloneable
 		}
 
 		return cloneSoundInfo;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getAbsolutePath() {
