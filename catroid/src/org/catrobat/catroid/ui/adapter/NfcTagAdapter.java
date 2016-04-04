@@ -28,10 +28,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.common.NfcTagData;
+import org.catrobat.catroid.content.NfcDataHistory;
+import org.catrobat.catroid.content.commands.NfcDataCommands;
 import org.catrobat.catroid.ui.controller.NfcTagController;
 import org.catrobat.catroid.ui.fragment.NfcTagFragment;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -60,16 +64,6 @@ public class NfcTagAdapter extends NfcTagBaseAdapter implements ActionModeActivi
 			int position = iterator.next();
 			nfcTagFragment.setSelectedNfcTagData((NfcTagData) listView.getItemAtPosition(position));
 			nfcTagFragment.showRenameDialog();
-		}
-		nfcTagFragment.clearCheckedNfcTagsAndEnableButtons();
-	}
-
-	public void onDestroyActionModeCopy(ActionMode mode) {
-		Iterator<Integer> iterator = checkedNfcTags.iterator();
-
-		while (iterator.hasNext()) {
-			int position = iterator.next();
-			NfcTagController.getInstance().copyNfcTag(position, nfcTagFragment.getNfcTagDataList(), this);
 		}
 		nfcTagFragment.clearCheckedNfcTagsAndEnableButtons();
 	}

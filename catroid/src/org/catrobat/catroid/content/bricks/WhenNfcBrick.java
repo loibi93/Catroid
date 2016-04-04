@@ -58,6 +58,7 @@ public class WhenNfcBrick extends ScriptBrick implements NfcTagFragment.OnNfcTag
 	private transient NfcTagData nfcTag;
 	private transient NfcTagData oldSelectedNfcTag;
 	private static final long serialVersionUID = 1L;
+	private transient int id = ProjectManager.getInstance().getNewId();
 	private transient AdapterView<?> adapterView;
 
 	public WhenNfcBrick() {
@@ -397,5 +398,9 @@ public class WhenNfcBrick extends ScriptBrick implements NfcTagFragment.OnNfcTag
 
 	public void setWhenNfcScript(WhenNfcScript whenNfcScript) {
 		this.whenNfcScript = whenNfcScript;
+	}
+
+	public int getId() {
+		return id;
 	}
 }

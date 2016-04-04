@@ -58,10 +58,15 @@ public class PlaySoundBrick extends BrickBaseType implements OnItemSelectedListe
 	private static final long serialVersionUID = 1L;
 
 	private SoundInfo sound;
+	private transient int id = ProjectManager.getInstance().getNewId();
 	private transient SoundInfo oldSelectedSound;
 	private transient AdapterView<?> adapterView;
 
 	public PlaySoundBrick() {
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override
@@ -234,7 +239,7 @@ public class PlaySoundBrick extends BrickBaseType implements OnItemSelectedListe
 		}
 	}
 
-	public SoundInfo getSound() {
+	public SoundInfo getSoundInfo() {
 		return sound;
 	}
 
@@ -351,7 +356,7 @@ public class PlaySoundBrick extends BrickBaseType implements OnItemSelectedListe
 
 	@Override
 	public void storeDataForBackPack(Sprite sprite) {
-		SoundInfo backPackedSoundInfo = SoundController.getInstance().backPackHiddenSound(this.getSound());
+		SoundInfo backPackedSoundInfo = SoundController.getInstance().backPackHiddenSound(this.getSoundInfo());
 		this.setSoundInfo(backPackedSoundInfo);
 		if (sprite != null && !sprite.getSoundList().contains(backPackedSoundInfo)) {
 			sprite.getSoundList().add(backPackedSoundInfo);

@@ -147,24 +147,6 @@ public final class NfcTagController {
 				nfcTagDataList, adapter);
 	}
 
-	private void deleteNfcTag(int position, List<NfcTagData> nfcTagDataList, Activity activity) {
-		nfcTagDataList.remove(position);
-		ProjectManager.getInstance().getCurrentSprite().setNfcTagList(nfcTagDataList);
-		activity.sendBroadcast(new Intent(ScriptActivity.ACTION_NFCTAG_DELETED));
-	}
-
-	public void deleteCheckedNfcTags(Activity activity, NfcTagBaseAdapter adapter, List<NfcTagData> nfcTagDataList) {
-		SortedSet<Integer> checkedNfcTags = adapter.getCheckedItems();
-		Iterator<Integer> iterator = checkedNfcTags.iterator();
-		NfcTagController.getInstance().stopScanAndUpdateList(nfcTagDataList, adapter);
-		int numberDeleted = 0;
-		while (iterator.hasNext()) {
-			int position = iterator.next();
-			deleteNfcTag(position - numberDeleted, nfcTagDataList, activity);
-			++numberDeleted;
-		}
-	}
-
 	public NfcTagData updateNfcTagAdapter(String name, String uid, List<NfcTagData> nfcTagDataList, NfcTagBaseAdapter adapter) {
 		name = Utils.getUniqueNfcTagName(name);
 

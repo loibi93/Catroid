@@ -485,7 +485,6 @@ public final class SoundController {
 		String fileFormat = fileName.substring(fileName.lastIndexOf('.'), fileName.length());
 		fileName = fileName.substring(0, fileName.indexOf('_') + 1) + title + fileFormat;
 		newSoundInfo.setSoundFileName(fileName);
-		ProjectManager.getInstance().getCurrentSprite().getSoundList().add(newSoundInfo);
 
 		if (delete) {
 			if (fromHiddenBackPack) {

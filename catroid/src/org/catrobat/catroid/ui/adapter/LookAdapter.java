@@ -28,11 +28,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.catrobat.catroid.common.LookData;
+import org.catrobat.catroid.content.LookDataHistory;
+import org.catrobat.catroid.content.commands.LookCommands;
 import org.catrobat.catroid.ui.BackPackActivity;
 import org.catrobat.catroid.ui.controller.LookController;
 import org.catrobat.catroid.ui.fragment.LookFragment;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LookAdapter extends LookBaseAdapter implements ActionModeActivityAdapterInterface,

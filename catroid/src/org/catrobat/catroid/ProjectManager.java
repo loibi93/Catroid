@@ -36,11 +36,17 @@ import com.facebook.AccessToken;
 import org.catrobat.catroid.common.Constants;
 import org.catrobat.catroid.common.DefaultProjectHandler;
 import org.catrobat.catroid.common.FileChecksumContainer;
+import org.catrobat.catroid.common.LookData;
 import org.catrobat.catroid.common.MessageContainer;
+import org.catrobat.catroid.common.NfcTagData;
 import org.catrobat.catroid.common.ScreenModes;
+import org.catrobat.catroid.common.SoundInfo;
+import org.catrobat.catroid.content.LookDataHistory;
 import org.catrobat.catroid.content.Project;
 import org.catrobat.catroid.content.Script;
+import org.catrobat.catroid.content.SoundInfoHistory;
 import org.catrobat.catroid.content.Sprite;
+import org.catrobat.catroid.content.SpriteHistory;
 import org.catrobat.catroid.content.bricks.Brick;
 import org.catrobat.catroid.content.bricks.IfLogicBeginBrick;
 import org.catrobat.catroid.content.bricks.IfLogicElseBrick;
@@ -48,7 +54,11 @@ import org.catrobat.catroid.content.bricks.IfLogicEndBrick;
 import org.catrobat.catroid.content.bricks.LoopBeginBrick;
 import org.catrobat.catroid.content.bricks.LoopEndBrick;
 import org.catrobat.catroid.content.bricks.PhiroIfLogicBeginBrick;
+import org.catrobat.catroid.content.bricks.PlaySoundBrick;
+import org.catrobat.catroid.content.bricks.PointToBrick;
+import org.catrobat.catroid.content.bricks.SetLookBrick;
 import org.catrobat.catroid.content.bricks.UserBrick;
+import org.catrobat.catroid.content.bricks.WhenNfcBrick;
 import org.catrobat.catroid.exceptions.CompatibilityProjectException;
 import org.catrobat.catroid.exceptions.LoadingProjectException;
 import org.catrobat.catroid.exceptions.OutdatedVersionProjectException;
@@ -62,6 +72,7 @@ import org.catrobat.catroid.transfers.FacebookExchangeTokenTask;
 import org.catrobat.catroid.ui.SettingsActivity;
 import org.catrobat.catroid.ui.dialogs.SignInDialog;
 import org.catrobat.catroid.ui.dialogs.UploadProjectDialog;
+import org.catrobat.catroid.utils.IdPool;
 import org.catrobat.catroid.utils.Utils;
 
 import java.io.File;
@@ -92,6 +103,10 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 
 	public static ProjectManager getInstance() {
 		return INSTANCE;
+	}
+
+	public int getNewId() {
+		return IdPool.getInstance().getNewId();
 	}
 
 	public boolean getComingFromScriptFragmentToSoundFragment() {
@@ -215,6 +230,10 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 		}
 
 		if (project != null) {
+			for (Sprite sprite : project.getSpriteList()) {
+				setCurrentSprite(sprite);
+			}
+			setCurrentSprite(null);
 			project.loadLegoNXTSettingsFromProject(context);
 
 			int resources = project.getRequiredResources();
@@ -226,7 +245,100 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 			if ((resources & Brick.BLUETOOTH_SENSORS_ARDUINO) > 0) {
 				SettingsActivity.setArduinoSharedPreferenceEnabled(context, true);
 			}
+
+			LookDataHistory.clearHistory();
+			SoundInfoHistory.clearHistory();
+			SpriteHistory.clearHistory();
 		}
+	}
+
+	public LookData getLookById(int id) {
+		for (Sprite sprite : getCurrentProject().getSpriteList()) {
+			for (LookData lookData : sprite.getLookDataList()) {
+				if (lookData.getId() == id) {
+					return lookData;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public SoundInfo getSoundById(int id) {
+		for (Sprite sprite : getCurrentProject().getSpriteList()) {
+			for (SoundInfo soundInfo : sprite.getSoundList()) {
+				if (soundInfo.getId() == id) {
+					return soundInfo;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public Sprite getSpriteById(int id) {
+		for (Sprite sprite : getCurrentProject().getSpriteList()) {
+			if (sprite.getId() == id) {
+				return sprite;
+			}
+		}
+
+		return null;
+	}
+
+	public NfcTagData getNfcById(int id) {
+		for (Sprite sprite : getCurrentProject().getSpriteList()) {
+			for (NfcTagData nfcTagData : sprite.getNfcTagList()) {
+				if (nfcTagData.getId() == id) return nfcTagData;
+			}
+		}
+
+		return null;
+	}
+
+	public SetLookBrick getSetLookBrickById(int id) {
+		for (Sprite sprite : getCurrentProject().getSpriteList()) {
+			for (SetLookBrick brick : sprite.getSetLookBricks()) {
+				if (brick.getId() == id) {
+					return brick;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public PlaySoundBrick getPlaySoundBrickById(int id) {
+		for (Sprite sprite : getCurrentProject().getSpriteList()) {
+			for (PlaySoundBrick brick : sprite.getPlaySoundBricks()) {
+				if (brick.getId() == id) {
+					return brick;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public PointToBrick getPointToBrickById(int id) {
+		for (PointToBrick brick : getCurrentProject().getPointToBricks()) {
+			if (brick.getId() == id) {
+				return brick;
+			}
+		}
+		return null;
+	}
+
+	public WhenNfcBrick getWhenNfcBrickById(int id) {
+		for (Sprite sprite : getCurrentProject().getSpriteList()) {
+			for (WhenNfcBrick brick : sprite.getNfcBrickList()) {
+				if (brick.getId() == id) {
+					return brick;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private void localizeBackgroundSprite(Context context) {
@@ -335,6 +447,12 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 		Log.d(TAG, "deleteProject " + projectName);
 		if (StorageHandler.getInstance().projectExists(projectName)) {
 			StorageHandler.getInstance().deleteProject(projectName);
+		}
+
+		if (projectName.equals(SpriteHistory.projectName)) {
+			SpriteHistory.clearHistory();
+			LookDataHistory.clearHistory();
+			SoundInfoHistory.clearHistory();
 		}
 
 		if (project != null && project.getName().equals(projectName)) {

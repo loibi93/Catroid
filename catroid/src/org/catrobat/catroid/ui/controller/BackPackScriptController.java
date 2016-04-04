@@ -143,7 +143,7 @@ public final class BackPackScriptController {
 				}
 			} else if (brickOfScript instanceof PlaySoundBrick) {
 				PlaySoundBrick brick = (PlaySoundBrick) brickOfScript;
-				SoundInfo newSoundInfo = SoundController.getInstance().unpack(brick.getSound(), deleteUnpackedItems, true);
+				SoundInfo newSoundInfo = SoundController.getInstance().unpack(brick.getSoundInfo(), deleteUnpackedItems, true);
 				if (newSoundInfo != null) {
 					brick.setSoundInfo(newSoundInfo);
 				}

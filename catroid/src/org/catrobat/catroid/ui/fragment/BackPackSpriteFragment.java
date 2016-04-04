@@ -34,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.ContextMenu;
@@ -47,10 +48,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
 import org.catrobat.catroid.common.LookData;
 import org.catrobat.catroid.common.SoundInfo;
 import org.catrobat.catroid.content.Sprite;
+import org.catrobat.catroid.content.SpriteHistory;
+import org.catrobat.catroid.content.commands.SpriteCommands;
 import org.catrobat.catroid.io.StorageHandler;
 import org.catrobat.catroid.ui.BackPackActivity;
 import org.catrobat.catroid.ui.BottomBar;
@@ -65,6 +69,8 @@ import org.catrobat.catroid.ui.dialogs.ConfirmUnpackBackgroundDialog;
 import org.catrobat.catroid.ui.dialogs.DeleteLookDialog;
 import org.catrobat.catroid.utils.ToastUtil;
 import org.catrobat.catroid.utils.Utils;
+
+import java.util.ArrayList;
 
 public class BackPackSpriteFragment extends BackPackActivityFragment implements Dialog.OnKeyListener, SpriteBaseAdapter.OnSpriteEditListener {
 
@@ -217,17 +223,20 @@ public class BackPackSpriteFragment extends BackPackActivityFragment implements 
 		return super.onContextItemSelected(item);
 	}
 
-	private void checkForBackgroundUnpacking(Sprite selectedSprite, boolean delete, boolean keepCurrentSprite,
+	private void  checkForBackgroundUnpacking(Sprite selectedSprite, boolean delete, boolean keepCurrentSprite,
 			boolean fromHiddenBackPack) {
-		if (selectedSprite.isBackgroundSprite) {
-			ConfirmUnpackBackgroundDialog dialog = new ConfirmUnpackBackgroundDialog(selectedSprite, delete,
-					keepCurrentSprite, fromHiddenBackPack);
-			dialog.show(getFragmentManager(), ConfirmUnpackBackgroundDialog.DIALOG_FRAGMENT_TAG);
-		} else {
-			BackPackSpriteController.getInstance().unpack(selectedSprite, delete,
-					keepCurrentSprite, fromHiddenBackPack);
-			adapter.returnToProjectActivity();
+		ArrayList<Sprite> toAdd = new ArrayList<>();
+		toAdd.add(BackPackSpriteController.getInstance().unpack(selectedSprite, delete,
+				keepCurrentSprite, fromHiddenBackPack));
+
+		if (!selectedSprite.isBackgroundSprite) {
+			ProjectManager.getInstance().getCurrentProject().getSpriteList()
+					.removeAll(toAdd);
 		}
+		SpriteCommands.AddSpriteCommand command = new SpriteCommands.AddSpriteCommand(toAdd);
+		command.execute();
+		SpriteHistory.getInstance().add(command);
+		adapter.returnToProjectActivity();
 	}
 
 	private void showConfirmDeleteDialog() {

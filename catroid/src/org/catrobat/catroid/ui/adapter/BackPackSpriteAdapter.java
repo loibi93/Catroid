@@ -35,8 +35,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
 import org.catrobat.catroid.content.Sprite;
+import org.catrobat.catroid.content.SpriteHistory;
+import org.catrobat.catroid.content.commands.SpriteCommands;
 import org.catrobat.catroid.ui.ProjectActivity;
 import org.catrobat.catroid.ui.controller.BackPackSpriteController;
 import org.catrobat.catroid.ui.fragment.BackPackSpriteFragment;
@@ -143,14 +146,23 @@ public class BackPackSpriteAdapter extends SpriteBaseAdapter implements ActionMo
 	}
 
 	public void onDestroyActionModeUnpacking(boolean delete) {
+		ArrayList<Sprite> toAdd = new ArrayList<>();
 		List<Sprite> spritesToUnpack = new ArrayList<>();
 		for (Integer checkedPosition : checkedSprites) {
 			spritesToUnpack.add(getItem(checkedPosition));
 		}
 
 		for (Sprite sprite : spritesToUnpack) {
-			BackPackSpriteController.getInstance().unpack(sprite, delete, false, false);
+			toAdd.add(BackPackSpriteController.getInstance().unpack(sprite, delete, false, false));
 		}
+
+		for (Sprite sprite : toAdd) {
+			if (!sprite.isBackgroundSprite) ProjectManager.getInstance().getCurrentProject().removeSprite(sprite);
+		}
+
+		SpriteCommands.AddSpriteCommand command = new SpriteCommands.AddSpriteCommand(toAdd);
+		command.execute();
+		SpriteHistory.getInstance().add(command);
 
 		boolean returnToProjectActivity = !checkedSprites.isEmpty();
 		clearCheckedItems();

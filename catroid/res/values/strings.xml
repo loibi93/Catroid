@@ -748,6 +748,8 @@
     <string name="error_changing_description_of_incompatible_project">Changing the description of an incompatible
         project is not possible.</string>
     <string name="error_unknown_error">An unknown error occurred.</string>
+    <string name="error_undo">Something went wrong when undoing.</string>
+    <string name="error_redo">Something went wrong when redoing.</string>
     <!--  -->
 
 

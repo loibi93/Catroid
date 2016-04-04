@@ -58,6 +58,8 @@ import android.widget.TextView;
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
 import org.catrobat.catroid.common.LookData;
+import org.catrobat.catroid.content.LookDataHistory;
+import org.catrobat.catroid.content.commands.LookCommands;
 import org.catrobat.catroid.ui.BackPackActivity;
 import org.catrobat.catroid.ui.BottomBar;
 import org.catrobat.catroid.ui.LookViewHolder;
@@ -69,6 +71,8 @@ import org.catrobat.catroid.ui.controller.LookController;
 import org.catrobat.catroid.ui.dialogs.DeleteLookDialog;
 import org.catrobat.catroid.utils.ToastUtil;
 import org.catrobat.catroid.utils.Utils;
+
+import java.util.ArrayList;
 
 public class BackPackLookFragment extends BackPackActivityFragment implements Dialog.OnKeyListener, OnLookEditListener {
 
@@ -227,7 +231,12 @@ public class BackPackLookFragment extends BackPackActivityFragment implements Di
 	}
 
 	private void contextMenuUnpacking(boolean delete) {
-		LookController.getInstance().unpack(selectedLookDataBackPack, delete, false);
+		ArrayList<LookData> toAdd = new ArrayList<>();
+		toAdd.add(LookController.getInstance().unpack(selectedLookDataBackPack, delete, false));
+		ProjectManager.getInstance().getCurrentSprite().getLookDataList().removeAll(toAdd);
+		LookCommands.AddLookCommand command = new LookCommands.AddLookCommand(toAdd);
+		command.execute();
+		LookDataHistory.getInstance(ProjectManager.getInstance().getCurrentSprite()).add(command);
 		String textForUnPacking = getResources().getQuantityString(R.plurals.unpacking_items_plural, 1);
 		ToastUtil.showSuccess(getActivity(), selectedLookDataBackPack.getLookName() + " " + textForUnPacking);
 		((BackPackActivity) getActivity()).returnToScriptActivity(ScriptActivity.FRAGMENT_LOOKS);

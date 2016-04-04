@@ -193,7 +193,7 @@ public final class BackPackSpriteController {
 		BackPackScriptController.getInstance().unpack(selectedSprite.getName(), delete, false, null, true);
 
 		if (selectedSprite.isBackgroundSprite) {
-			ProjectManager.getInstance().getCurrentProject().replaceBackgroundSprite(unpackedSprite);
+			unpackedSprite.isBackgroundSprite = true;
 		} else {
 			ProjectManager.getInstance().addSprite(unpackedSprite);
 		}
@@ -225,7 +225,7 @@ public final class BackPackSpriteController {
 
 	private boolean soundInfoIsUsedInScript(SoundInfo soundInfo, Sprite sprite) {
 		for (Brick brick : sprite.getListWithAllBricks()) {
-			if (brick instanceof PlaySoundBrick && ((PlaySoundBrick) brick).getSound().equals(soundInfo)) {
+			if (brick instanceof PlaySoundBrick && ((PlaySoundBrick) brick).getSoundInfo().equals(soundInfo)) {
 				return true;
 			}
 		}

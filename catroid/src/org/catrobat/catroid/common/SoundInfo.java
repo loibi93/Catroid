@@ -40,6 +40,7 @@ public class SoundInfo implements Serializable, Comparable<SoundInfo>, Cloneable
 	private String name;
 	private String fileName;
 	public transient boolean isPlaying;
+	private transient int id = ProjectManager.getInstance().getNewId();
 
 	public transient boolean isBackpackSoundInfo;
 
@@ -96,6 +97,14 @@ public class SoundInfo implements Serializable, Comparable<SoundInfo>, Cloneable
 		}
 
 		return cloneSoundInfo;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getAbsolutePath() {

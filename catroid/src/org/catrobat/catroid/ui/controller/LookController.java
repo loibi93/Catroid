@@ -51,6 +51,7 @@ import org.catrobat.catroid.R;
 import org.catrobat.catroid.common.Constants;
 import org.catrobat.catroid.common.DroneVideoLookData;
 import org.catrobat.catroid.common.LookData;
+import org.catrobat.catroid.content.LookDataHistory;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.io.StorageHandler;
 import org.catrobat.catroid.ui.LookViewHolder;
@@ -245,14 +246,8 @@ public final class LookController {
 			} else {
 				BackPackListManager.getInstance().removeItemFromLookBackPack(lookData);
 			}
-			if (!otherLookDataItemsHaveAFileReference(lookData)) {
-				StorageHandler.getInstance().deleteFile(lookData.getAbsolutePathBackPack(), true);
-			}
 		}
 
-		if (adapter != null) {
-			adapter.notifyDataSetChanged();
-		}
 		return newLookData;
 	}
 
@@ -404,9 +399,7 @@ public final class LookController {
 			try {
 				File newLookFile = StorageHandler.getInstance().copyImage(projectName, pathOfPocketPaintImage,
 						newFileName);
-
-				StorageHandler.getInstance().deleteFile(selectedLookData.getAbsolutePath(), false); //reduce usage in container or delete it
-
+				
 				selectedLookData.setLookFilename(newLookFile.getName());
 				selectedLookData.resetThumbnailBitmap();
 			} catch (IOException ioException) {

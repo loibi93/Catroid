@@ -64,6 +64,7 @@ public class PointToBrick extends BrickBaseType {
 	private static final long serialVersionUID = 1L;
 
 	private Sprite pointedObject;
+	private transient int id = ProjectManager.getInstance().getNewId();
 	private transient String oldSelectedObject;
 	private transient AdapterView<?> adapterView;
 	private transient SpinnerAdapterWrapper spinnerAdapterWrapper;
@@ -74,6 +75,10 @@ public class PointToBrick extends BrickBaseType {
 	}
 
 	public PointToBrick() {
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override
@@ -226,6 +231,14 @@ public class PointToBrick extends BrickBaseType {
 				}
 			}
 		}
+	}
+
+	public void setSprite(Sprite sprite) {
+		this.pointedObject = sprite;
+	}
+
+	public Sprite getSprite() {
+		return this.pointedObject;
 	}
 
 	private ArrayAdapter<String> getArrayAdapterFromSpriteList(Context context) {

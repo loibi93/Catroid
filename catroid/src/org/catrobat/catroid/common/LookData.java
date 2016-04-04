@@ -57,6 +57,7 @@ public class LookData implements Serializable, Cloneable {
 	protected transient Pixmap pixmap = null;
 	protected transient Pixmap originalPixmap = null;
 	protected transient TextureRegion textureRegion = null;
+	private transient int id = ProjectManager.getInstance().getNewId();
 
 	public LookData() {
 	}
@@ -108,6 +109,14 @@ public class LookData implements Serializable, Cloneable {
 		pixmap = null;
 		originalPixmap = null;
 		textureRegion = null;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public TextureRegion getTextureRegion() {
