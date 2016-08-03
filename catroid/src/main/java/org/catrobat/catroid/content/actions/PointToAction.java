@@ -29,13 +29,13 @@ import org.catrobat.catroid.content.Sprite;
 
 import java.util.ArrayList;
 
-public class PointToAction extends TemporalAction {
+public class PointToAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Sprite pointedSprite;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		final ArrayList<Sprite> spriteList = (ArrayList<Sprite>) ProjectManager.getInstance().getCurrentProject()
 				.getSpriteList();
 		if (!spriteList.contains(pointedSprite)) {

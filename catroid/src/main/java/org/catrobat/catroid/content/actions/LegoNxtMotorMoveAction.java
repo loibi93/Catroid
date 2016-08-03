@@ -36,7 +36,7 @@ import org.catrobat.catroid.devices.mindstorms.nxt.LegoNXT;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class LegoNxtMotorMoveAction extends TemporalAction {
+public class LegoNxtMotorMoveAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 	private static final int MIN_SPEED = -100;
 	private static final int MAX_SPEED = 100;
 
@@ -44,10 +44,10 @@ public class LegoNxtMotorMoveAction extends TemporalAction {
 
 	private Motor motorEnum;
 	private Formula speed;
-	private Sprite sprite;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		int speedValue;
 		try {
 			speedValue = speed.interpretInteger(sprite);

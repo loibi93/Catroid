@@ -35,14 +35,14 @@ public class HideActionTest extends AndroidTestCase {
 		Sprite sprite = new Sprite("new sprite");
 		assertTrue("Unexpected default visibility", sprite.look.isVisible());
 		ActionFactory factory = sprite.getActionFactory();
-		Action action = factory.createHideAction(sprite);
+		Action action = factory.createHideAction(sprite, null);
 		action.act(1.0f);
 		assertFalse("Sprite is still visible after HideBrick executed", sprite.look.isLookVisible());
 	}
 
 	public void testNullSprite() {
 		ActionFactory factory = new ActionFactory();
-		Action action = factory.createHideAction(null);
+		Action action = factory.createHideAction(null, null);
 		try {
 			action.act(1.0f);
 			fail("Execution of HideBrick with null Sprite did not cause a NullPointerException to be thrown");

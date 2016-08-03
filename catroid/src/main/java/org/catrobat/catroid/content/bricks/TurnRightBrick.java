@@ -135,7 +135,7 @@ public class TurnRightBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createTurnRightAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createTurnRightAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.TURN_RIGHT_DEGREES)));
 		return null;
 	}

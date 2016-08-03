@@ -136,7 +136,7 @@ public class SetBrightnessBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSetBrightnessAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSetBrightnessAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.BRIGHTNESS)));
 		return null;
 	}

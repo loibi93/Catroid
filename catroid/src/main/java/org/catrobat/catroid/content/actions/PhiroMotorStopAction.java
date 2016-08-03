@@ -31,7 +31,7 @@ import org.catrobat.catroid.common.ServiceProvider;
 import org.catrobat.catroid.content.bricks.PhiroMotorStopBrick.Motor;
 import org.catrobat.catroid.devices.arduino.phiro.Phiro;
 
-public class PhiroMotorStopAction extends TemporalAction {
+public class PhiroMotorStopAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Motor motorEnum;
 
@@ -39,6 +39,7 @@ public class PhiroMotorStopAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 
 		Phiro phiro = btService.getDevice(BluetoothDevice.PHIRO);
 		if (phiro == null) {

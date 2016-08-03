@@ -36,7 +36,8 @@ public class DronePlayLedAnimationBrick extends DroneBasicBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createDronePlayLedAnimationAction());
+		sequence.addAction(sprite.getActionFactory().createDronePlayLedAnimationAction(sprite, sprite
+				.getBrickIndexAndScriptIndexForBrick(this)));
 		return null;
 	}
 

@@ -147,7 +147,7 @@ public class SetFrictionBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSetFrictionAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSetFrictionAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.PHYSICS_FRICTION)));
 		return null;
 	}

@@ -30,13 +30,13 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class ChangeXByNAction extends TemporalAction {
+public class ChangeXByNAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula xMovement;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		try {
 			Float newX = xMovement == null ? Float.valueOf(0f) : xMovement.interpretFloat(sprite);
 			sprite.look.changeXInUserInterfaceDimensionUnit(newX);

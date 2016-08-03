@@ -29,12 +29,11 @@ import org.catrobat.catroid.content.Sprite;
 
 import java.util.List;
 
-public class ComeToFrontAction extends TemporalAction {
-
-	private Sprite sprite;
+public class ComeToFrontAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	@Override
 	protected void update(float delta) {
+		updateCurrentBrick();
 
 		List<Sprite> spriteList = ProjectManager.getInstance().getCurrentProject().getSpriteList();
 		int actualSpriteZIndex = sprite.look.getZIndex();

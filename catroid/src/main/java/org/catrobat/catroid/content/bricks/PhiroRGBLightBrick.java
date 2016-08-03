@@ -329,7 +329,7 @@ public class PhiroRGBLightBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createPhiroRgbLedEyeActionAction(sprite, eyeEnum,
+		sequence.addAction(sprite.getActionFactory().createPhiroRgbLedEyeActionAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this), eyeEnum,
 				getFormulaWithBrickField(BrickField.PHIRO_LIGHT_RED),
 				getFormulaWithBrickField(BrickField.PHIRO_LIGHT_GREEN),
 				getFormulaWithBrickField(BrickField.PHIRO_LIGHT_BLUE)));

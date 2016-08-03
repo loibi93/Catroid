@@ -63,7 +63,8 @@ public class AddItemToUserListActionTest extends AndroidTestCase {
 	}
 
 	public void testAddNumericalValueToUserList() {
-		actionFactory.createAddItemToUserListAction(testSprite, new Formula(DOUBLE_VALUE_ITEM_TO_ADD), userList).act(1f);
+		actionFactory.createAddItemToUserListAction(testSprite, null, new Formula(DOUBLE_VALUE_ITEM_TO_ADD), userList)
+		.act(1f);
 		Object lastItemOfUserList = userList.getList().get(userList.getList().size() - 1);
 
 		assertEquals("UserList size not changed!", 4, userList.getList().size());
@@ -71,18 +72,19 @@ public class AddItemToUserListActionTest extends AndroidTestCase {
 	}
 
 	public void testAddItemWithInvalidUserList() {
-		actionFactory.createAddItemToUserListAction(testSprite, new Formula(DOUBLE_VALUE_ITEM_TO_ADD), null).act(1f);
+		actionFactory.createAddItemToUserListAction(testSprite, null, new Formula(DOUBLE_VALUE_ITEM_TO_ADD), null).act
+				(1f);
 		assertEquals("UserList changed, but should not!", 2, userList.getList().size());
 	}
 
 	public void testAddNullFormula() {
-		actionFactory.createAddItemToUserListAction(testSprite, null, userList).act(1f);
+		actionFactory.createAddItemToUserListAction(testSprite, null, null, userList).act(1f);
 		Object lastItemOfUserList = userList.getList().get(userList.getList().size() - 1);
 		assertEquals("UserList not changed!", 0d, lastItemOfUserList);
 	}
 
 	public void testNotANumberFormula() {
-		actionFactory.createAddItemToUserListAction(testSprite, new Formula(Double.NaN), userList).act(1f);
+		actionFactory.createAddItemToUserListAction(testSprite, null, new Formula(Double.NaN), userList).act(1f);
 		Object lastItemOfUserList = userList.getList().get(userList.getList().size() - 1);
 		assertEquals("String UserVariable not changed!", String.valueOf(Double.NaN), lastItemOfUserList);
 	}

@@ -31,13 +31,14 @@ import org.catrobat.catroid.common.ServiceProvider;
 import org.catrobat.catroid.content.bricks.LegoNxtMotorStopBrick.Motor;
 import org.catrobat.catroid.devices.mindstorms.nxt.LegoNXT;
 
-public class LegoNxtMotorStopAction extends TemporalAction {
+public class LegoNxtMotorStopAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Motor motorEnum;
 	private BluetoothDeviceService btService = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE);
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 
 		LegoNXT nxt = btService.getDevice(BluetoothDevice.LEGO_NXT);
 		if (nxt == null) {

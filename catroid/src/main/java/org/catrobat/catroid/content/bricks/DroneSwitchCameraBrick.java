@@ -36,7 +36,7 @@ public class DroneSwitchCameraBrick extends DroneBasicLookBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createDroneSwitchCameraAction());
+		sequence.addAction(sprite.getActionFactory().createDroneSwitchCameraAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this)));
 		return null;
 	}
 

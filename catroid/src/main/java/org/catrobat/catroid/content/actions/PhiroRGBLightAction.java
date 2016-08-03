@@ -36,7 +36,7 @@ import org.catrobat.catroid.devices.arduino.phiro.Phiro;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class PhiroRGBLightAction extends TemporalAction {
+public class PhiroRGBLightAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 	private static final String TAG = PhiroRGBLightAction.class.getSimpleName();
 	private static final int MIN_VALUE = 0;
 	private static final int MAX_VALUE = 255;
@@ -45,12 +45,12 @@ public class PhiroRGBLightAction extends TemporalAction {
 	private Formula red;
 	private Formula green;
 	private Formula blue;
-	private Sprite sprite;
 
 	private BluetoothDeviceService btService = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE);
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 
 		int redValue = updateFormulaValue(red);
 		int greenValue = updateFormulaValue(green);

@@ -48,6 +48,7 @@ import org.catrobat.catroid.physics.PhysicsWorld;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,7 @@ public class Sprite implements Serializable, Cloneable {
 	private List<UserBrick> userBricks = new ArrayList<>();
 	private List<NfcTagData> nfcTagList = new ArrayList<>();
 	private transient ActionFactory actionFactory = new ActionFactory();
+	public transient Map<Integer, Integer> currentBrickMap = new HashMap<>();
 
 	public Sprite(String name) {
 		this.name = name;
@@ -110,6 +112,10 @@ public class Sprite implements Serializable, Cloneable {
 		return scriptList;
 	}
 
+	public void setCurrentBrickInScript(Integer scriptIndex, Integer brickIndex) {
+		currentBrickMap.put(scriptIndex, brickIndex);
+	}
+
 	public List<Brick> getListWithAllBricks() {
 		List<Brick> allBricks = new ArrayList<>();
 		for (Script script : scriptList) {
@@ -151,6 +157,20 @@ public class Sprite implements Serializable, Cloneable {
 			}
 		}
 		return result;
+	}
+
+	public ArrayList<Integer> getBrickIndexAndScriptIndexForBrick(Brick brick) {
+		for (int s = 0; s < scriptList.size(); s++) {
+			int b = scriptList.get(s).brickList.indexOf(brick);
+			if (b != -1) {
+				ArrayList<Integer> indexes = new ArrayList<>();
+				indexes.add(s);
+				indexes.add(b);
+				return indexes;
+			}
+		}
+
+		return null;
 	}
 
 	public void resetSprite() {

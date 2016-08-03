@@ -67,7 +67,7 @@ public class ComeToFrontActionTest extends AndroidTestCase {
 		checkIfEveryZIndexUsedOnlyOnceFromZeroToNMinus1(project);
 
 		ActionFactory factory = middleSprite.getActionFactory();
-		Action action = factory.createComeToFrontAction(middleSprite);
+		Action action = factory.createComeToFrontAction(middleSprite, null);
 		bottomSprite.look.addAction(action);
 		action.act(1.0f);
 		assertEquals("bottomSprite z position should now be 2", middleSprite.look.getZIndex(),
@@ -80,7 +80,7 @@ public class ComeToFrontActionTest extends AndroidTestCase {
 		assertEquals("Unexpected initial z position of topSprite", 3, nextSprite.look.getZIndex());
 
 		ActionFactory factory2 = middleSprite.getActionFactory();
-		Action action2 = factory2.createComeToFrontAction(bottomSprite);
+		Action action2 = factory2.createComeToFrontAction(bottomSprite, null);
 		bottomSprite.look.addAction(action2);
 		action2.act(1.0f);
 		assertEquals("bottomSprite z position should now be 3", bottomSprite.look.getZIndex(),
@@ -111,7 +111,7 @@ public class ComeToFrontActionTest extends AndroidTestCase {
 
 	public void testNullSprite() {
 		ActionFactory factory = new ActionFactory();
-		Action action = factory.createComeToFrontAction(null);
+		Action action = factory.createComeToFrontAction(null, null);
 
 		try {
 			action.act(1.0f);
@@ -138,7 +138,7 @@ public class ComeToFrontActionTest extends AndroidTestCase {
 		ProjectManager.getInstance().setProject(project);
 
 		ActionFactory factory = firstSprite.getActionFactory();
-		Action action = factory.createComeToFrontAction(firstSprite);
+		Action action = factory.createComeToFrontAction(firstSprite, null);
 		firstSprite.look.addAction(action);
 		action.act(1.0f);
 

@@ -130,7 +130,7 @@ public class ChangeXByNBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createChangeXByNAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createChangeXByNAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.X_POSITION_CHANGE)));
 		return null;
 	}

@@ -27,12 +27,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 
 import org.catrobat.catroid.camera.CameraManager;
 
-public class CameraBrickAction extends TemporalAction {
+public class CameraBrickAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	CameraManager.CameraState state = CameraManager.CameraState.notUsed;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		CameraManager.getInstance().updatePreview(state);
 	}
 

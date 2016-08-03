@@ -130,8 +130,8 @@ public class RepeatUntilActionTest extends InstrumentationTestCase {
 	}
 
 	public void testNullFormula() {
-		Action repeatedAction = testSprite.getActionFactory().createSetXAction(testSprite, new Formula(10));
-		Action repeatAction = testSprite.getActionFactory().createRepeatUntilAction(testSprite, null, repeatedAction);
+		Action repeatedAction = testSprite.getActionFactory().createSetXAction(testSprite, null, new Formula(10));
+		Action repeatAction = testSprite.getActionFactory().createRepeatUntilAction(testSprite, null, null, repeatedAction);
 
 		repeatAction.act(1.0f);
 		int repeatCountValue = ((RepeatUntilAction) repeatAction).getExecutedCount();

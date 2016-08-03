@@ -27,12 +27,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.DelegateAction;
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.content.bricks.UserBrick;
 
-public class UserBrickAction extends DelegateAction {
+public class UserBrickAction extends org.catrobat.catroid.content.actions.debugActions.DelegateAction {
 
 	private UserBrick userBrick;
 
 	@Override
 	public boolean delegate(float delta) {
+		updateCurrentBrick();
 		ProjectManager.getInstance().setCurrentUserBrick(userBrick);
 		return action.act(delta);
 	}

@@ -191,12 +191,12 @@ public class IfLogicActionTest extends AndroidTestCase {
 
 	public void testNullFormula() {
 		Object userVariableExpected = userVariable.getValue();
-		Action ifAction = testSprite.getActionFactory().createSetVariableAction(testSprite, new Formula(IF_TRUE_VALUE),
+		Action ifAction = testSprite.getActionFactory().createSetVariableAction(testSprite, null, new Formula(IF_TRUE_VALUE),
 				userVariable);
-		Action elseAction = testSprite.getActionFactory().createSetVariableAction(testSprite,
+		Action elseAction = testSprite.getActionFactory().createSetVariableAction(testSprite, null,
 				new Formula(IF_FALSE_VALUE), userVariable);
 
-		Action ifLogicAction = testSprite.getActionFactory().createIfLogicAction(testSprite, null, ifAction,
+		Action ifLogicAction = testSprite.getActionFactory().createIfLogicAction(testSprite, null, null, ifAction,
 				elseAction);
 		ifLogicAction.act(1.0f);
 		Object isInterpretedCorrectly = Reflection.getPrivateField(ifLogicAction, "isInterpretedCorrectly");

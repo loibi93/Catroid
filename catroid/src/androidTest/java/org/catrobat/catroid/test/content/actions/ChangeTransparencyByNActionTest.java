@@ -47,17 +47,17 @@ public class ChangeTransparencyByNActionTest extends AndroidTestCase {
 		assertEquals("Unexpected initial sprite ghost effect value", 0f,
 				sprite.look.getTransparencyInUserInterfaceDimensionUnit());
 
-		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, new Formula(INCREASE_VALUE)).act(1.0f);
+		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, null, new Formula(INCREASE_VALUE)).act(1.0f);
 		assertEquals("Incorrect sprite ghost effect value after ChangeTransparencyByNBrick executed", INCREASE_VALUE,
 				sprite.look.getTransparencyInUserInterfaceDimensionUnit());
 
-		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, new Formula(DECREASE_VALUE)).act(1.0f);
+		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, null, new Formula(DECREASE_VALUE)).act(1.0f);
 		assertEquals("Incorrect sprite ghost effect value after ChangeTransparencyByNBrick executed", INCREASE_VALUE + DECREASE_VALUE,
 				sprite.look.getTransparencyInUserInterfaceDimensionUnit());
 	}
 
 	public void testNullSprite() {
-		Action action = sprite.getActionFactory().createChangeTransparencyByNAction(null, new Formula(INCREASE_VALUE));
+		Action action = sprite.getActionFactory().createChangeTransparencyByNAction(null, null, new Formula(INCREASE_VALUE));
 		try {
 			action.act(1.0f);
 			fail("Execution of ChangeTransparencyByNBrick with null Sprite did not cause a NullPointerException to be thrown");
@@ -66,24 +66,23 @@ public class ChangeTransparencyByNActionTest extends AndroidTestCase {
 	}
 
 	public void testBrickWithStringFormula() {
-		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, new Formula(String.valueOf(INCREASE_VALUE)))
-				.act(1.0f);
+		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, null, new Formula(String.valueOf(INCREASE_VALUE))).act(1.0f);
 		assertEquals("Incorrect sprite ghost effect value after ChangeTransparencyByNBrick executed", INCREASE_VALUE,
 				sprite.look.getTransparencyInUserInterfaceDimensionUnit(), DELTA);
 
-		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, new Formula(NOT_NUMERICAL_STRING)).act(1.0f);
+		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, null, new Formula(NOT_NUMERICAL_STRING)).act(1.0f);
 		assertEquals("Incorrect sprite ghost effect value after ChangeTransparencyByNBrick executed", INCREASE_VALUE,
 				sprite.look.getTransparencyInUserInterfaceDimensionUnit(), DELTA);
 	}
 
 	public void testNullFormula() {
-		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, null).act(1.0f);
+		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, null, null).act(1.0f);
 		assertEquals("Incorrect sprite ghost effect value after ChangeTransparencyByNBrick executed", 0f,
 				sprite.look.getTransparencyInUserInterfaceDimensionUnit());
 	}
 
 	public void testNotANumberFormula() {
-		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, new Formula(Double.NaN)).act(1.0f);
+		sprite.getActionFactory().createChangeTransparencyByNAction(sprite, null, new Formula(Double.NaN)).act(1.0f);
 		assertEquals("Incorrect sprite ghost effect value after ChangeTransparencyByNBrick executed", 0f,
 				sprite.look.getTransparencyInUserInterfaceDimensionUnit());
 	}

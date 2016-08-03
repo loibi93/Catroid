@@ -33,13 +33,13 @@ import org.catrobat.catroid.formulaeditor.InterpretationException;
 
 import java.util.List;
 
-public class GoNStepsBackAction extends TemporalAction {
+public class GoNStepsBackAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula steps;
 
 	@Override
 	protected void update(float delta) {
+		updateCurrentBrick();
 		Float stepsValue;
 		try {
 			stepsValue = steps == null ? Float.valueOf(0f) : steps.interpretFloat(sprite);

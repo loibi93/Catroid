@@ -73,7 +73,7 @@ public class SetGravityActionTest extends PhysicsBaseTest {
 	}
 
 	private void initGravityValues(float gravityX, float gravityY) {
-		Action action = sprite.getActionFactory().createSetGravityAction(sprite, new Formula(gravityX),
+		Action action = sprite.getActionFactory().createSetGravityAction(sprite, null, new Formula(gravityX),
 				new Formula(gravityY));
 		Vector2 gravityVector = ((World) Reflection.getPrivateField(PhysicsWorld.class, physicsWorld, "world"))
 				.getGravity();
@@ -85,7 +85,7 @@ public class SetGravityActionTest extends PhysicsBaseTest {
 	}
 
 	public void testBrickWithStringFormula() {
-		sprite.getActionFactory().createSetGravityAction(sprite, new Formula(String.valueOf(GRAVITY_X)),
+		sprite.getActionFactory().createSetGravityAction(sprite, null, new Formula(String.valueOf(GRAVITY_X)),
 				new Formula(String.valueOf(GRAVITY_Y))).act(1.0f);
 		Vector2 gravityVector = ((World) Reflection.getPrivateField(PhysicsWorld.class, physicsWorld, "world"))
 				.getGravity();
@@ -93,7 +93,7 @@ public class SetGravityActionTest extends PhysicsBaseTest {
 		assertEquals("Unexpected gravityX value", GRAVITY_X, gravityVector.x);
 		assertEquals("Unexpected gravityY value", GRAVITY_Y, gravityVector.y);
 
-		sprite.getActionFactory().createSetGravityAction(sprite, new Formula(String.valueOf("not a numerical string")),
+		sprite.getActionFactory().createSetGravityAction(sprite, null, new Formula(String.valueOf("not a numerical string")),
 				new Formula(String.valueOf("not a numerical string"))).act(1.0f);
 		gravityVector = ((World) Reflection.getPrivateField(PhysicsWorld.class, physicsWorld, "world")).getGravity();
 
@@ -102,7 +102,7 @@ public class SetGravityActionTest extends PhysicsBaseTest {
 	}
 
 	public void testNullFormula() {
-		sprite.getActionFactory().createSetGravityAction(sprite, null, null).act(1.0f);
+		sprite.getActionFactory().createSetGravityAction(sprite, null, null, null).act(1.0f);
 		Vector2 gravityVector = ((World) Reflection.getPrivateField(PhysicsWorld.class, physicsWorld, "world"))
 				.getGravity();
 
@@ -111,7 +111,7 @@ public class SetGravityActionTest extends PhysicsBaseTest {
 	}
 
 	public void testNotANumberFormula() {
-		sprite.getActionFactory().createSetGravityAction(sprite, new Formula(Double.NaN), new Formula(Double.NaN))
+		sprite.getActionFactory().createSetGravityAction(sprite, null, new Formula(Double.NaN), new Formula(Double.NaN))
 				.act(1.0f);
 		Vector2 gravityVector = ((World) Reflection.getPrivateField(PhysicsWorld.class, physicsWorld, "world"))
 				.getGravity();

@@ -27,11 +27,12 @@ import com.parrot.freeflight.service.DroneControlService;
 
 import org.catrobat.catroid.drone.DroneServiceWrapper;
 
-public class DroneTakeoffAndLandAction extends TemporalAction {
+public class DroneTakeoffAndLandAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	@Override
 	protected void begin() {
 		super.begin();
+		updateCurrentBrick();
 		DroneControlService dcs = DroneServiceWrapper.getInstance().getDroneService();
 		if (dcs != null) {
 			dcs.triggerTakeOff();
@@ -40,6 +41,7 @@ public class DroneTakeoffAndLandAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		//Nothing to do
 	}
 }

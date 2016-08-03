@@ -170,10 +170,10 @@ public class ChooseCameraBrick extends BrickBaseType {
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
 		if (spinnerSelectionID == FRONT) {
-			sequence.addAction(sprite.getActionFactory().createSetFrontCameraAction());
+			sequence.addAction(sprite.getActionFactory().createSetFrontCameraAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this)));
 			return null;
 		}
-		sequence.addAction(sprite.getActionFactory().createSetBackCameraAction());
+		sequence.addAction(sprite.getActionFactory().createSetBackCameraAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this)));
 		return null;
 	}
 }

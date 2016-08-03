@@ -175,7 +175,8 @@ public class ArduinoSendDigitalValueBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSendDigitalArduinoValueAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSendDigitalArduinoValueAction(sprite, sprite
+				.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.ARDUINO_DIGITAL_PIN_NUMBER),
 				getFormulaWithBrickField(BrickField.ARDUINO_DIGITAL_PIN_VALUE)));
 		return null;

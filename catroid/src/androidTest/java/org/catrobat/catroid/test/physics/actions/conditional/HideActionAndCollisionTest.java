@@ -38,30 +38,30 @@ public class HideActionAndCollisionTest extends PhysicsCollisionBaseTest {
 	}
 
 	public void testNoCollisionAfterHide() {
-		Action action = sprite.getActionFactory().createHideAction(sprite);
+		Action action = sprite.getActionFactory().createHideAction(sprite, null);
 		action.act(1.0f);
 		simulateFullCollision();
 		assertFalse("PhysicObjects shouldn't collide because sprite2 is invisible", collisionDetected());
 	}
 
 	public void testCollisionAfterHide() {
-		Action action = sprite.getActionFactory().createHideAction(sprite);
+		Action action = sprite.getActionFactory().createHideAction(sprite, null);
 		action.act(1.0f);
-		action = sprite.getActionFactory().createShowAction(sprite);
+		action = sprite.getActionFactory().createShowAction(sprite, null);
 		action.act(1.0f);
 		simulateFullCollision();
 		assertTrue("PhysicObjects should collide because sprite2 is visible", collisionDetected());
 	}
 
 	public void testHide() {
-		Action action = sprite.getActionFactory().createHideAction(sprite);
+		Action action = sprite.getActionFactory().createHideAction(sprite, null);
 		action.act(1.0f);
 		assertFalse("Sprite is still visible after HideBrick executed", sprite.look.isLookVisible());
 	}
 
 	public void testNullSprite() {
 		ActionFactory factory = new ActionFactory();
-		Action action = factory.createHideAction(null);
+		Action action = factory.createHideAction(null, null);
 		try {
 			action.act(1.0f);
 			fail("Execution of HideBrick with null Sprite did not cause a NullPointerException to be thrown");

@@ -31,12 +31,11 @@ import org.catrobat.catroid.physics.PhysicsBoundaryBox;
 import org.catrobat.catroid.physics.PhysicsObject;
 import org.catrobat.catroid.physics.PhysicsWorld;
 
-public class IfOnEdgeBouncePhysicsAction extends TemporalAction {
+public class IfOnEdgeBouncePhysicsAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	public static final float THRESHOLD_VELOCITY_TO_ACTIVATE_BOUNCE = 10.0f;
 	private static final float COLLISION_OVERLAP_RANGE_FACTOR = 0.9f;
 
-	private Sprite sprite;
 	private PhysicsWorld physicsWorld;
 
 	private void performVerticalRepositioning(float bbLookOffsetX, boolean velocityHighEnoughToCollideAfterRepositioning, boolean correctGravityPresent) {
@@ -57,6 +56,7 @@ public class IfOnEdgeBouncePhysicsAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		// AABB ... AXIS-ALIGNED-BOUNDING-BOX
 		Vector2 bbLowerEdge = new Vector2();
 		Vector2 bbUpperEdge = new Vector2();

@@ -151,7 +151,7 @@ public class RepeatUntilBrick extends FormulaBrick implements LoopBeginBrick {
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
 		Action repeatSequence = sprite.getActionFactory().createSequence();
 
-		Action action = sprite.getActionFactory().createRepeatUntilAction(sprite, getFormulaWithBrickField(BrickField.REPEAT_UNTIL_CONDITION),
+		Action action = sprite.getActionFactory().createRepeatUntilAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this), getFormulaWithBrickField(BrickField.REPEAT_UNTIL_CONDITION),
 				repeatSequence);
 		sequence.addAction(action);
 		LinkedList<SequenceAction> returnActionList = new LinkedList<SequenceAction>();

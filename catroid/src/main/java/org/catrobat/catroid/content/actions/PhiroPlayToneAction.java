@@ -36,16 +36,16 @@ import org.catrobat.catroid.devices.arduino.phiro.Phiro;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class PhiroPlayToneAction extends TemporalAction {
+public class PhiroPlayToneAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Tone toneEnum;
 	private Formula durationInSeconds;
-	private Sprite sprite;
 
 	private BluetoothDeviceService btService = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE);
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		int durationInterpretation;
 
 		try {

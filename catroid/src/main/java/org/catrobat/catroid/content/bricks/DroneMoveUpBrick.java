@@ -52,7 +52,7 @@ public class DroneMoveUpBrick extends DroneMoveBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createDroneMoveUpAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createDroneMoveUpAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.DRONE_TIME_TO_FLY_IN_SECONDS),
 				getFormulaWithBrickField(BrickField.DRONE_POWER_IN_PERCENT)));
 		return null;

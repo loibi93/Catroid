@@ -51,7 +51,7 @@ public class SetMassActionTest extends PhysicsBaseTest {
 
 	private void initMassValue(float mass) {
 		PhysicsObject physicsObject = physicsWorld.getPhysicsObject(sprite);
-		Action action = sprite.getActionFactory().createSetMassAction(sprite, new Formula(mass));
+		Action action = sprite.getActionFactory().createSetMassAction(sprite, null, new Formula(mass));
 
 		assertEquals("Unexpected mass value", PhysicsObject.DEFAULT_MASS, physicsObject.getMass());
 
@@ -61,23 +61,23 @@ public class SetMassActionTest extends PhysicsBaseTest {
 
 	public void testBrickWithStringFormula() {
 		PhysicsObject physicsObject = physicsWorld.getPhysicsObject(sprite);
-		sprite.getActionFactory().createSetMassAction(sprite, new Formula(String.valueOf(MASS))).act(1.0f);
+		sprite.getActionFactory().createSetMassAction(sprite, null, new Formula(String.valueOf(MASS))).act(1.0f);
 		assertEquals("Unexpected mass value", MASS, physicsObject.getMass());
 
-		sprite.getActionFactory().createSetMassAction(sprite, new Formula(String.valueOf("not a numerical string")))
+		sprite.getActionFactory().createSetMassAction(sprite, null, new Formula(String.valueOf("not a numerical string")))
 				.act(1.0f);
 		assertEquals("Unexpected mass value", MASS, physicsObject.getMass());
 	}
 
 	public void testNullFormula() {
 		PhysicsObject physicsObject = physicsWorld.getPhysicsObject(sprite);
-		sprite.getActionFactory().createSetMassAction(sprite, null).act(1.0f);
+		sprite.getActionFactory().createSetMassAction(sprite, null, null).act(1.0f);
 		assertEquals("Unexpected mass value", 0f, physicsObject.getMass());
 	}
 
 	public void testNotANumberFormula() {
 		PhysicsObject physicsObject = physicsWorld.getPhysicsObject(sprite);
-		sprite.getActionFactory().createSetMassAction(sprite, new Formula(Double.NaN)).act(1.0f);
+		sprite.getActionFactory().createSetMassAction(sprite, null, new Formula(Double.NaN)).act(1.0f);
 		assertEquals("Unexpected mass value", PhysicsObject.DEFAULT_MASS, physicsObject.getMass());
 	}
 

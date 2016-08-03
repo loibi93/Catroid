@@ -41,18 +41,18 @@ import java.io.File;
 import java.util.HashMap;
 
 @SuppressWarnings("deprecation")
-public class SpeakAction extends TemporalAction {
+public class SpeakAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Formula text;
 	private Object interpretedText;
 	private String hashText;
-	private Sprite sprite;
 
 	private File speechFile;
 	private OnUtteranceCompletedListener listener;
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		try {
 			interpretedText = text == null ? "" : text.interpretString(sprite);
 		} catch (InterpretationException interpretationException) {
@@ -94,6 +94,7 @@ public class SpeakAction extends TemporalAction {
 
 	@Override
 	protected void update(float delta) {
+		updateCurrentBrick();
 		HashMap<String, String> speakParameter = new HashMap<String, String>();
 		speakParameter.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, hashText);
 		PreStageActivity.textToSpeech(String.valueOf(interpretedText), speechFile, listener, speakParameter);

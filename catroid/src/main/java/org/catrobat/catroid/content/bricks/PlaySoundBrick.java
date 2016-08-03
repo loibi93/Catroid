@@ -213,7 +213,7 @@ public class PlaySoundBrick extends BrickBaseType implements OnItemSelectedListe
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createPlaySoundAction(sprite, sound));
+		sequence.addAction(sprite.getActionFactory().createPlaySoundAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this), sound));
 		return null;
 	}
 

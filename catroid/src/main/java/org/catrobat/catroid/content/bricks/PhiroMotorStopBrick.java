@@ -175,7 +175,8 @@ public class PhiroMotorStopBrick extends BrickBaseType implements OnItemSelected
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createPhiroMotorStopActionAction(motorEnum));
+		sequence.addAction(sprite.getActionFactory().createPhiroMotorStopActionAction(sprite, sprite
+				.getBrickIndexAndScriptIndexForBrick(this), motorEnum));
 		return null;
 	}
 }

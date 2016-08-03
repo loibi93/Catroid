@@ -33,18 +33,18 @@ import org.catrobat.catroid.devices.raspberrypi.RaspberryPiService;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class RaspiSendDigitalValueAction extends TemporalAction {
+public class RaspiSendDigitalValueAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private static final String TAG = RaspiSendDigitalValueAction.class.getSimpleName();
 
 	private Formula pinNumber;
 	private Formula pinValue;
-	private Sprite sprite;
 	private int pin;
 	private boolean value;
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		Integer pinNumberInterpretation;
 		boolean pinValueInterpretation;
 
@@ -70,6 +70,7 @@ public class RaspiSendDigitalValueAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		RPiSocketConnection connection = RaspberryPiService.getInstance().connection;
 		try {
 			Log.d(TAG, "RPi set " + pin + " to " + value);

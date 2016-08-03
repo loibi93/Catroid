@@ -31,9 +31,11 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
 import org.catrobat.catroid.common.BroadcastSequenceMap;
 import org.catrobat.catroid.common.BroadcastWaitSequenceMap;
+import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.stage.StageActivity;
 import org.catrobat.catroid.stage.StageListener;
 import org.catrobat.catroid.utils.ToastUtil;
@@ -42,11 +44,13 @@ public class StageDialog extends Dialog implements View.OnClickListener {
 	private static final String TAG = StageDialog.class.getSimpleName();
 	private StageActivity stageActivity;
 	private StageListener stageListener;
+	private int theme;
 
 	public StageDialog(StageActivity stageActivity, StageListener stageListener, int theme) {
 		super(stageActivity, theme);
 		this.stageActivity = stageActivity;
 		this.stageListener = stageListener;
+		this.theme = theme;
 	}
 
 	@Override
@@ -75,6 +79,7 @@ public class StageDialog extends Dialog implements View.OnClickListener {
 		} else {
 			((ImageButton) findViewById(R.id.stage_dialog_button_maximize)).setVisibility(View.GONE);
 		}
+		((ImageButton) findViewById(R.id.stage_dialog_button_debug)).setOnClickListener(this);
 	}
 
 	@Override
@@ -101,6 +106,9 @@ public class StageDialog extends Dialog implements View.OnClickListener {
 			case R.id.stage_dialog_button_screenshot:
 				makeScreenshot();
 				break;
+			case R.id.stage_dialog_button_debug:
+				startDebugMode();
+				break;
 			default:
 				Log.w(TAG, "Unimplemented button clicked! This shouldn't happen!");
 				break;
@@ -113,6 +121,12 @@ public class StageDialog extends Dialog implements View.OnClickListener {
 		dismiss();
 		stageActivity.exit();
 		new FinishThreadAndDisposeTexturesTask().execute(null, null, null);
+	}
+
+	private void startDebugMode() {
+		StageDebugDialog debugDialog = new StageDebugDialog(stageActivity, stageListener, this, theme);
+		hide();
+		debugDialog.show();
 	}
 
 	private void makeScreenshot() {

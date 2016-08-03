@@ -131,7 +131,7 @@ public class ChangeVolumeByNBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createChangeVolumeByNAction(sprite, getFormulaWithBrickField(BrickField.VOLUME_CHANGE)));
+		sequence.addAction(sprite.getActionFactory().createChangeVolumeByNAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this), getFormulaWithBrickField(BrickField.VOLUME_CHANGE)));
 		return null;
 	}
 

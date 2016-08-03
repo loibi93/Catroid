@@ -44,6 +44,8 @@ import org.catrobat.catroid.physics.content.actions.SetVelocityAction;
 import org.catrobat.catroid.physics.content.actions.TurnLeftSpeedAction;
 import org.catrobat.catroid.physics.content.actions.TurnRightSpeedAction;
 
+import java.util.ArrayList;
+
 public class ActionPhysicsFactory extends ActionFactory {
 
 	private PhysicsObject getPhysicsObject(Sprite sprite) {
@@ -56,92 +58,103 @@ public class ActionPhysicsFactory extends ActionFactory {
 
 	// OVERRIDE
 	@Override
-	public Action createIfOnEdgeBounceAction(Sprite sprite) {
+	public Action createIfOnEdgeBounceAction(Sprite sprite, ArrayList<Integer> indexes) {
 		IfOnEdgeBouncePhysicsAction action = Actions.action(IfOnEdgeBouncePhysicsAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsWorld(getPhysicsWorld());
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createGlideToAction(Sprite sprite, Formula x, Formula y, Formula duration) {
+	public Action createGlideToAction(Sprite sprite, ArrayList<Integer> indexes, Formula x, Formula y, Formula duration) {
 		GlideToPhysicsAction action = Actions.action(GlideToPhysicsAction.class);
 		action.setPosition(x, y);
 		action.setDuration(duration);
 		action.setSprite(sprite);
 		action.setPhysicsLook((PhysicsLook) sprite.look);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	// PHYSICS
 	@Override
-	public Action createSetBounceFactorAction(Sprite sprite, Formula bounceFactor) {
+	public Action createSetBounceFactorAction(Sprite sprite, ArrayList<Integer> indexes, Formula bounceFactor) {
 		SetBounceFactorAction action = Actions.action(SetBounceFactorAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsObject(getPhysicsObject(sprite));
 		action.setBounceFactor(bounceFactor);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createSetFrictionAction(Sprite sprite, Formula friction) {
+	public Action createSetFrictionAction(Sprite sprite, ArrayList<Integer> indexes, Formula friction) {
 		SetFrictionAction action = Actions.action(SetFrictionAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsObject(getPhysicsObject(sprite));
 		action.setFriction(friction);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createSetGravityAction(Sprite sprite, Formula gravityX, Formula gravityY) {
+	public Action createSetGravityAction(Sprite sprite, ArrayList<Integer> indexes, Formula gravityX, Formula gravityY) {
 		SetGravityAction action = Actions.action(SetGravityAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsWorld(getPhysicsWorld());
 		action.setGravity(gravityX, gravityY);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createSetMassAction(Sprite sprite, Formula mass) {
+	public Action createSetMassAction(Sprite sprite, ArrayList<Integer> indexes, Formula mass) {
 		SetMassAction action = Actions.action(SetMassAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsObject(getPhysicsObject(sprite));
 		action.setMass(mass);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createSetPhysicsObjectTypeAction(Sprite sprite, Type type) {
+	public Action createSetPhysicsObjectTypeAction(Sprite sprite, ArrayList<Integer> indexes, Type type) {
 		SetPhysicsObjectTypeAction action = Actions.action(SetPhysicsObjectTypeAction.class);
 		action.setPhysicsObject(getPhysicsObject(sprite));
 		action.setType(type);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createSetVelocityAction(Sprite sprite, Formula velocityX, Formula velocityY) {
+	public Action createSetVelocityAction(Sprite sprite, ArrayList<Integer> indexes, Formula velocityX, Formula velocityY) {
 		SetVelocityAction action = Actions.action(SetVelocityAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsObject(getPhysicsObject(sprite));
 		action.setVelocity(velocityX, velocityY);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createTurnLeftSpeedAction(Sprite sprite, Formula speed) {
+	public Action createTurnLeftSpeedAction(Sprite sprite, ArrayList<Integer> indexes, Formula speed) {
 		TurnLeftSpeedAction action = Actions.action(TurnLeftSpeedAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsObject(getPhysicsObject(sprite));
 		action.setSpeed(speed);
+		action.setIndexes(indexes);
 		return action;
 	}
 
 	@Override
-	public Action createTurnRightSpeedAction(Sprite sprite, Formula speed) {
+	public Action createTurnRightSpeedAction(Sprite sprite, ArrayList<Integer> indexes, Formula speed) {
 		TurnRightSpeedAction action = Actions.action(TurnRightSpeedAction.class);
 		action.setSprite(sprite);
 		action.setPhysicsObject(getPhysicsObject(sprite));
 		action.setSpeed(speed);
+		action.setIndexes(indexes);
 		return action;
 	}
 }

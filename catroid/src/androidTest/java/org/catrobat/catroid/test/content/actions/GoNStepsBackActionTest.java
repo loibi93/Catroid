@@ -81,14 +81,14 @@ public class GoNStepsBackActionTest extends AndroidTestCase {
 
 		int oldPosition = sprite.look.getZIndex();
 
-		sprite.getActionFactory().createGoNStepsBackAction(sprite, steps).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite, null, steps).act(1.0f);
 		assertEquals("Incorrect sprite Z position after GoNStepsBackBrick executed",
 				(oldPosition - STEPS), sprite.look.getZIndex());
 
 		checkIfEveryZIndexUsedOnlyOnceFromZeroToNMinus1(project.getSpriteList());
 		oldPosition = sprite.look.getZIndex();
 
-		sprite.getActionFactory().createGoNStepsBackAction(sprite, new Formula(-STEPS)).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite, null, new Formula(-STEPS)).act(1.0f);
 		assertEquals("Incorrect sprite Z position after GoNStepsBackBrick executed",
 				(oldPosition + STEPS), sprite.look.getZIndex());
 		checkIfEveryZIndexUsedOnlyOnceFromZeroToNMinus1(project.getSpriteList());
@@ -115,7 +115,7 @@ public class GoNStepsBackActionTest extends AndroidTestCase {
 
 	public void testNullSprite() {
 		ActionFactory factory = new ActionFactory();
-		Action action = factory.createGoNStepsBackAction(null, steps);
+		Action action = factory.createGoNStepsBackAction(null, null, steps);
 		try {
 			action.act(1.0f);
 			fail("Execution of GoNStepsBackBrick with null Sprite did not cause a NullPointerException to be thrown");
@@ -142,36 +142,36 @@ public class GoNStepsBackActionTest extends AndroidTestCase {
 		project.addSprite(sprite2);
 		ProjectManager.getInstance().setProject(project);
 
-		sprite.getActionFactory().createGoNStepsBackAction(sprite, new Formula(Integer.MAX_VALUE)).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite, null, new Formula(Integer.MAX_VALUE)).act(1.0f);
 		assertEquals("GoNStepsBackBrick execution failed. Z position should be zero.", 1, sprite.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 2, sprite2.look.getZIndex());
 
-		sprite.getActionFactory().createGoNStepsBackAction(sprite, new Formula(Integer.MIN_VALUE)).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite, null, new Formula(Integer.MIN_VALUE)).act(1.0f);
 		assertEquals("An unwanted Integer overflow occured during GoNStepsBackBrick execution.", 2,
 				sprite.look.getZIndex());
 	}
 
 	public void testBrickWithStringFormula() {
-		sprite.getActionFactory().createGoNStepsBackAction(sprite2, new Formula(String.valueOf(STEPS))).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite2, null, new Formula(String.valueOf(STEPS))).act(1.0f);
 		assertEquals("Unexpected initial sprite Z position", 0, background.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 1, sprite2.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 2, sprite.look.getZIndex());
 
-		sprite.getActionFactory().createGoNStepsBackAction(sprite, new Formula(String.valueOf(NOT_NUMERICAL_STRING))).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite, null, new Formula(String.valueOf(NOT_NUMERICAL_STRING))).act(1.0f);
 		assertEquals("Unexpected initial sprite Z position", 0, background.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 1, sprite2.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 2, sprite.look.getZIndex());
 	}
 
 	public void testNullFormula() {
-		sprite.getActionFactory().createGoNStepsBackAction(sprite2, null).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite2, null, null).act(1.0f);
 		assertEquals("Unexpected initial sprite Z position", 0, background.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 1, sprite.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 2, sprite2.look.getZIndex());
 	}
 
 	public void testNotANumberFormula() {
-		sprite.getActionFactory().createGoNStepsBackAction(sprite2, new Formula(Double.NaN)).act(1.0f);
+		sprite.getActionFactory().createGoNStepsBackAction(sprite2, null, new Formula(Double.NaN)).act(1.0f);
 		assertEquals("Unexpected initial sprite Z position", 0, background.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 1, sprite.look.getZIndex());
 		assertEquals("Unexpected sprite Z position", 2, sprite2.look.getZIndex());

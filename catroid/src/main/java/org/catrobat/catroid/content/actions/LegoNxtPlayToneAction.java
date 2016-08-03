@@ -35,16 +35,16 @@ import org.catrobat.catroid.devices.mindstorms.nxt.LegoNXT;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class LegoNxtPlayToneAction extends TemporalAction {
+public class LegoNxtPlayToneAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Formula hertz;
 	private Formula durationInSeconds;
-	private Sprite sprite;
 
 	private BluetoothDeviceService btService = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE);
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		int hertzInterpretation;
 		float durationInterpretation;
 

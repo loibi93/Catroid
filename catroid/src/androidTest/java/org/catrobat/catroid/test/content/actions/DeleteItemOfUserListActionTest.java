@@ -63,7 +63,7 @@ public class DeleteItemOfUserListActionTest extends AndroidTestCase {
 	}
 
 	public void testDeleteItemOfUserList() {
-		actionFactory.createDeleteItemOfUserListAction(testSprite, new Formula(1d), userList).act(1f);
+		actionFactory.createDeleteItemOfUserListAction(testSprite, null, new Formula(1d), userList).act(1f);
 		Object lastItemOfUserList = userList.getList().get(userList.getList().size() - 1);
 		Object firstItemOfUserList = userList.getList().get(0);
 
@@ -73,12 +73,12 @@ public class DeleteItemOfUserListActionTest extends AndroidTestCase {
 	}
 
 	public void testDeleteItemWithInvalidUserList() {
-		actionFactory.createAddItemToUserListAction(testSprite, new Formula(1d), null).act(1f);
+		actionFactory.createAddItemToUserListAction(testSprite, null, new Formula(1d), null).act(1f);
 		assertEquals("UserList changed, but should not!", 3, userList.getList().size());
 	}
 
 	public void testDeleteNullFormula() {
-		actionFactory.createDeleteItemOfUserListAction(testSprite, null, userList).act(1f);
+		actionFactory.createDeleteItemOfUserListAction(testSprite, null, null, userList).act(1f);
 
 		Object lastItemOfUserList = userList.getList().get(userList.getList().size() - 1);
 		Object firstItemOfUserList = userList.getList().get(0);
@@ -89,7 +89,7 @@ public class DeleteItemOfUserListActionTest extends AndroidTestCase {
 	}
 
 	public void testNotANumberFormula() {
-		actionFactory.createDeleteItemOfUserListAction(testSprite, new Formula(Double.NaN), userList).act(1f);
+		actionFactory.createDeleteItemOfUserListAction(testSprite, null, new Formula(Double.NaN), userList).act(1f);
 
 		Object lastItemOfUserList = userList.getList().get(userList.getList().size() - 1);
 		Object firstItemOfUserList = userList.getList().get(0);

@@ -183,7 +183,8 @@ public class HideTextBrick extends UserVariableBrick {
 			userVariableName = Constants.NO_VARIABLE_SELECTED;
 		}
 
-		sequence.addAction(sprite.getActionFactory().createHideTextAction(userVariableName));
+		sequence.addAction(sprite.getActionFactory().createHideTextAction(sprite, sprite
+				.getBrickIndexAndScriptIndexForBrick(this), userVariableName));
 		return null;
 	}
 

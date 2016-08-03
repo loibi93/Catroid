@@ -46,6 +46,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.catrobat.catroid.ProjectManager;
@@ -75,6 +76,7 @@ import org.catrobat.catroid.ui.controller.BackPackListManager;
 import org.catrobat.catroid.ui.dialogs.CustomAlertDialogBuilder;
 import org.catrobat.catroid.ui.dialogs.DeleteLookDialog;
 import org.catrobat.catroid.ui.dragndrop.DragAndDropListView;
+import org.catrobat.catroid.ui.dragndrop.DragAndDropListener;
 import org.catrobat.catroid.ui.fragment.BrickCategoryFragment.OnCategorySelectedListener;
 import org.catrobat.catroid.utils.ToastUtil;
 import org.catrobat.catroid.utils.Utils;
@@ -109,6 +111,8 @@ public class ScriptFragment extends ScriptActivityFragment implements OnCategory
 	private boolean deleteScriptFromContextMenu = false;
 
 	private boolean backpackMenuIsVisible = true;
+
+	private boolean disableUserInteraction = false;
 
 	private ActionMode.Callback deleteModeCallBack = new ActionMode.Callback() {
 
@@ -244,6 +248,10 @@ public class ScriptFragment extends ScriptActivityFragment implements OnCategory
 		}
 	}
 
+	public void disableUserInteraction() {
+		disableUserInteraction = true;
+	}
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -252,22 +260,28 @@ public class ScriptFragment extends ScriptActivityFragment implements OnCategory
 
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
-		menu.findItem(R.id.show_details).setVisible(false);
-		menu.findItem(R.id.rename).setVisible(false);
-		menu.findItem(R.id.unpacking).setVisible(false);
-		menu.findItem(R.id.unpacking_keep).setVisible(false);
-		if (getActivity() instanceof UserBrickScriptActivity || isInUserBrickOverview()) {
-			backpackMenuIsVisible = false;
+		if (!disableUserInteraction) {
+			menu.findItem(R.id.show_details).setVisible(false);
+			menu.findItem(R.id.rename).setVisible(false);
+			menu.findItem(R.id.unpacking).setVisible(false);
+			menu.findItem(R.id.unpacking_keep).setVisible(false);
+			if (getActivity() instanceof UserBrickScriptActivity || isInUserBrickOverview()) {
+				backpackMenuIsVisible = false;
+			}
+			menu.findItem(R.id.backpack).setVisible(backpackMenuIsVisible);
+			handlePlayButtonVisibility();
 		}
-		menu.findItem(R.id.backpack).setVisible(backpackMenuIsVisible);
-		handlePlayButtonVisibility();
+
 		super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.findItem(R.id.delete).setVisible(true);
-		menu.findItem(R.id.copy).setVisible(true);
+		if (!disableUserInteraction) {
+			menu.findItem(R.id.delete).setVisible(true);
+			menu.findItem(R.id.copy).setVisible(true);
+		}
+
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -384,8 +398,12 @@ public class ScriptFragment extends ScriptActivityFragment implements OnCategory
 
 		listView.setOnCreateContextMenuListener(this);
 		listView.setOnDragAndDropListener(adapter);
-		listView.setAdapter(adapter);
 		registerForContextMenu(listView);
+		listView.setNoUserInteraction(disableUserInteraction);
+		listView.setAdapter(adapter);
+		if (disableUserInteraction) {
+			BottomBar.hideAddButton(getActivity());
+		}
 	}
 
 	private void showCategoryFragment() {

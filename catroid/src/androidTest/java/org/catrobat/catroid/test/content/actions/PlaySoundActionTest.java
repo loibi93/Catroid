@@ -68,7 +68,7 @@ public class PlaySoundActionTest extends InstrumentationTestCase {
 		testSprite.getSoundList().add(soundInfo);
 
 		ActionFactory factory = testSprite.getActionFactory();
-		Action action = factory.createPlaySoundAction(testSprite, soundInfo);
+		Action action = factory.createPlaySoundAction(testSprite, null, soundInfo);
 		action.act(1.0f);
 
 		List<MediaPlayer> mediaPlayers = getMediaPlayers();
@@ -82,8 +82,8 @@ public class PlaySoundActionTest extends InstrumentationTestCase {
 		testSprite.getSoundList().add(soundInfo);
 
 		ActionFactory factory = testSprite.getActionFactory();
-		Action playSoundAction1 = factory.createPlaySoundAction(testSprite, soundInfo);
-		Action playSoundAction2 = factory.createPlaySoundAction(testSprite, soundInfo);
+		Action playSoundAction1 = factory.createPlaySoundAction(testSprite, null, soundInfo);
+		Action playSoundAction2 = factory.createPlaySoundAction(testSprite, null, soundInfo);
 
 		playSoundAction1.act(1.0f);
 		playSoundAction2.act(1.0f);

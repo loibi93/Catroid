@@ -26,12 +26,13 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 
 import org.catrobat.catroid.content.BroadcastEvent;
 
-public class BroadcastNotifyAction extends Action {
+public class BroadcastNotifyAction extends org.catrobat.catroid.content.actions.debugActions.Action {
 
 	private BroadcastEvent event;
 
 	@Override
 	public boolean act(float delta) {
+		updateCurrentBrick();
 		event.raiseNumberOfFinishedReceivers();
 		if (event.allReceiversHaveFinished()) {
 			event.resetEventAndResumeScript();

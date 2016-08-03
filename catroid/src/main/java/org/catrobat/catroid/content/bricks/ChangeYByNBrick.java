@@ -130,7 +130,7 @@ public class ChangeYByNBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createChangeYByNAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createChangeYByNAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.Y_POSITION_CHANGE)));
 		return null;
 	}

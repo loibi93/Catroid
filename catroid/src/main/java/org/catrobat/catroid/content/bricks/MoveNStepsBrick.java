@@ -160,7 +160,7 @@ public class MoveNStepsBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createMoveNStepsAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createMoveNStepsAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.STEPS)));
 		return null;
 	}

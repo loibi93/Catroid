@@ -171,7 +171,7 @@ public class SetGravityBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSetGravityAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSetGravityAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.PHYSICS_GRAVITY_X),
 				getFormulaWithBrickField(BrickField.PHYSICS_GRAVITY_Y)));
 		return null;

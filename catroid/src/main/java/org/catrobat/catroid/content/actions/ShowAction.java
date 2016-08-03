@@ -26,12 +26,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 
 import org.catrobat.catroid.content.Sprite;
 
-public class ShowAction extends TemporalAction {
-
-	private Sprite sprite;
+public class ShowAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	@Override
 	protected void update(float delta) {
+		updateCurrentBrick();
 		sprite.look.setLookVisible(true);
 	}
 

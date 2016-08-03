@@ -96,8 +96,8 @@ public class NextLookActionTest extends InstrumentationTestCase {
 		sprite.getLookDataList().add(lookData2);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action setLookAction = factory.createSetLookAction(sprite, lookData1);
-		Action nextLookAction = factory.createNextLookAction(sprite);
+		Action setLookAction = factory.createSetLookAction(sprite, null, lookData1);
+		Action nextLookAction = factory.createNextLookAction(sprite, null);
 
 		setLookAction.act(1.0f);
 		nextLookAction.act(1.0f);
@@ -127,8 +127,8 @@ public class NextLookActionTest extends InstrumentationTestCase {
 		sprite.getLookDataList().add(lookData3);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action setLookAction = factory.createSetLookAction(sprite, lookData3);
-		Action nextLookAction = factory.createNextLookAction(sprite);
+		Action setLookAction = factory.createSetLookAction(sprite, null, lookData3);
+		Action nextLookAction = factory.createNextLookAction(sprite, null);
 
 		setLookAction.act(1.0f);
 		nextLookAction.act(1.0f);
@@ -140,7 +140,7 @@ public class NextLookActionTest extends InstrumentationTestCase {
 
 		Sprite sprite = new Sprite("cat");
 		ActionFactory factory = sprite.getActionFactory();
-		Action nextLookAction = factory.createNextLookAction(sprite);
+		Action nextLookAction = factory.createNextLookAction(sprite, null);
 		nextLookAction.act(1.0f);
 
 		assertEquals("Look is not null", null, sprite.look.getLookData());
@@ -155,8 +155,8 @@ public class NextLookActionTest extends InstrumentationTestCase {
 		sprite.getLookDataList().add(lookData1);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action setLookAction = factory.createSetLookAction(sprite, lookData1);
-		Action nextLookAction = factory.createNextLookAction(sprite);
+		Action setLookAction = factory.createSetLookAction(sprite, null, lookData1);
+		Action nextLookAction = factory.createNextLookAction(sprite, null);
 
 		setLookAction.act(1.0f);
 		nextLookAction.act(1.0f);
@@ -170,7 +170,7 @@ public class NextLookActionTest extends InstrumentationTestCase {
 		Sprite sprite = new Sprite("cat");
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action nextLookAction = factory.createNextLookAction(sprite);
+		Action nextLookAction = factory.createNextLookAction(sprite, null);
 
 		LookData lookData1 = new LookData();
 		lookData1.setLookFilename(testImage.getName());

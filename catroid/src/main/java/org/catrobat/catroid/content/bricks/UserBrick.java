@@ -366,7 +366,8 @@ public class UserBrick extends BrickBaseType implements OnClickListener {
 		SequenceAction userSequence = (SequenceAction) actionFactory.createSequence();
 		definitionBrick.getScriptSafe().run(sprite, userSequence);
 		returnActionList.add(userSequence);
-		sequence.addAction(actionFactory.createUserBrickAction(userSequence, this));
+		sequence.addAction(actionFactory.createUserBrickAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick
+				(this), userSequence, this));
 		ProjectManager.getInstance().setCurrentUserBrick(this);
 
 		return returnActionList;

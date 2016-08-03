@@ -32,9 +32,8 @@ import org.catrobat.catroid.drone.DroneServiceWrapper;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public abstract class DroneMoveAction extends TemporalAction {
+public abstract class DroneMoveAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula duration;
 	private Formula powerInPercent;
 
@@ -42,6 +41,7 @@ public abstract class DroneMoveAction extends TemporalAction {
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		Float newDuration;
 		try {
 			newDuration = duration == null ? Float.valueOf(DRONE_MOVE_SPEED_STOP) : duration.interpretFloat(sprite);
@@ -86,12 +86,14 @@ public abstract class DroneMoveAction extends TemporalAction {
 	@Override
 	protected void update(float percent) {
 		this.move();
+		updateCurrentBrick();
 	}
 
 	// TODO: complete the method
 	@Override
 	public boolean act(float delta) {
 		Boolean superReturn = super.act(delta);
+		updateCurrentBrick();
 		return superReturn;
 	}
 

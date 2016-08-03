@@ -28,9 +28,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
+import org.catrobat.catroid.R;
 import org.catrobat.catroid.content.Project;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.ui.adapter.BrickAdapter;
@@ -42,6 +44,7 @@ public abstract class BrickBaseType implements Brick {
 	private static final String TAG = BrickBaseType.class.getSimpleName();
 	protected transient View view;
 	protected transient CheckBox checkbox;
+	public transient boolean running = false;
 	protected transient boolean checked = false;
 	protected transient BrickAdapter adapter;
 	protected transient int alphaValue = 255;
@@ -114,6 +117,13 @@ public abstract class BrickBaseType implements Brick {
 		checkbox.setChecked(isChecked);
 		checkbox.setVisibility(checkboxVisibility);
 		checkbox.setEnabled(enabled);
+		if (running) {
+			view.findViewById(R.id.brick_debug_arrow).setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void setRunningState(boolean state) {
+		running = state;
 	}
 
 	@Override

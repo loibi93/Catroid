@@ -31,15 +31,15 @@ import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.physics.PhysicsObject;
 
-public class SetVelocityAction extends TemporalAction {
+public class SetVelocityAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private PhysicsObject physicsObject;
 	private Formula velocityX;
 	private Formula velocityY;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		Float newVelocityX;
 		try {
 			newVelocityX = velocityX == null ? Float.valueOf(0f) : velocityX.interpretFloat(sprite);

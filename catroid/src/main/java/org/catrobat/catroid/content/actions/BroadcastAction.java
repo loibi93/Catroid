@@ -31,13 +31,14 @@ import org.catrobat.catroid.content.Sprite;
 
 import java.util.List;
 
-public class BroadcastAction extends Action {
+public class BroadcastAction extends org.catrobat.catroid.content.actions.debugActions.Action {
 
 	private BroadcastEvent event;
 	private boolean executeOnce = true;
 
 	@Override
 	public boolean act(float delta) {
+		updateCurrentBrick();
 		if (executeOnce) {
 			List<Sprite> sprites = ProjectManager.getInstance().getCurrentProject().getSpriteList();
 			for (Sprite spriteOfList : sprites) {
@@ -53,6 +54,7 @@ public class BroadcastAction extends Action {
 
 	@Override
 	public void restart() {
+		updateCurrentBrick();
 		executeOnce = true;
 		if (event.getType().equals(BroadcastType.broadcastWait)) {
 			event.setRun(false);

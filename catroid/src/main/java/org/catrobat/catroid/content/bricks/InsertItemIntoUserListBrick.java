@@ -75,7 +75,7 @@ public class InsertItemIntoUserListBrick extends UserListBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createInsertItemIntoUserListAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createInsertItemIntoUserListAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.INSERT_ITEM_INTO_USERLIST_INDEX),
 				getFormulaWithBrickField(BrickField.INSERT_ITEM_INTO_USERLIST_VALUE), userList));
 

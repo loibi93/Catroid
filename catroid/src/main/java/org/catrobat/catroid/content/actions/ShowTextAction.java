@@ -46,17 +46,17 @@ import org.catrobat.catroid.stage.StageActivity;
 import java.util.List;
 import java.util.Map;
 
-public class ShowTextAction extends TemporalAction {
+public class ShowTextAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 	public static final String TAG = ShowTextAction.class.getSimpleName();
 	private Formula endX;
 	private Formula endY;
 	private String variableName;
-	private Sprite sprite;
 	private UserBrick userBrick;
 	private ShowTextActor actor;
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		try {
 			int x = endX.interpretInteger(sprite);
 			int y = endY.interpretInteger(sprite);
@@ -109,6 +109,7 @@ public class ShowTextAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		try {
 			int x = endX.interpretInteger(sprite);
 			int y = endY.interpretInteger(sprite);

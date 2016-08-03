@@ -93,7 +93,7 @@ public class IfThenLogicBeginBrick extends IfLogicBeginBrick implements NestingB
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
 		SequenceAction ifAction = (SequenceAction) sprite.getActionFactory().createSequence();
-		Action action = sprite.getActionFactory().createIfLogicAction(sprite,
+		Action action = sprite.getActionFactory().createIfLogicAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.IF_CONDITION), ifAction, null);
 		sequence.addAction(action);
 

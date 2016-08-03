@@ -30,13 +30,13 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class SetYAction extends TemporalAction {
+public class SetYAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula yPosition;
 
 	@Override
 	protected void update(float delta) {
+		updateCurrentBrick();
 		try {
 			Float newY = yPosition == null ? Float.valueOf(0f) : yPosition.interpretFloat(sprite);
 			sprite.look.setYInUserInterfaceDimensionUnit(newY);

@@ -30,13 +30,13 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class MoveNStepsAction extends TemporalAction {
+public class MoveNStepsAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula steps;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		try {
 			Double stepsValue = steps == null ? Double.valueOf(0d) : steps.interpretDouble(sprite);
 			double radians = Math.toRadians(sprite.look.getDirectionInUserInterfaceDimensionUnit());

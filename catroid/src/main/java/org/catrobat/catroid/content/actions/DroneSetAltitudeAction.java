@@ -31,16 +31,16 @@ import org.catrobat.catroid.drone.DroneConfigManager;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class DroneSetAltitudeAction extends TemporalAction {
+public class DroneSetAltitudeAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Formula altitude;
 	private Formula verticalSpeed;
 	private Formula rotationSpeed;
 	private Formula tiltAngle;
-	private Sprite sprite;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 
 		int altitudeValue = updateFormulaValue(altitude);
 		int verticalSpeedValue = updateFormulaValue(verticalSpeed);

@@ -31,14 +31,14 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class SetColorAction extends TemporalAction {
+public class SetColorAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private static final String TAG = SetColorAction.class.getSimpleName();
 
-	private Sprite sprite;
 	private Formula color;
 
 	protected void update(float delta) {
+		updateCurrentBrick();
 		try {
 			float eightBitColor = color == null ? 0 : color.interpretFloat(sprite);
 			sprite.look.setColorInUserInterfaceDimensionUnit(eightBitColor);

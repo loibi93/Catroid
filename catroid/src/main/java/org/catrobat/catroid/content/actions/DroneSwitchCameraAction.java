@@ -29,13 +29,14 @@ import com.parrot.freeflight.service.DroneControlService;
 
 import org.catrobat.catroid.drone.DroneServiceWrapper;
 
-public class DroneSwitchCameraAction extends TemporalAction {
+public class DroneSwitchCameraAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private static final String TAG = DroneSwitchCameraAction.class.getSimpleName();
 
 	@Override
 	protected void begin() {
 		super.begin();
+		updateCurrentBrick();
 		Log.d(TAG, "begin!");
 		DroneControlService dcs = DroneServiceWrapper.getInstance().getDroneService();
 		if (dcs != null) {
@@ -45,5 +46,6 @@ public class DroneSwitchCameraAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 	}
 }

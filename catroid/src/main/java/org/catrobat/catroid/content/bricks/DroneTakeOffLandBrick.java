@@ -41,7 +41,7 @@ public class DroneTakeOffLandBrick extends DroneBasicBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createDroneTakeOffAndLandAction());
+		sequence.addAction(sprite.getActionFactory().createDroneTakeOffAndLandAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this)));
 		return null;
 	}
 }

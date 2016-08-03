@@ -30,13 +30,13 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class WaitAction extends TemporalAction {
+public class WaitAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula duration;
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		try {
 			Float newDuration = duration == null ? Float.valueOf(0f) : duration.interpretFloat(sprite);
 			super.setDuration(newDuration);
@@ -55,5 +55,6 @@ public class WaitAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 	}
 }

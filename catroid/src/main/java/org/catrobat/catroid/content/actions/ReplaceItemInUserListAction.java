@@ -31,9 +31,8 @@ import org.catrobat.catroid.formulaeditor.UserList;
 
 import java.util.ArrayList;
 
-public class ReplaceItemInUserListAction extends TemporalAction {
+public class ReplaceItemInUserListAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula formulaIndexToReplace;
 	private Formula formulaItemToInsert;
 
@@ -41,6 +40,7 @@ public class ReplaceItemInUserListAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (userList == null) {
 			return;
 		}

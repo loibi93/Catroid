@@ -171,7 +171,8 @@ public class ArduinoSendPWMValueBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSendPWMArduinoValueAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSendPWMArduinoValueAction(sprite, sprite
+				.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.ARDUINO_ANALOG_PIN_NUMBER),
 				getFormulaWithBrickField(BrickField.ARDUINO_ANALOG_PIN_VALUE)));
 		return null;

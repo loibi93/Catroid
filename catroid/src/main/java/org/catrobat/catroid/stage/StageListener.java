@@ -67,6 +67,7 @@ import org.catrobat.catroid.physics.PhysicsLook;
 import org.catrobat.catroid.physics.PhysicsObject;
 import org.catrobat.catroid.physics.PhysicsWorld;
 import org.catrobat.catroid.physics.shapebuilder.PhysicsShapeBuilder;
+import org.catrobat.catroid.ui.dialogs.StageDebugDialog;
 import org.catrobat.catroid.ui.dialogs.StageDialog;
 import org.catrobat.catroid.utils.FlashUtil;
 import org.catrobat.catroid.utils.TouchUtil;
@@ -106,6 +107,8 @@ public class StageListener implements ApplicationListener {
 	private boolean finished = false;
 	private boolean firstStart = true;
 	private boolean reloadProject = false;
+	private boolean doStep = false;
+	private boolean stopStep = false;
 
 	private static boolean checkIfAutomaticScreenshotShouldBeTaken = true;
 	private boolean makeAutomaticScreenshot = false;
@@ -147,6 +150,7 @@ public class StageListener implements ApplicationListener {
 	private int testHeight = 0;
 
 	private StageDialog stageDialog;
+	private StageDebugDialog stageDebugDialog;
 
 	public int maximizeViewPortX = 0;
 	public int maximizeViewPortY = 0;
@@ -285,6 +289,20 @@ public class StageListener implements ApplicationListener {
 		reloadProject = true;
 	}
 
+	public void setStageDebugDialog(StageDebugDialog dialog) {
+		stageDebugDialog = dialog;
+	}
+
+	public void dismissDialogs() {
+		if (stageDialog != null) {
+			stageDialog.dismiss();
+		}
+		if (stageDebugDialog != null) {
+			stageDebugDialog.resumeStage();
+			stageDebugDialog.dismiss();
+		}
+	}
+
 	@Override
 	public void resume() {
 		if (!paused) {
@@ -326,6 +344,10 @@ public class StageListener implements ApplicationListener {
 
 	@Override
 	public void render() {
+		if (doStep) {
+			menuResume();
+		}
+
 		if (CameraManager.getInstance().getState() == CameraManager.CameraState.previewRunning) {
 			Gdx.gl20.glClearColor(0f, 0f, 0f, 0f);
 		} else {
@@ -460,6 +482,25 @@ public class StageListener implements ApplicationListener {
 			testPixels = ScreenUtils.getFrameBufferPixels(testX, testY, testWidth, testHeight, false);
 			makeTestPixels = false;
 		}
+
+		if (stopStep) {
+			menuPause();
+			doStep = false;
+			stopStep = false;
+		}
+	}
+
+	public void step() {
+		doStep = true;
+		stopStep = true;
+	}
+
+	public void startStep() {
+		doStep = true;
+	}
+
+	public void stopStep() {
+		stopStep = true;
 	}
 
 	private List<String> reconstructNotifyActions(Map<String, List<String>> actions) {

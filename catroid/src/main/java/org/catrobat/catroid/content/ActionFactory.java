@@ -128,6 +128,8 @@ import org.catrobat.catroid.formulaeditor.UserList;
 import org.catrobat.catroid.formulaeditor.UserVariable;
 import org.catrobat.catroid.physics.PhysicsObject;
 
+import java.util.ArrayList;
+
 public class ActionFactory extends Actions {
 
 	public static Action createBroadcastAction(Sprite sprite, String broadcastMessage) {
@@ -146,14 +148,15 @@ public class ActionFactory extends Actions {
 		return action;
 	}
 
-	public Action createWaitAction(Sprite sprite, Formula delay) {
+	public Action createWaitAction(Sprite sprite, ArrayList<Integer> indexes, Formula delay) {
 		WaitAction action = action(WaitAction.class);
 		action.setSprite(sprite);
 		action.setDelay(delay);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createBroadcastActionFromWaiter(Sprite sprite, String broadcastMessage) {
+	public Action createBroadcastActionFromWaiter(Sprite sprite, ArrayList<Integer> indexes, String broadcastMessage) {
 		BroadcastAction action = Actions.action(BroadcastAction.class);
 		BroadcastEvent event = new BroadcastEvent();
 		event.setSenderSprite(sprite);
@@ -161,174 +164,199 @@ public class ActionFactory extends Actions {
 		event.setRun(false);
 		event.setType(BroadcastType.broadcastWait);
 		action.setBroadcastEvent(event);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeBrightnessByNAction(Sprite sprite, Formula changeBrightness) {
+	public Action createChangeBrightnessByNAction(Sprite sprite, ArrayList<Integer> indexes, Formula changeBrightness) {
 		ChangeBrightnessByNAction action = Actions.action(ChangeBrightnessByNAction.class);
 		action.setSprite(sprite);
 		action.setBrightness(changeBrightness);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeColorByNAction(Sprite sprite, Formula changeColor) {
+	public Action createChangeColorByNAction(Sprite sprite, ArrayList<Integer> indexes, Formula changeColor) {
 		ChangeColorByNAction action = Actions.action(ChangeColorByNAction.class);
 		action.setSprite(sprite);
 		action.setColor(changeColor);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeTransparencyByNAction(Sprite sprite, Formula transparency) {
+	public Action createChangeTransparencyByNAction(Sprite sprite, ArrayList<Integer> indexes, Formula transparency) {
 		ChangeTransparencyByNAction action = Actions.action(ChangeTransparencyByNAction.class);
 		action.setSprite(sprite);
 		action.setTransparency(transparency);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeSizeByNAction(Sprite sprite, Formula size) {
+	public Action createChangeSizeByNAction(Sprite sprite, ArrayList<Integer> indexes, Formula size) {
 		ChangeSizeByNAction action = Actions.action(ChangeSizeByNAction.class);
 		action.setSprite(sprite);
 		action.setSize(size);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeVolumeByNAction(Sprite sprite, Formula volume) {
+	public Action createChangeVolumeByNAction(Sprite sprite, ArrayList<Integer> indexes, Formula volume) {
 		ChangeVolumeByNAction action = Actions.action(ChangeVolumeByNAction.class);
 		action.setVolume(volume);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeXByNAction(Sprite sprite, Formula xMovement) {
+	public Action createChangeXByNAction(Sprite sprite, ArrayList<Integer> indexes, Formula xMovement) {
 		ChangeXByNAction action = Actions.action(ChangeXByNAction.class);
 		action.setSprite(sprite);
 		action.setxMovement(xMovement);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeYByNAction(Sprite sprite, Formula yMovement) {
+	public Action createChangeYByNAction(Sprite sprite, ArrayList<Integer> indexes, Formula yMovement) {
 		ChangeYByNAction action = Actions.action(ChangeYByNAction.class);
 		action.setSprite(sprite);
 		action.setyMovement(yMovement);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createClearGraphicEffectAction(Sprite sprite) {
+	public Action createClearGraphicEffectAction(Sprite sprite, ArrayList<Integer> indexes) {
 		ClearGraphicEffectAction action = Actions.action(ClearGraphicEffectAction.class);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createComeToFrontAction(Sprite sprite) {
+	public Action createComeToFrontAction(Sprite sprite, ArrayList<Integer> indexes) {
 		ComeToFrontAction action = Actions.action(ComeToFrontAction.class);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createGlideToAction(Sprite sprite, Formula x, Formula y, Formula duration) {
+	public Action createGlideToAction(Sprite sprite, ArrayList<Integer> indexes, Formula x, Formula y, Formula duration) {
 		GlideToAction action = Actions.action(GlideToAction.class);
 		action.setPosition(x, y);
 		action.setDuration(duration);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createGlideToAction(Sprite sprite, Formula x, Formula y, Formula duration, Interpolation interpolation) {
+	public Action createGlideToAction(Sprite sprite, ArrayList<Integer> indexes, Formula x, Formula y, Formula duration, Interpolation interpolation) {
 		GlideToAction action = Actions.action(GlideToAction.class);
 		action.setPosition(x, y);
 		action.setDuration(duration);
 		action.setInterpolation(interpolation);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPlaceAtAction(Sprite sprite, Formula x, Formula y) {
+	public Action createPlaceAtAction(Sprite sprite, ArrayList<Integer> indexes, Formula x, Formula y) {
 		GlideToAction action = Actions.action(GlideToAction.class);
 		action.setPosition(x, y);
 		action.setDuration(0);
 		action.setInterpolation(null);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createGoNStepsBackAction(Sprite sprite, Formula steps) {
+	public Action createGoNStepsBackAction(Sprite sprite, ArrayList<Integer> indexes, Formula steps) {
 		GoNStepsBackAction action = Actions.action(GoNStepsBackAction.class);
 		action.setSprite(sprite);
 		action.setSteps(steps);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createHideAction(Sprite sprite) {
+	public Action createHideAction(Sprite sprite, ArrayList<Integer> indexes) {
 		HideAction action = Actions.action(HideAction.class);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createIfOnEdgeBounceAction(Sprite sprite) {
+	public Action createIfOnEdgeBounceAction(Sprite sprite, ArrayList<Integer> indexes) {
 		IfOnEdgeBounceAction action = Actions.action(IfOnEdgeBounceAction.class);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createLegoNxtMotorMoveAction(Sprite sprite, LegoNxtMotorMoveBrick.Motor motorEnum, Formula speed) {
+	public Action createLegoNxtMotorMoveAction(Sprite sprite, ArrayList<Integer> indexes, LegoNxtMotorMoveBrick.Motor motorEnum, Formula speed) {
 		LegoNxtMotorMoveAction action = Actions.action(LegoNxtMotorMoveAction.class);
 		action.setMotorEnum(motorEnum);
 		action.setSprite(sprite);
 		action.setSpeed(speed);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createLegoNxtMotorStopAction(LegoNxtMotorStopBrick.Motor motorEnum) {
+	public Action createLegoNxtMotorStopAction(Sprite sprite, ArrayList<Integer> indexes, LegoNxtMotorStopBrick.Motor motorEnum) {
 		LegoNxtMotorStopAction action = Actions.action(LegoNxtMotorStopAction.class);
 		action.setMotorEnum(motorEnum);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createLegoNxtMotorTurnAngleAction(Sprite sprite,
+	public Action createLegoNxtMotorTurnAngleAction(Sprite sprite, ArrayList<Integer> indexes,
 			LegoNxtMotorTurnAngleBrick.Motor motorEnum, Formula degrees) {
 		LegoNxtMotorTurnAngleAction action = Actions.action(LegoNxtMotorTurnAngleAction.class);
 		action.setMotorEnum(motorEnum);
 		action.setSprite(sprite);
 		action.setDegrees(degrees);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createLegoNxtPlayToneAction(Sprite sprite, Formula hertz, Formula durationInSeconds) {
+	public Action createLegoNxtPlayToneAction(Sprite sprite, ArrayList<Integer> indexes, Formula hertz, Formula durationInSeconds) {
 		LegoNxtPlayToneAction action = Actions.action(LegoNxtPlayToneAction.class);
 		action.setHertz(hertz);
 		action.setSprite(sprite);
 		action.setDurationInSeconds(durationInSeconds);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPhiroPlayToneActionAction(Sprite sprite, PhiroPlayToneBrick.Tone toneEnum,
+	public Action createPhiroPlayToneActionAction(Sprite sprite, ArrayList<Integer> indexes, PhiroPlayToneBrick.Tone toneEnum,
 			Formula duration) {
 		PhiroPlayToneAction action = action(PhiroPlayToneAction.class);
 		action.setSelectedTone(toneEnum);
 		action.setSprite(sprite);
 		action.setDurationInSeconds(duration);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPhiroMotorMoveForwardActionAction(Sprite sprite, PhiroMotorMoveForwardBrick.Motor motorEnum,
+	public Action createPhiroMotorMoveForwardActionAction(Sprite sprite, ArrayList<Integer> indexes, PhiroMotorMoveForwardBrick.Motor motorEnum,
 			Formula speed) {
 		PhiroMotorMoveForwardAction action = action(PhiroMotorMoveForwardAction.class);
 		action.setMotorEnum(motorEnum);
 		action.setSprite(sprite);
 		action.setSpeed(speed);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPhiroMotorMoveBackwardActionAction(Sprite sprite, PhiroMotorMoveBackwardBrick.Motor motorEnum,
+	public Action createPhiroMotorMoveBackwardActionAction(Sprite sprite, ArrayList<Integer> indexes, PhiroMotorMoveBackwardBrick.Motor motorEnum,
 			Formula speed) {
 		PhiroMotorMoveBackwardAction action = action(PhiroMotorMoveBackwardAction.class);
 		action.setMotorEnum(motorEnum);
 		action.setSprite(sprite);
 		action.setSpeed(speed);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPhiroRgbLedEyeActionAction(Sprite sprite, PhiroRGBLightBrick.Eye eye,
+	public Action createPhiroRgbLedEyeActionAction(Sprite sprite, ArrayList<Integer> indexes, PhiroRGBLightBrick.Eye eye,
 			Formula red, Formula green, Formula blue) {
 		PhiroRGBLightAction action = action(PhiroRGBLightAction.class);
 		action.setSprite(sprite);
@@ -336,249 +364,287 @@ public class ActionFactory extends Actions {
 		action.setRed(red);
 		action.setGreen(green);
 		action.setBlue(blue);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPhiroSendSelectedSensorAction(Sprite sprite, int sensorNumber, Action ifAction, Action
+	public Action createPhiroSendSelectedSensorAction(Sprite sprite, ArrayList<Integer> indexes, int sensorNumber, Action ifAction, Action
 			elseAction) {
 		PhiroSensorAction action = action(PhiroSensorAction.class);
 		action.setSprite(sprite);
 		action.setSensor(sensorNumber);
 		action.setIfAction(ifAction);
 		action.setElseAction(elseAction);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPhiroMotorStopActionAction(PhiroMotorStopBrick.Motor motorEnum) {
+	public Action createPhiroMotorStopActionAction(Sprite sprite, ArrayList<Integer> indexes, PhiroMotorStopBrick.Motor motorEnum) {
 		PhiroMotorStopAction action = action(PhiroMotorStopAction.class);
 		action.setMotorEnum(motorEnum);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createMoveNStepsAction(Sprite sprite, Formula steps) {
+	public Action createMoveNStepsAction(Sprite sprite, ArrayList<Integer> indexes, Formula steps) {
 		MoveNStepsAction action = Actions.action(MoveNStepsAction.class);
 		action.setSprite(sprite);
 		action.setSteps(steps);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createNextLookAction(Sprite sprite) {
+	public Action createNextLookAction(Sprite sprite, ArrayList<Integer> indexes) {
 		NextLookAction action = Actions.action(NextLookAction.class);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPlaySoundAction(Sprite sprite, SoundInfo sound) {
+	public Action createPlaySoundAction(Sprite sprite, ArrayList<Integer> indexes, SoundInfo sound) {
 		PlaySoundAction action = Actions.action(PlaySoundAction.class);
 		action.setSprite(sprite);
 		action.setSound(sound);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPointInDirectionAction(Sprite sprite, Formula degrees) {
+	public Action createPointInDirectionAction(Sprite sprite, ArrayList<Integer> indexes, Formula degrees) {
 		PointInDirectionAction action = Actions.action(PointInDirectionAction.class);
 		action.setSprite(sprite);
 		action.setDegreesInUserInterfaceDimensionUnit(degrees);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createPointToAction(Sprite sprite, Sprite pointedSprite) {
+	public Action createPointToAction(Sprite sprite, ArrayList<Integer> indexes, Sprite pointedSprite) {
 		PointToAction action = Actions.action(PointToAction.class);
 		action.setSprite(sprite);
 		action.setPointedSprite(pointedSprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetBrightnessAction(Sprite sprite, Formula brightness) {
+	public Action createSetBrightnessAction(Sprite sprite, ArrayList<Integer> indexes, Formula brightness) {
 		SetBrightnessAction action = Actions.action(SetBrightnessAction.class);
 		action.setSprite(sprite);
 		action.setBrightness(brightness);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetColorAction(Sprite sprite, Formula color) {
+	public Action createSetColorAction(Sprite sprite, ArrayList<Integer> indexes, Formula color) {
 		SetColorAction action = Actions.action(SetColorAction.class);
 		action.setSprite(sprite);
 		action.setColor(color);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetTransparencyAction(Sprite sprite, Formula transparency) {
+	public Action createSetTransparencyAction(Sprite sprite, ArrayList<Integer> indexes, Formula transparency) {
 		SetTransparencyAction action = Actions.action(SetTransparencyAction.class);
 		action.setSprite(sprite);
 		action.setTransparency(transparency);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetLookAction(Sprite sprite, LookData lookData) {
+	public Action createSetLookAction(Sprite sprite, ArrayList<Integer> indexes, LookData lookData) {
 		SetLookAction action = Actions.action(SetLookAction.class);
 		action.setSprite(sprite);
 		action.setLookData(lookData);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetSizeToAction(Sprite sprite, Formula size) {
+	public Action createSetSizeToAction(Sprite sprite, ArrayList<Integer> indexes, Formula size) {
 		SetSizeToAction action = Actions.action(SetSizeToAction.class);
 		action.setSprite(sprite);
 		action.setSize(size);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetVolumeToAction(Sprite sprite, Formula volume) {
+	public Action createSetVolumeToAction(Sprite sprite, ArrayList<Integer> indexes, Formula volume) {
 		SetVolumeToAction action = Actions.action(SetVolumeToAction.class);
 		action.setVolume(volume);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetXAction(Sprite sprite, Formula x) {
+	public Action createSetXAction(Sprite sprite, ArrayList<Integer> indexes, Formula x) {
 		SetXAction action = Actions.action(SetXAction.class);
 		action.setSprite(sprite);
 		action.setX(x);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetYAction(Sprite sprite, Formula y) {
+	public Action createSetYAction(Sprite sprite, ArrayList<Integer> indexes, Formula y) {
 		SetYAction action = Actions.action(SetYAction.class);
 		action.setSprite(sprite);
 		action.setY(y);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createShowAction(Sprite sprite) {
+	public Action createShowAction(Sprite sprite, ArrayList<Integer> indexes) {
 		ShowAction action = Actions.action(ShowAction.class);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSpeakAction(Sprite sprite, Formula text) {
+	public Action createSpeakAction(Sprite sprite, ArrayList<Integer> indexes, Formula text) {
 		SpeakAction action = action(SpeakAction.class);
 		action.setSprite(sprite);
 		action.setText(text);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createStopAllSoundsAction() {
-		return Actions.action(StopAllSoundsAction.class);
+	public Action createStopAllSoundsAction(Sprite sprite, ArrayList<Integer> indexes) {
+		StopAllSoundsAction action = Actions.action(StopAllSoundsAction.class);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
+		return action;
 	}
 
-	public Action createTurnLeftAction(Sprite sprite, Formula degrees) {
+	public Action createTurnLeftAction(Sprite sprite, ArrayList<Integer> indexes, Formula degrees) {
 		TurnLeftAction action = Actions.action(TurnLeftAction.class);
 		action.setSprite(sprite);
 		action.setDegrees(degrees);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createTurnRightAction(Sprite sprite, Formula degrees) {
+	public Action createTurnRightAction(Sprite sprite, ArrayList<Integer> indexes, Formula degrees) {
 		TurnRightAction action = Actions.action(TurnRightAction.class);
 		action.setSprite(sprite);
 		action.setDegrees(degrees);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createChangeVariableAction(Sprite sprite, Formula variableFormula, UserVariable userVariable) {
+	public Action createChangeVariableAction(Sprite sprite, ArrayList<Integer> indexes, Formula variableFormula, UserVariable userVariable) {
 		ChangeVariableAction action = Actions.action(ChangeVariableAction.class);
 		action.setSprite(sprite);
 		action.setChangeVariable(variableFormula);
 		action.setUserVariable(userVariable);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetVariableAction(Sprite sprite, Formula variableFormula, UserVariable userVariable) {
+	public Action createSetVariableAction(Sprite sprite, ArrayList<Integer> indexes, Formula variableFormula, UserVariable userVariable) {
 		SetVariableAction action = Actions.action(SetVariableAction.class);
 		action.setSprite(sprite);
 		action.setChangeVariable(variableFormula);
 		action.setUserVariable(userVariable);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDeleteItemOfUserListAction(Sprite sprite, Formula userListFormula, UserList userList) {
+	public Action createDeleteItemOfUserListAction(Sprite sprite, ArrayList<Integer> indexes, Formula userListFormula, UserList userList) {
 		DeleteItemOfUserListAction action = action(DeleteItemOfUserListAction.class);
 		action.setSprite(sprite);
 		action.setFormulaIndexToDelete(userListFormula);
 		action.setUserList(userList);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createAddItemToUserListAction(Sprite sprite, Formula userListFormula, UserList userList) {
+	public Action createAddItemToUserListAction(Sprite sprite, ArrayList<Integer> indexes, Formula userListFormula, UserList userList) {
 		AddItemToUserListAction action = action(AddItemToUserListAction.class);
 		action.setSprite(sprite);
 		action.setFormulaItemToAdd(userListFormula);
 		action.setUserList(userList);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createInsertItemIntoUserListAction(Sprite sprite, Formula userListFormulaIndexToInsert,
+	public Action createInsertItemIntoUserListAction(Sprite sprite, ArrayList<Integer> indexes, Formula userListFormulaIndexToInsert,
 			Formula userListFormulaItemToInsert, UserList userList) {
 		InsertItemIntoUserListAction action = action(InsertItemIntoUserListAction.class);
 		action.setSprite(sprite);
 		action.setFormulaIndexToInsert(userListFormulaIndexToInsert);
 		action.setFormulaItemToInsert(userListFormulaItemToInsert);
 		action.setUserList(userList);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createReplaceItemInUserListAction(Sprite sprite, Formula userListFormulaIndexToReplace,
+	public Action createReplaceItemInUserListAction(Sprite sprite, ArrayList<Integer> indexes, Formula userListFormulaIndexToReplace,
 			Formula userListFormulaItemToInsert, UserList userList) {
 		ReplaceItemInUserListAction action = action(ReplaceItemInUserListAction.class);
 		action.setSprite(sprite);
 		action.setFormulaIndexToReplace(userListFormulaIndexToReplace);
 		action.setFormulaItemToInsert(userListFormulaItemToInsert);
 		action.setUserList(userList);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createIfLogicAction(Sprite sprite, Formula condition, Action ifAction, Action elseAction) {
+	public Action createIfLogicAction(Sprite sprite, ArrayList<Integer> indexes, Formula condition, Action ifAction, Action elseAction) {
 		IfLogicAction action = Actions.action(IfLogicAction.class);
 		action.setIfAction(ifAction);
 		action.setIfCondition(condition);
 		action.setElseAction(elseAction);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createRepeatAction(Sprite sprite, Formula count, Action repeatedAction) {
+	public Action createRepeatAction(Sprite sprite, ArrayList<Integer> indexes, Formula count, Action repeatedAction) {
 		RepeatAction action = Actions.action(RepeatAction.class);
 		action.setRepeatCount(count);
 		action.setAction(repeatedAction);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createWaitUntilAction(Sprite sprite, Formula condition) {
+	public Action createWaitUntilAction(Sprite sprite, ArrayList<Integer> indexes, Formula condition) {
 		WaitUntilAction action = Actions.action(WaitUntilAction.class);
 		action.setSprite(sprite);
 		action.setCondition(condition);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createRepeatUntilAction(Sprite sprite, Formula condition, Action repeatedAction) {
+	public Action createRepeatUntilAction(Sprite sprite, ArrayList<Integer> indexes, Formula condition, Action repeatedAction) {
 		RepeatUntilAction action = action(RepeatUntilAction.class);
 		action.setRepeatCondition(condition);
 		action.setAction(repeatedAction);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDelayAction(Sprite sprite, Formula delay) {
+	public Action createDelayAction(Sprite sprite, ArrayList<Integer> indexes, Formula delay) {
 		WaitAction action = Actions.action(WaitAction.class);
 		action.setSprite(sprite);
 		action.setDelay(delay);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createForeverAction(Sprite sprite, SequenceAction foreverSequence) {
+	public Action createForeverAction(Sprite sprite, ArrayList<Integer> indexes, SequenceAction foreverSequence) {
 		RepeatAction action = Actions.action(RepeatAction.class);
 		action.setIsForeverRepeat(true);
 		action.setAction(foreverSequence);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createUserBrickAction(Action userBrickAction, UserBrick userBrick) {
+	public Action createUserBrickAction(Sprite sprite, ArrayList<Integer> indexes, Action userBrickAction, UserBrick userBrick) {
 		UserBrickAction action = action(UserBrickAction.class);
 		action.setAction(userBrickAction);
 		action.setUserBrick(userBrick);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
@@ -586,248 +652,293 @@ public class ActionFactory extends Actions {
 		return Actions.sequence();
 	}
 
-	public Action createSetBounceFactorAction(Sprite sprite, Formula bounceFactor) {
+	public Action createSetBounceFactorAction(Sprite sprite, ArrayList<Integer> indexes, Formula bounceFactor) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createTurnRightSpeedAction(Sprite sprite, Formula degreesPerSecond) {
+	public Action createTurnRightSpeedAction(Sprite sprite, ArrayList<Integer> indexes, Formula degreesPerSecond) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createTurnLeftSpeedAction(Sprite sprite, Formula degreesPerSecond) {
+	public Action createTurnLeftSpeedAction(Sprite sprite, ArrayList<Integer> indexes, Formula degreesPerSecond) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createSetVelocityAction(Sprite sprite, Formula velocityX, Formula velocityY) {
+	public Action createSetVelocityAction(Sprite sprite, ArrayList<Integer> indexes, Formula velocityX, Formula velocityY) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createSetPhysicsObjectTypeAction(Sprite sprite, PhysicsObject.Type type) {
+	public Action createSetPhysicsObjectTypeAction(Sprite sprite, ArrayList<Integer> indexes, PhysicsObject.Type type) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createSetMassAction(Sprite sprite, Formula mass) {
+	public Action createSetMassAction(Sprite sprite, ArrayList<Integer> indexes, Formula mass) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createSetGravityAction(Sprite sprite, Formula gravityX, Formula gravityY) {
+	public Action createSetGravityAction(Sprite sprite, ArrayList<Integer> indexes, Formula gravityX, Formula gravityY) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createSetFrictionAction(Sprite sprite, Formula friction) {
+	public Action createSetFrictionAction(Sprite sprite, ArrayList<Integer> indexes, Formula friction) {
 		throw new RuntimeException("No physics action available in non-physics sprite!");
 	}
 
-	public Action createDroneTakeOffAndLandAction() {
-		return action(DroneTakeoffAndLandAction.class);
+	public Action createDroneTakeOffAndLandAction(Sprite sprite, ArrayList<Integer> indexes) {
+		DroneTakeoffAndLandAction action = action(DroneTakeoffAndLandAction.class);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
+		return action;
 	}
 
-	public Action createDroneMoveUpAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneMoveUpAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneMoveUpAction action = action(DroneMoveUpAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneMoveDownAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneMoveDownAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneMoveDownAction action = action(DroneMoveDownAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneMoveLeftAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneMoveLeftAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneMoveLeftAction action = action(DroneMoveLeftAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneMoveRightAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneMoveRightAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneMoveRightAction action = action(DroneMoveRightAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneMoveForwardAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneMoveForwardAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneMoveForwardAction action = action(DroneMoveForwardAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneMoveBackwardAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneMoveBackwardAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneMoveBackwardAction action = action(DroneMoveBackwardAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneTurnRightAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneTurnRightAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneTurnRightAction action = action(DroneTurnRightAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneTurnLeftAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneTurnLeftAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneTurnLeftAction action = action(DroneTurnLeftAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneTurnLeftMagnetoAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneTurnLeftMagnetoAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneTurnLeftWithMagnetometerAction action = action(DroneTurnLeftWithMagnetometerAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDroneTurnRightMagnetoAction(Sprite sprite, Formula seconds, Formula powerInPercent) {
+	public Action createDroneTurnRightMagnetoAction(Sprite sprite, ArrayList<Integer> indexes, Formula seconds, Formula powerInPercent) {
 		DroneTurnRightWithMagnetometerAction action = action(DroneTurnRightWithMagnetometerAction.class);
 		action.setSprite(sprite);
 		action.setDelay(seconds);
 		action.setPower(powerInPercent);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createDronePlayLedAnimationAction() {
-		return action(DronePlayLedAnimationAction.class);
+	public Action createDronePlayLedAnimationAction(Sprite sprite, ArrayList<Integer> indexes) {
+		DronePlayLedAnimationAction action = action(DronePlayLedAnimationAction.class);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
+		return action;
 	}
 
-	public Action createDroneFlipAction() {
-		return action(DroneFlipAction.class);
+	public Action createDroneFlipAction(Sprite sprite, ArrayList<Integer> indexes) {
+		DroneFlipAction action = action(DroneFlipAction.class);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
+		return action;
 	}
 
-	public Action createDroneSwitchCameraAction() {
-		return action(DroneSwitchCameraAction.class);
+	public Action createDroneSwitchCameraAction(Sprite sprite, ArrayList<Integer> indexes) {
+		DroneSwitchCameraAction action = action(DroneSwitchCameraAction.class);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
+		return action;
 	}
 
-	public Action createDroneGoEmergencyAction() {
-		return action(DroneEmergencyAction.class);
+	public Action createDroneGoEmergencyAction(Sprite sprite, ArrayList<Integer> indexes) {
+		DroneEmergencyAction action = action(DroneEmergencyAction.class);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
+		return action;
 	}
 
-	public Action createSetTextAction(Sprite sprite, Formula x, Formula y, Formula text) {
+	public Action createSetTextAction(Sprite sprite, ArrayList<Integer> indexes, Formula x, Formula y, Formula text) {
 		SetTextAction action = action(SetTextAction.class);
 
 		action.setPosition(x, y);
 		action.setText(text);
 		action.setDuration(5);
 		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createShowTextAction(Sprite sprite, Formula x, Formula y, String variableName) {
+	public Action createShowTextAction(Sprite sprite, ArrayList<Integer> indexes, Formula x, Formula y, String variableName) {
 		ShowTextAction action = action(ShowTextAction.class);
 		action.setPosition(x, y);
 		action.setVariableName(variableName);
 		action.setSprite(sprite);
 		UserBrick userBrick = ProjectManager.getInstance().getCurrentUserBrick();
 		action.setUserBrick(userBrick);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createHideTextAction(String variableName) {
+	public Action createHideTextAction(Sprite sprite, ArrayList<Integer> indexes, String variableName) {
 		HideTextAction action = action(HideTextAction.class);
 		action.setVariableName(variableName);
 		UserBrick userBrick = ProjectManager.getInstance().getCurrentUserBrick();
 		action.setUserBrick(userBrick);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createTurnFlashOnAction() {
+	public Action createTurnFlashOnAction(Sprite sprite, ArrayList<Integer> indexes) {
 		FlashAction action = action(FlashAction.class);
 		action.turnFlashOn();
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createTurnFlashOffAction() {
+	public Action createTurnFlashOffAction(Sprite sprite, ArrayList<Integer> indexes) {
 		FlashAction action = action(FlashAction.class);
 		action.turnFlashOff();
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createVibrateAction(Sprite sprite, Formula duration) {
+	public Action createVibrateAction(Sprite sprite, ArrayList<Integer> indexes, Formula duration) {
 		VibrateAction action = action(VibrateAction.class);
 		action.setSprite(sprite);
 		action.setDuration(duration);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createUpdateCameraPreviewAction(CameraManager.CameraState state) {
+	public Action createUpdateCameraPreviewAction(Sprite sprite, ArrayList<Integer> indexes, CameraManager.CameraState state) {
 		CameraBrickAction action = action(CameraBrickAction.class);
 		action.setCameraAction(state);
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetFrontCameraAction() {
+	public Action createSetFrontCameraAction(Sprite sprite, ArrayList<Integer> indexes) {
 		ChooseCameraAction action = action(ChooseCameraAction.class);
 		action.setFrontCamera();
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSetBackCameraAction() {
+	public Action createSetBackCameraAction(Sprite sprite, ArrayList<Integer> indexes) {
 		ChooseCameraAction action = action(ChooseCameraAction.class);
 		action.setBackCamera();
+		action.setSprite(sprite);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSendDigitalArduinoValueAction(Sprite sprite, Formula pinNumber,
+	public Action createSendDigitalArduinoValueAction(Sprite sprite, ArrayList<Integer> indexes, Formula pinNumber,
 			Formula
 					pinValue) {
 		ArduinoSendDigitalValueAction action = action(ArduinoSendDigitalValueAction.class);
 		action.setSprite(sprite);
 		action.setPinNumber(pinNumber);
 		action.setPinValue(pinValue);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSendPWMArduinoValueAction(Sprite sprite, Formula pinNumber, Formula
+	public Action createSendPWMArduinoValueAction(Sprite sprite, ArrayList<Integer> indexes, Formula pinNumber, Formula
 			pinValue) {
 		ArduinoSendPWMValueAction action = action(ArduinoSendPWMValueAction.class);
 		action.setSprite(sprite);
 		action.setPinNumber(pinNumber);
 		action.setPinValue(pinValue);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSendDigitalRaspiValueAction(Sprite sprite, Formula pinNumber,
+	public Action createSendDigitalRaspiValueAction(Sprite sprite, ArrayList<Integer> indexes, Formula pinNumber,
 			Formula pinValue) {
 		RaspiSendDigitalValueAction action = action(RaspiSendDigitalValueAction.class);
 		action.setSprite(sprite);
 		action.setPinNumber(pinNumber);
 		action.setPinValue(pinValue);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createSendRaspiPwmValueAction(Sprite sprite, Formula pinNumber, Formula
+	public Action createSendRaspiPwmValueAction(Sprite sprite, ArrayList<Integer> indexes, Formula pinNumber, Formula
 			pwmFrequency, Formula pwmPercentage) {
 		RaspiPwmAction action = action(RaspiPwmAction.class);
 		action.setSprite(sprite);
 		action.setPinNumberFormula(pinNumber);
 		action.setPwmFrequencyFormula(pwmFrequency);
 		action.setPwmPercentageFormula(pwmPercentage);
+		action.setIndexes(indexes);
 		return action;
 	}
 
-	public Action createRaspiIfLogicActionAction(Sprite sprite, Formula pinNumber, Action ifAction,
+	public Action createRaspiIfLogicActionAction(Sprite sprite, ArrayList<Integer> indexes, Formula pinNumber, Action ifAction,
 			Action elseAction) {
 		RaspiIfLogicAction action = action(RaspiIfLogicAction.class);
 		action.setSprite(sprite);
 		action.setPinNumber(pinNumber);
 		action.setIfAction(ifAction);
 		action.setElseAction(elseAction);
+		action.setIndexes(indexes);
 		return action;
 	}
 }

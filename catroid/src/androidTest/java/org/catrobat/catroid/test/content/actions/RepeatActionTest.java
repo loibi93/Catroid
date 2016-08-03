@@ -190,11 +190,11 @@ public class RepeatActionTest extends InstrumentationTestCase {
 		final float decoyDeltaY = -150f;
 		final float expectedDeltaY = 150f;
 
-		final RepeatAction repeatAction = (RepeatAction) testSprite.getActionFactory().createRepeatAction(testSprite,
-				new Formula(0), testSprite.getActionFactory().createChangeYByNAction(testSprite, new Formula(decoyDeltaY)));
+		final RepeatAction repeatAction = (RepeatAction) testSprite.getActionFactory().createRepeatAction(testSprite, null,
+				new Formula(0), testSprite.getActionFactory().createChangeYByNAction(testSprite, null, new Formula(decoyDeltaY)));
 		repeatAction.act(1f);
 
-		testSprite.getActionFactory().createChangeYByNAction(testSprite, new Formula(expectedDeltaY)).act(1f);
+		testSprite.getActionFactory().createChangeYByNAction(testSprite, null, new Formula(expectedDeltaY)).act(1f);
 
 		int executedCount = (Integer) Reflection.getPrivateField(repeatAction, "executedCount");
 
@@ -214,8 +214,8 @@ public class RepeatActionTest extends InstrumentationTestCase {
 	}
 
 	public void testNullFormula() {
-		Action repeatedAction = testSprite.getActionFactory().createSetXAction(testSprite, new Formula(10));
-		Action repeatAction = testSprite.getActionFactory().createRepeatAction(testSprite, null, repeatedAction);
+		Action repeatedAction = testSprite.getActionFactory().createSetXAction(testSprite, null, new Formula(10));
+		Action repeatAction = testSprite.getActionFactory().createRepeatAction(testSprite, null, null, repeatedAction);
 		repeatAction.act(1.0f);
 		Object repeatCountValue = Reflection.getPrivateField(repeatAction, "repeatCountValue");
 		assertEquals("Null Formula should not have been possible to interpret!", 0, repeatCountValue);

@@ -30,14 +30,14 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.UserVariable;
 
-public class ChangeVariableAction extends Action {
+public class ChangeVariableAction extends org.catrobat.catroid.content.actions.debugActions.Action {
 
-	private Sprite sprite;
 	private Formula changeVariable;
 	private UserVariable userVariable;
 
 	@Override
 	public boolean act(float delta) {
+		updateCurrentBrick();
 		if (userVariable == null) {
 			return true;
 		}

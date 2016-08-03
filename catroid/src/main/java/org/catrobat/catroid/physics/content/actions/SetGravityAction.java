@@ -31,15 +31,15 @@ import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.physics.PhysicsWorld;
 
-public class SetGravityAction extends TemporalAction {
+public class SetGravityAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private PhysicsWorld physicsWorld;
 	private Formula gravityX;
 	private Formula gravityY;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		Float newGravityX;
 		try {
 			newGravityX = gravityX == null ? Float.valueOf(0f) : gravityX.interpretFloat(sprite);

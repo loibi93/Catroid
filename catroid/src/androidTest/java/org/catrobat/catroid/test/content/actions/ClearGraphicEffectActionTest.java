@@ -40,7 +40,7 @@ public class ClearGraphicEffectActionTest extends AndroidTestCase {
 		assertEquals("Look hasn't brightness effect.", value, sprite.look.getBrightnessInUserInterfaceDimensionUnit());
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action action = factory.createClearGraphicEffectAction(sprite);
+		Action action = factory.createClearGraphicEffectAction(sprite, null);
 		sprite.look.addAction(action);
 		action.act(1.0f);
 		assertEquals("Look's ghost effect is removed.", 0f, sprite.look.getTransparencyInUserInterfaceDimensionUnit());
@@ -50,7 +50,7 @@ public class ClearGraphicEffectActionTest extends AndroidTestCase {
 
 	public void testNullSprite() {
 		ActionFactory factory = new ActionFactory();
-		Action action = factory.createClearGraphicEffectAction(null);
+		Action action = factory.createClearGraphicEffectAction(null, null);
 		try {
 			action.act(1.0f);
 			fail("Execution of ClearGraphicEffectBrick with null Sprite did not cause a NullPointerException to be thrown");

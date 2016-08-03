@@ -27,13 +27,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import org.catrobat.catroid.common.LookData;
 import org.catrobat.catroid.content.Sprite;
 
-public class SetLookAction extends TemporalAction {
+public class SetLookAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private LookData look;
-	private Sprite sprite;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (look != null && sprite != null && sprite.getLookDataList().contains(look)) {
 			sprite.look.setLookData(look);
 		}

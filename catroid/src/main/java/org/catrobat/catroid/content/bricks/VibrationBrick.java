@@ -154,7 +154,7 @@ public class VibrationBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createVibrateAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createVibrateAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.VIBRATE_DURATION_IN_SECONDS)));
 		return null;
 	}

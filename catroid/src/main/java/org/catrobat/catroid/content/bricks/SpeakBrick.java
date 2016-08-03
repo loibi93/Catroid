@@ -130,7 +130,7 @@ public class SpeakBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSpeakAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSpeakAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.SPEAK)));
 		return null;
 	}

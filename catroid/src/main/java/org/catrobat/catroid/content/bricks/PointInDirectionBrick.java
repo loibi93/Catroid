@@ -153,7 +153,7 @@ public class PointInDirectionBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createPointInDirectionAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createPointInDirectionAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.DEGREES)));
 		return null;
 	}

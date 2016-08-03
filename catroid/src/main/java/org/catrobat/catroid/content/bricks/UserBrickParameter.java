@@ -93,7 +93,7 @@ public class UserBrickParameter extends FormulaBrick {
 		DataContainer dataContainer = ProjectManager.getInstance().getCurrentProject().getDataContainer();
 		String variableName = element.getText();
 
-		sequence.addAction(sprite.getActionFactory().createSetVariableAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSetVariableAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.VARIABLE), dataContainer.getUserVariable(variableName, parent, sprite)));
 		return null;
 	}

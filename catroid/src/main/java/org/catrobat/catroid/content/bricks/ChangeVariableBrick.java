@@ -245,7 +245,7 @@ public class ChangeVariableBrick extends UserVariableBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createChangeVariableAction(sprite, getFormulaWithBrickField(BrickField.VARIABLE_CHANGE), userVariable));
+		sequence.addAction(sprite.getActionFactory().createChangeVariableAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this), getFormulaWithBrickField(BrickField.VARIABLE_CHANGE), userVariable));
 		return null;
 	}
 

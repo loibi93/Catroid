@@ -111,6 +111,6 @@ public class SetSizeToActionTest extends PhysicsBaseTest {
 	}
 
 	private void performSetSizeToAction(float scaleFactor) {
-		sprite.getActionFactory().createSetSizeToAction(sprite, new Formula(scaleFactor)).act(1.0f);
+		sprite.getActionFactory().createSetSizeToAction(sprite, null, new Formula(scaleFactor)).act(1.0f);
 	}
 }

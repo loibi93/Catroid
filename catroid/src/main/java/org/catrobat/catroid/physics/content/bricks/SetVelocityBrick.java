@@ -172,7 +172,7 @@ public class SetVelocityBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSetVelocityAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSetVelocityAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.PHYSICS_VELOCITY_X),
 				getFormulaWithBrickField(BrickField.PHYSICS_VELOCITY_Y)));
 		return null;

@@ -53,7 +53,7 @@ public class SpeakActionTest extends AndroidTestCase {
 
 	public void testSpeak() {
 		SpeakBrick speakBrick = new SpeakBrick(text);
-		Action action = factory.createSpeakAction(sprite, text);
+		Action action = factory.createSpeakAction(sprite, null, text);
 		Formula textAfterExecution = (Formula) Reflection.getPrivateField(action, "text");
 
 		assertEquals("Text is not updated after SpeakBrick executed", text, speakBrick
@@ -61,7 +61,7 @@ public class SpeakActionTest extends AndroidTestCase {
 		assertEquals("Text is not updated after SpeakBrick executed", text, textAfterExecution);
 
 		speakBrick = new SpeakBrick(text2);
-		action = factory.createSpeakAction(sprite, text);
+		action = factory.createSpeakAction(sprite, null, text);
 		textAfterExecution = (Formula) Reflection.getPrivateField(action, "text");
 
 		assertEquals("Text is not updated after SpeakBrick executed", text2, speakBrick
@@ -71,7 +71,7 @@ public class SpeakActionTest extends AndroidTestCase {
 
 	public void testNullSprite() {
 		SpeakBrick speakBrick = new SpeakBrick(text);
-		Action action = factory.createSpeakAction(sprite, text);
+		Action action = factory.createSpeakAction(sprite, null, text);
 
 		try {
 			action.act(1.0f);
@@ -89,7 +89,7 @@ public class SpeakActionTest extends AndroidTestCase {
 
 	public void testBrickWithStringFormula() {
 		SpeakBrick speakBrick = new SpeakBrick(textString);
-		Action action = factory.createSpeakAction(sprite, textString);
+		Action action = factory.createSpeakAction(sprite, null, textString);
 		Reflection.invokeMethod(action, "begin");
 
 		assertEquals("Text is not updated after SpeakBrick executed", textString, speakBrick
@@ -99,7 +99,7 @@ public class SpeakActionTest extends AndroidTestCase {
 	}
 
 	public void testNullFormula() {
-		Action action = factory.createSpeakAction(sprite, (Formula) null);
+		Action action = factory.createSpeakAction(sprite, null, (Formula) null);
 		Reflection.invokeMethod(action, "begin");
 
 		assertEquals("Text is not updated after SpeakBrick executed", "",
@@ -107,7 +107,7 @@ public class SpeakActionTest extends AndroidTestCase {
 	}
 
 	public void testNotANumberFormula() {
-		Action action = factory.createSpeakAction(sprite, new Formula(Double.NaN));
+		Action action = factory.createSpeakAction(sprite, null, new Formula(Double.NaN));
 		Reflection.invokeMethod(action, "begin");
 
 		assertEquals("Text is not updated after SpeakBrick executed", "",

@@ -170,7 +170,9 @@ public class CameraBrick extends BrickBaseType {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createUpdateCameraPreviewAction(getCameraStateFromSpinner()));
+		sequence.addAction(sprite.getActionFactory().createUpdateCameraPreviewAction(sprite, sprite
+				.getBrickIndexAndScriptIndexForBrick(this), getCameraStateFromSpinner
+				()));
 		return null;
 	}
 

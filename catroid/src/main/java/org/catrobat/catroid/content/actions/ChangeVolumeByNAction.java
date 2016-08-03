@@ -31,13 +31,13 @@ import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.io.SoundManager;
 
-public class ChangeVolumeByNAction extends TemporalAction {
+public class ChangeVolumeByNAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Formula volume;
-	private Sprite sprite;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		try {
 			Float newVolume = volume == null ? Float.valueOf(0f) : volume.interpretFloat(sprite);
 			SoundManager.getInstance().setVolume(SoundManager.getInstance().getVolume() + newVolume);

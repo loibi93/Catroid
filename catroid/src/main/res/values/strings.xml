@@ -469,6 +469,16 @@
     <string name="stage_dialog_screenshot">Preview</string>
     <!--  -->
 
+    <!-- Stage debug dialog -->
+    <string name="stage_debug_dialog_show_code">Show Code</string>
+    <string name="stage_debug_dialog_step">Step</string>
+    <string name="stage_debug_dialog_show_variables">Show Variables</string>
+    <string name="global_variables">Global Variables</string>
+    <string name="no_variables_header_one">Currently</string>
+    <string name="no_variables_header_two">no Variables</string>
+    <string name="choose_sprite_dialog_title">Choose Sprite:</string>
+    <!--  -->
+
 
     <!-- Broadcast spinner -->
     <string name="new_broadcast_message">New…</string>

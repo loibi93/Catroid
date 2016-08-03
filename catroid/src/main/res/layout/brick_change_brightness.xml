@@ -46,6 +46,16 @@
         app:horizontalSpacing="@dimen/brick_flow_layout_horizontal_spacing"
         app:verticalSpacing="@dimen/brick_flow_layout_vertical_spacing" >
 
+        <ImageView
+            android:id="@+id/brick_debug_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/brick_debug_arrow"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/brick_change_brightness_label"
             style="@style/BrickText.SingleLine"

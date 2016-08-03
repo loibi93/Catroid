@@ -33,11 +33,10 @@ import org.catrobat.catroid.devices.raspberrypi.RaspberryPiService;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class RaspiIfLogicAction extends Action {
+public class RaspiIfLogicAction extends org.catrobat.catroid.content.actions.debugActions.Action {
 
 	private static final String TAG = RaspiIfLogicAction.class.getSimpleName();
 
-	private Sprite sprite;
 	private Action ifAction;
 	private Action elseAction;
 	private boolean isInitialized = false;
@@ -49,6 +48,7 @@ public class RaspiIfLogicAction extends Action {
 	}
 
 	protected void begin() {
+		updateCurrentBrick();
 		Integer pinNumberInterpretation;
 
 		try {
@@ -63,6 +63,7 @@ public class RaspiIfLogicAction extends Action {
 
 	@Override
 	public boolean act(float delta) {
+		updateCurrentBrick();
 		if (!isInitialized) {
 			begin();
 			isInitialized = true;
@@ -88,6 +89,7 @@ public class RaspiIfLogicAction extends Action {
 
 	@Override
 	public void restart() {
+		updateCurrentBrick();
 		ifAction.restart();
 		elseAction.restart();
 		isInitialized = false;

@@ -36,18 +36,18 @@ import org.catrobat.catroid.devices.arduino.phiro.Phiro;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class PhiroMotorMoveForwardAction extends TemporalAction {
+public class PhiroMotorMoveForwardAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 	private static final int MIN_SPEED = 0;
 	private static final int MAX_SPEED = 100;
 
 	private Motor motorEnum;
 	private Formula speed;
-	private Sprite sprite;
 
 	private BluetoothDeviceService btService = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE);
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		int speedValue;
 		try {
 			speedValue = speed.interpretInteger(sprite);

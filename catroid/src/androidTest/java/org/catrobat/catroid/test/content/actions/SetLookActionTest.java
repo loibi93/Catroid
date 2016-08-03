@@ -95,7 +95,7 @@ public class SetLookActionTest extends InstrumentationTestCase {
 		sprite.getLookDataList().add(lookData);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action action = factory.createSetLookAction(sprite, lookData);
+		Action action = factory.createSetLookAction(sprite, null, lookData);
 		action.act(1.0f);
 		assertNotNull("current Look is null", sprite.look);
 	}

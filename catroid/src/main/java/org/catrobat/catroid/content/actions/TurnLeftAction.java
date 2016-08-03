@@ -30,13 +30,13 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class TurnLeftAction extends TemporalAction {
+public class TurnLeftAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula degrees;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		try {
 			Float newDegrees = degrees == null ? Float.valueOf(0f) : -degrees.interpretFloat(sprite);
 			sprite.look.changeDirectionInUserInterfaceDimensionUnit(newDegrees);

@@ -29,12 +29,11 @@ import org.catrobat.catroid.content.Sprite;
 
 import java.util.List;
 
-public class NextLookAction extends TemporalAction {
-
-	private Sprite sprite;
+public class NextLookAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	@Override
 	protected void update(float delta) {
+		updateCurrentBrick();
 		final List<LookData> lookDataList = sprite.getLookDataList();
 		int lookDataListSize = lookDataList.size();
 

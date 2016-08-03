@@ -28,11 +28,10 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class RepeatAction extends com.badlogic.gdx.scenes.scene2d.actions.RepeatAction {
+public class RepeatAction extends org.catrobat.catroid.content.actions.debugActions.RepeatAction {
 
 	private int executedCount;
 	private Formula repeatCount;
-	private Sprite sprite;
 	private boolean isCurrentLoopInitialized = false;
 	private boolean isRepeatActionInitialized = false;
 	private int repeatCountValue;
@@ -42,6 +41,7 @@ public class RepeatAction extends com.badlogic.gdx.scenes.scene2d.actions.Repeat
 
 	@Override
 	public boolean delegate(float delta) {
+		updateCurrentBrick();
 
 		if (!isRepeatActionInitialized) {
 			isRepeatActionInitialized = true;

@@ -30,13 +30,13 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class SetBrightnessAction extends TemporalAction {
+public class SetBrightnessAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula brightness;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		try {
 			Float newBrightness = brightness == null ? Float.valueOf(0f) : brightness.interpretFloat(sprite);
 			sprite.look.setBrightnessInUserInterfaceDimensionUnit(newBrightness);

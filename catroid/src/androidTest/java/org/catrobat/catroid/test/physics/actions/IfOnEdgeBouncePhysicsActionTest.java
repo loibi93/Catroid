@@ -70,7 +70,7 @@ public class IfOnEdgeBouncePhysicsActionTest extends PhysicsBaseTest {
 		assertTrue("Unexpected Y-value", sprite.look.getYInUserInterfaceDimensionUnit() == (setYValue));
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite);
+		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite, null);
 		logState("Values after action creation", sprite, physicsObject);
 
 		ifOnEdgeBouncePhysicsAction.act(0.1f);
@@ -98,7 +98,7 @@ public class IfOnEdgeBouncePhysicsActionTest extends PhysicsBaseTest {
 		assertTrue("Unexpected velocity-Y-value", physicsObject.getVelocity().y == setVelocityYValue);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite);
+		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite, null);
 		logState("Values after action creation", sprite, physicsObject);
 
 		ifOnEdgeBouncePhysicsAction.act(0.1f);
@@ -134,7 +134,7 @@ public class IfOnEdgeBouncePhysicsActionTest extends PhysicsBaseTest {
 		assertTrue("Unexpected velocity-Y-value", physicsObject.getVelocity().y == setVelocityYValue);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite);
+		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite, null);
 		logState("Values after action creation", sprite, physicsObject);
 
 		ifOnEdgeBouncePhysicsAction.act(0.1f);
@@ -156,7 +156,7 @@ public class IfOnEdgeBouncePhysicsActionTest extends PhysicsBaseTest {
 
 		float prevX = sprite.look.getXInUserInterfaceDimensionUnit();
 		float prevY = sprite.look.getYInUserInterfaceDimensionUnit();
-		ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite);
+		ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite, null);
 		ifOnEdgeBouncePhysicsAction.act(0.1f);
 		assertEquals("second act should not change X-coordinate. (expected = " + prevX + "; actual = " + sprite.look.getXInUserInterfaceDimensionUnit(), prevX, sprite.look.getXInUserInterfaceDimensionUnit(), TestUtils.DELTA);
 		assertEquals("second act should not change Y-coordinate. (expected = " + prevY + "; actual = " + sprite.look.getYInUserInterfaceDimensionUnit(), prevY, sprite.look.getYInUserInterfaceDimensionUnit(), TestUtils.DELTA);
@@ -201,7 +201,7 @@ public class IfOnEdgeBouncePhysicsActionTest extends PhysicsBaseTest {
 		physicsObject.setVelocity(setVelocityXValue, setVelocityYValue);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite);
+		Action ifOnEdgeBouncePhysicsAction = factory.createIfOnEdgeBounceAction(sprite, null);
 
 		ArrayList<Sprite> activeVerticalBounces = (ArrayList<Sprite>) Reflection.getPrivateField(PhysicsWorld.class,
 				physicsWorld, "activeVerticalBounces");

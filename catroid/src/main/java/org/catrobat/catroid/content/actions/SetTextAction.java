@@ -32,16 +32,16 @@ import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.stage.StageActivity;
 import org.catrobat.catroid.stage.TextActor;
 
-public class SetTextAction extends TemporalAction {
+public class SetTextAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Formula endX;
 	private Formula endY;
 	private Formula text;
-	private Sprite sprite;
 	private TextActor actor;
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		try {
 			String string = text.interpretString(sprite);
 			int posX = endX.interpretInteger(sprite);
@@ -56,6 +56,7 @@ public class SetTextAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		try {
 			String str = text.interpretString(sprite);
 			int posX = endX.interpretInteger(sprite);

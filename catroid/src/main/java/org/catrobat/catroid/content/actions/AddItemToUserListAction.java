@@ -28,14 +28,14 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.UserList;
 
-public class AddItemToUserListAction extends TemporalAction {
+public class AddItemToUserListAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula formulaItemToAdd;
 	private UserList userList;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (userList == null) {
 			return;
 		}

@@ -69,8 +69,8 @@ public class StopAllSoundsActionTest extends InstrumentationTestCase {
 		List<MediaPlayer> mediaPlayers = getMediaPlayers();
 
 		ActionFactory factory = testSprite.getActionFactory();
-		Action playSoundAction = factory.createPlaySoundAction(testSprite, soundInfo);
-		Action stopAllSoundsAction = factory.createStopAllSoundsAction();
+		Action playSoundAction = factory.createPlaySoundAction(testSprite, null, soundInfo);
+		Action stopAllSoundsAction = factory.createStopAllSoundsAction(null, null);
 
 		playSoundAction.act(1.0f);
 
@@ -88,8 +88,8 @@ public class StopAllSoundsActionTest extends InstrumentationTestCase {
 		testSprite.getSoundList().add(soundInfo);
 
 		ActionFactory factory = testSprite.getActionFactory();
-		Action playSoundAction1 = factory.createPlaySoundAction(testSprite, soundInfo);
-		Action playSoundAction2 = factory.createPlaySoundAction(testSprite, soundInfo);
+		Action playSoundAction1 = factory.createPlaySoundAction(testSprite, null, soundInfo);
+		Action playSoundAction2 = factory.createPlaySoundAction(testSprite, null, soundInfo);
 
 		playSoundAction1.act(1.0f);
 		playSoundAction2.act(1.0f);
@@ -99,7 +99,7 @@ public class StopAllSoundsActionTest extends InstrumentationTestCase {
 		assertTrue("First MediaPlayer is not playing", mediaPlayers.get(0).isPlaying());
 		assertTrue("Second MediaPlayer is not playing", mediaPlayers.get(1).isPlaying());
 
-		Action stopAllSoundsAction = factory.createStopAllSoundsAction();
+		Action stopAllSoundsAction = factory.createStopAllSoundsAction(null, null);
 		stopAllSoundsAction.act(1.0f);
 
 		assertFalse("First MediaPlayer is still playing", mediaPlayers.get(0).isPlaying());

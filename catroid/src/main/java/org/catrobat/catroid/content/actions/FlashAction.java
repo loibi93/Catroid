@@ -26,7 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 
 import org.catrobat.catroid.utils.FlashUtil;
 
-public class FlashAction extends TemporalAction {
+public class FlashAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private static final int OFF = 0;
 	private static final int ON = 1;
@@ -34,6 +34,7 @@ public class FlashAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (turnFlash == ON) {
 			FlashUtil.flashOn();
 		} else {

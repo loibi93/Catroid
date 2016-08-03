@@ -82,6 +82,7 @@ public class ScriptActivity extends BaseActivity {
 	public static final int USERBRICKS_PROTOTYPE_VIEW = 4;
 
 	public static final String EXTRA_FRAGMENT_POSITION = "org.catrobat.catroid.ui.fragmentPosition";
+	public static final String EXTRA_DISABLE_USER_INTERACTION = "org.catrobat.catroid.ui.disableUserInteraction";
 
 	public static final String ACTION_SPRITE_RENAMED = "org.catrobat.catroid.SPRITE_RENAMED";
 	public static final String ACTION_SPRITES_LIST_INIT = "org.catrobat.catroid.SPRITES_LIST_INIT";
@@ -129,6 +130,7 @@ public class ScriptActivity extends BaseActivity {
 	private boolean isLookFragmentHandleAddButtonHandled = false;
 	private boolean isNfcTagFragmentFromWhenNfcTagBrickNew = false;
 	private boolean isNfcTagFragmentHandleAddButtonHandled = false;
+	private boolean disableScriptInteraction = false;
 
 	private ImageButton buttonAdd;
 	private boolean switchToScriptFragment;
@@ -145,6 +147,7 @@ public class ScriptActivity extends BaseActivity {
 
 			if (bundle != null) {
 				currentFragmentPosition = bundle.getInt(EXTRA_FRAGMENT_POSITION, FRAGMENT_SCRIPTS);
+				disableScriptInteraction = bundle.getBoolean(EXTRA_DISABLE_USER_INTERACTION);
 			}
 		}
 
@@ -223,6 +226,9 @@ public class ScriptActivity extends BaseActivity {
 			case FRAGMENT_SCRIPTS:
 				if (scriptFragment == null) {
 					scriptFragment = new ScriptFragment();
+					if (disableScriptInteraction) {
+						scriptFragment.disableUserInteraction();
+					}
 					fragmentExists = false;
 					currentFragmentTag = ScriptFragment.TAG;
 				}
@@ -271,7 +277,7 @@ public class ScriptActivity extends BaseActivity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		if (currentFragment != null) {
+		if (currentFragment != null && !disableScriptInteraction) {
 			handleShowDetails(currentFragment.getShowDetails(), menu.findItem(R.id.show_details));
 		}
 		return super.onPrepareOptionsMenu(menu);
@@ -279,8 +285,11 @@ public class ScriptActivity extends BaseActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.clear();
-		getMenuInflater().inflate(R.menu.menu_script_activity, menu);
+		if (!disableScriptInteraction) {
+			menu.clear();
+			getMenuInflater().inflate(R.menu.menu_script_activity, menu);
+		}
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -570,6 +579,11 @@ public class ScriptActivity extends BaseActivity {
 	}
 
 	public void handlePlayButton(View view) {
+		if (disableScriptInteraction) {
+			StageActivity.stageListener.dismissDialogs();
+			finish();
+			return;
+		}
 		updateHandleAddButtonClickListener();
 
 		Fragment formulaEditorFragment = fragmentManager

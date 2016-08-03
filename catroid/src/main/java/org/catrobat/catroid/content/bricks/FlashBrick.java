@@ -167,10 +167,10 @@ public class FlashBrick extends BrickBaseType {
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
 		if (spinnerSelectionID == FLASH_ON) {
-			sequence.addAction(sprite.getActionFactory().createTurnFlashOnAction());
+			sequence.addAction(sprite.getActionFactory().createTurnFlashOnAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this)));
 			return null;
 		}
-		sequence.addAction(sprite.getActionFactory().createTurnFlashOffAction());
+		sequence.addAction(sprite.getActionFactory().createTurnFlashOffAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this)));
 		return null;
 	}
 }

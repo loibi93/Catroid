@@ -28,13 +28,13 @@ import org.catrobat.catroid.common.SoundInfo;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.io.SoundManager;
 
-public class PlaySoundAction extends TemporalAction {
+public class PlaySoundAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private SoundInfo sound;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (sound != null && sprite.getSoundList().contains(sound) && sound.getAbsolutePath() != null) {
 			SoundManager.getInstance().playSoundFile(sound.getAbsolutePath());
 		}

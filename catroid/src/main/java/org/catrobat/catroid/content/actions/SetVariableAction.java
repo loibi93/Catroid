@@ -31,14 +31,14 @@ import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.FormulaElement;
 import org.catrobat.catroid.formulaeditor.UserVariable;
 
-public class SetVariableAction extends TemporalAction {
+public class SetVariableAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula changeVariable;
 	private UserVariable userVariable;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (userVariable == null) {
 			return;
 		}

@@ -275,7 +275,7 @@ public class ShowTextBrick extends UserVariableBrick {
 		if (userVariableName == null) {
 			userVariableName = Constants.NO_VARIABLE_SELECTED;
 		}
-		sequence.addAction(sprite.getActionFactory().createShowTextAction(sprite, getFormulaWithBrickField(BrickField.X_POSITION),
+		sequence.addAction(sprite.getActionFactory().createShowTextAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this), getFormulaWithBrickField(BrickField.X_POSITION),
 				getFormulaWithBrickField(BrickField.Y_POSITION), userVariableName));
 		return null;
 	}

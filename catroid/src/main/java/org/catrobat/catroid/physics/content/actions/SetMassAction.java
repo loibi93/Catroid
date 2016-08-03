@@ -31,14 +31,14 @@ import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.physics.PhysicsObject;
 
-public class SetMassAction extends TemporalAction {
+public class SetMassAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private PhysicsObject physicsObject;
 	private Formula mass;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		Float newMass;
 		try {
 			newMass = mass == null ? Float.valueOf(0f) : mass.interpretFloat(sprite);

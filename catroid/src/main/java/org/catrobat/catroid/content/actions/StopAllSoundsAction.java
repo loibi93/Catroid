@@ -26,10 +26,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 
 import org.catrobat.catroid.io.SoundManager;
 
-public class StopAllSoundsAction extends TemporalAction {
+public class StopAllSoundsAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		SoundManager.getInstance().stopAllSounds();
 	}
 }

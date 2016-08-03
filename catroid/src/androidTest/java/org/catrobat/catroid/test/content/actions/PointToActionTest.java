@@ -44,7 +44,7 @@ public class PointToActionTest extends AndroidTestCase {
 		ProjectManager.getInstance().setProject(project);
 
 		ActionFactory factory = sprite.getActionFactory();
-		Action pointToAction = factory.createPointToAction(sprite, pointedSprite);
+		Action pointToAction = factory.createPointToAction(sprite, null, pointedSprite);
 
 		pointedSprite.look.setPosition(200f, 0f);
 		pointToAction.act(1.0f);

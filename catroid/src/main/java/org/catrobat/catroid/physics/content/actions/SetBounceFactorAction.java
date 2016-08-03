@@ -31,14 +31,14 @@ import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.physics.PhysicsObject;
 
-public class SetBounceFactorAction extends TemporalAction {
+public class SetBounceFactorAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private PhysicsObject physicsObject;
 	private Formula bounceFactor;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		Float newBounceFactor;
 		try {
 			newBounceFactor = bounceFactor == null ? Float.valueOf(0f) : bounceFactor.interpretFloat(sprite);

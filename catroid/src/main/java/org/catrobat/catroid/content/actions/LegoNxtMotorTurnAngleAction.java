@@ -36,16 +36,16 @@ import org.catrobat.catroid.devices.mindstorms.nxt.LegoNXT;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class LegoNxtMotorTurnAngleAction extends TemporalAction {
+public class LegoNxtMotorTurnAngleAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Motor motorEnum;
 	private Formula degrees;
-	private Sprite sprite;
 
 	private BluetoothDeviceService btService = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE);
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		int degreesValue;
 		try {
 			degreesValue = degrees.interpretInteger(sprite);

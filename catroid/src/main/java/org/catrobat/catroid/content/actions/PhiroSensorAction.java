@@ -33,10 +33,9 @@ import org.catrobat.catroid.formulaeditor.FormulaElement;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.formulaeditor.Sensors;
 
-public class PhiroSensorAction extends Action {
+public class PhiroSensorAction extends org.catrobat.catroid.content.actions.debugActions.Action {
 
 	private int sensorNumber;
-	private Sprite sprite;
 	private Action ifAction;
 	private Action elseAction;
 	private Formula ifCondition;
@@ -47,6 +46,7 @@ public class PhiroSensorAction extends Action {
 	private static final int DISTANCE_THRESHOLD_VALUE = 850;
 
 	protected void begin() {
+		updateCurrentBrick();
 		try {
 			if (ifCondition == null) {
 				isInterpretedCorrectly = false;
@@ -63,6 +63,7 @@ public class PhiroSensorAction extends Action {
 
 	@Override
 	public boolean act(float delta) {
+		updateCurrentBrick();
 		if (!isInitialized) {
 			begin();
 			isInitialized = true;
@@ -81,6 +82,7 @@ public class PhiroSensorAction extends Action {
 
 	@Override
 	public void restart() {
+		updateCurrentBrick();
 		ifAction.restart();
 		elseAction.restart();
 		isInitialized = false;

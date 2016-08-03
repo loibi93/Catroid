@@ -35,11 +35,10 @@ import org.catrobat.catroid.devices.arduino.Arduino;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class ArduinoSendDigitalValueAction extends TemporalAction {
+public class ArduinoSendDigitalValueAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private Formula pinNumber;
 	private Formula pinValue;
-	private Sprite sprite;
 	private int pin;
 	private int value;
 
@@ -47,6 +46,7 @@ public class ArduinoSendDigitalValueAction extends TemporalAction {
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		Integer pinNumberInterpretation;
 		Integer pinValueInterpretation;
 
@@ -80,6 +80,7 @@ public class ArduinoSendDigitalValueAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		Arduino arduino = ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).getDevice(BluetoothDevice.ARDUINO);
 		if (arduino != null) {
 			arduino.setDigitalArduinoPin(pin, value);

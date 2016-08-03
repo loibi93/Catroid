@@ -218,6 +218,12 @@
             android:name=".pocketmusic.PocketMusicActivity"
             android:noHistory="true"
             android:screenOrientation="portrait" />
+        <activity
+             android:name=".ui.DebugVariablesActivity"
+             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.DebugScriptActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".transfers.ProjectUploadService" />
         <service android:name=".transfers.ProjectDownloadService" />

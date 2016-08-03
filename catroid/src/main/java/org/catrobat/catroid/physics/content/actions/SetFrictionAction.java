@@ -31,14 +31,14 @@ import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 import org.catrobat.catroid.physics.PhysicsObject;
 
-public class SetFrictionAction extends TemporalAction {
+public class SetFrictionAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private PhysicsObject physicsObject;
 	private Formula friction;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		Float newFriction;
 		try {
 			newFriction = friction == null ? Float.valueOf(0f) : friction.interpretFloat(sprite);

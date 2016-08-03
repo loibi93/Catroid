@@ -26,12 +26,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 
 import org.catrobat.catroid.content.Sprite;
 
-public class ClearGraphicEffectAction extends TemporalAction {
-
-	private Sprite sprite;
+public class ClearGraphicEffectAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		sprite.look.setBrightnessInUserInterfaceDimensionUnit(100.0f);
 		sprite.look.setTransparencyInUserInterfaceDimensionUnit(0.0f);
 		sprite.look.setColorInUserInterfaceDimensionUnit(0.0f);

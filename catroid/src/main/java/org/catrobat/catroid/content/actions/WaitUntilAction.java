@@ -30,11 +30,10 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class WaitUntilAction extends Action {
+public class WaitUntilAction extends org.catrobat.catroid.content.actions.debugActions.Action {
 
 	private boolean completed = false;
 	private Formula condition;
-	private Sprite sprite;
 	private static final float LOOP_DELAY = 0.02f;
 	private float currentTime = 0f;
 

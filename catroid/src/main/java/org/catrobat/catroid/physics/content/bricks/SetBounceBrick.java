@@ -144,7 +144,7 @@ public class SetBounceBrick extends FormulaBrick {
 
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
-		sequence.addAction(sprite.getActionFactory().createSetBounceFactorAction(sprite,
+		sequence.addAction(sprite.getActionFactory().createSetBounceFactorAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.PHYSICS_BOUNCE_FACTOR)));
 		return null;
 	}

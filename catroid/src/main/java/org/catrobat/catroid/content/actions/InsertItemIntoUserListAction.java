@@ -31,9 +31,8 @@ import org.catrobat.catroid.formulaeditor.UserList;
 
 import java.util.ArrayList;
 
-public class InsertItemIntoUserListAction extends TemporalAction {
+public class InsertItemIntoUserListAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula formulaIndexToInsert;
 	private Formula formulaItemToInsert;
 
@@ -41,6 +40,7 @@ public class InsertItemIntoUserListAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (userList == null) {
 			return;
 		}

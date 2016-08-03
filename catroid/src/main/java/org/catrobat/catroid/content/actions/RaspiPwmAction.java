@@ -33,7 +33,7 @@ import org.catrobat.catroid.devices.raspberrypi.RaspberryPiService;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class RaspiPwmAction extends TemporalAction {
+public class RaspiPwmAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private static final String TAG = RaspiPwmAction.class.getSimpleName();
 
@@ -41,14 +41,13 @@ public class RaspiPwmAction extends TemporalAction {
 	private Formula pwmFrequencyFormula;
 	private Formula pwmPercentageFormula;
 
-	private Sprite sprite;
-
 	private int pinInterpretation;
 	private double frequencyInterpretation;
 	private double percentageInterpretation;
 
 	@Override
 	protected void begin() {
+		updateCurrentBrick();
 		try {
 			pinInterpretation = pinNumberFormula == null ? Integer.valueOf(0) : pinNumberFormula.interpretInteger(sprite);
 		} catch (InterpretationException interpretationException) {
@@ -78,6 +77,7 @@ public class RaspiPwmAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 
 		RPiSocketConnection connection = RaspberryPiService.getInstance().connection;
 		try {

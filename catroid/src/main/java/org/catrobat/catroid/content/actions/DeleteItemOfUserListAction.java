@@ -31,14 +31,14 @@ import org.catrobat.catroid.formulaeditor.UserList;
 
 import java.util.ArrayList;
 
-public class DeleteItemOfUserListAction extends TemporalAction {
+public class DeleteItemOfUserListAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula formulaIndexToDelete;
 	private UserList userList;
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (userList == null) {
 			return;
 		}

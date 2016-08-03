@@ -229,7 +229,7 @@ public class PhiroIfLogicBeginBrick extends IfLogicBeginBrick implements OnItemS
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
 		SequenceAction ifAction = (SequenceAction) sprite.getActionFactory().createSequence();
 		SequenceAction elseAction = (SequenceAction) sprite.getActionFactory().createSequence();
-		Action action = sprite.getActionFactory().createPhiroSendSelectedSensorAction(sprite, sensorSpinnerPosition,
+		Action action = sprite.getActionFactory().createPhiroSendSelectedSensorAction(sprite, sprite.getBrickIndexAndScriptIndexForBrick(this), sensorSpinnerPosition,
 				ifAction, elseAction);
 		sequence.addAction(action);
 

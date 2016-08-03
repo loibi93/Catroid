@@ -31,9 +31,8 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class IfLogicAction extends Action {
+public class IfLogicAction extends org.catrobat.catroid.content.actions.debugActions.Action {
 
-	private Sprite sprite;
 	private Action ifAction;
 	private Action elseAction;
 	private Formula ifCondition;
@@ -42,6 +41,7 @@ public class IfLogicAction extends Action {
 	private boolean isInterpretedCorrectly;
 
 	protected void begin() {
+		updateCurrentBrick();
 		try {
 			if (ifCondition == null) {
 				isInterpretedCorrectly = false;
@@ -58,6 +58,7 @@ public class IfLogicAction extends Action {
 
 	@Override
 	public boolean act(float delta) {
+		updateCurrentBrick();
 		if (!isInitialized) {
 			begin();
 			isInitialized = true;
@@ -79,6 +80,7 @@ public class IfLogicAction extends Action {
 
 	@Override
 	public void restart() {
+		updateCurrentBrick();
 		ifAction.restart();
 		if (elseAction != null) {
 			elseAction.restart();

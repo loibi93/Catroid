@@ -28,11 +28,12 @@ import com.parrot.freeflight.service.DroneControlService;
 
 import org.catrobat.catroid.drone.DroneServiceWrapper;
 
-public class DronePlayLedAnimationAction extends TemporalAction {
+public class DronePlayLedAnimationAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	@Override
 	protected void begin() {
 		super.begin();
+		updateCurrentBrick();
 		DroneControlService dcs = DroneServiceWrapper.getInstance().getDroneService();
 		if (dcs != null) {
 			dcs.playLedAnimation(5.0f, 3, ARDRONE_LED_ANIMATION.ARDRONE_LED_ANIMATION_BLINK_ORANGE.ordinal());
@@ -41,6 +42,7 @@ public class DronePlayLedAnimationAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		//Nothing to do
 	}
 }

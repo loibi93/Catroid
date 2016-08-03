@@ -30,13 +30,13 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class ChangeTransparencyByNAction extends TemporalAction {
+public class ChangeTransparencyByNAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
-	private Sprite sprite;
 	private Formula changeTransparency;
 
 	@Override
 	protected void update(float delta) {
+		updateCurrentBrick();
 		try {
 			Float newChangeTransparency = changeTransparency == null ? Float.valueOf(0f) : changeTransparency
 					.interpretFloat(sprite);

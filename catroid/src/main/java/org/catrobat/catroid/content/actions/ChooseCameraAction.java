@@ -27,7 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 
 import org.catrobat.catroid.camera.CameraManager;
 
-public class ChooseCameraAction extends TemporalAction {
+public class ChooseCameraAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {
 
 	private static final int BACK = 0;
 	private static final int FRONT = 1;
@@ -35,6 +35,7 @@ public class ChooseCameraAction extends TemporalAction {
 
 	@Override
 	protected void update(float percent) {
+		updateCurrentBrick();
 		if (cameraFacing == FRONT) {
 			CameraManager.getInstance().setToFrontCamera();
 		} else {

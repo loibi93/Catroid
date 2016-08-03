@@ -25,13 +25,13 @@ package org.catrobat.catroid.content.actions;
 import android.util.Log;
 
 import org.catrobat.catroid.content.Sprite;
+import org.catrobat.catroid.content.actions.debugActions.*;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 
-public class RepeatUntilAction extends com.badlogic.gdx.scenes.scene2d.actions.RepeatAction {
+public class RepeatUntilAction extends org.catrobat.catroid.content.actions.debugActions.RepeatAction {
 
 	private int executedCount = 0;
-	private Sprite sprite;
 	private boolean isCurrentLoopInitialized = false;
 	private static final float LOOP_DELAY = 0.02f;
 	private float currentTime = 0f;
@@ -40,6 +40,7 @@ public class RepeatUntilAction extends com.badlogic.gdx.scenes.scene2d.actions.R
 
 	@Override
 	public boolean delegate(float delta) {
+		updateCurrentBrick();
 
 		try {
 			if (repeatCondition == null) {
@@ -83,6 +84,7 @@ public class RepeatUntilAction extends com.badlogic.gdx.scenes.scene2d.actions.R
 
 	@Override
 	public void restart() {
+		updateCurrentBrick();
 		isCurrentLoopInitialized = false;
 		executedCount = 0;
 		super.restart();
