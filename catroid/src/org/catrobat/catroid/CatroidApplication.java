@@ -71,6 +71,7 @@ public class CatroidApplication extends MultiDexApplication {
 			System.loadLibrary("avformat");
 			System.loadLibrary("avdevice");
 			System.loadLibrary("adfreeflight");
+			System.loadLibrary("opencv_java3");
 			parrotLibrariesLoaded = true;
 		} catch (UnsatisfiedLinkError e) {
 			Log.e(TAG, Log.getStackTraceString(e));

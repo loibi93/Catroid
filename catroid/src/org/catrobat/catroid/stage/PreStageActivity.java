@@ -169,6 +169,7 @@ public class PreStageActivity extends BaseActivity {
 		}
 
 		if ((requiredResources & Brick.VIDEO) > 0) {
+			CatroidApplication.loadNativeLibs();
 			if (CameraManager.getInstance().hasFrontCamera()
 					|| CameraManager.getInstance().hasBackCamera()) {
 				resourceInitialized();
