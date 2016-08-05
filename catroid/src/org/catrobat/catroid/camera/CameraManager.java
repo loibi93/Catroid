@@ -22,22 +22,44 @@
  */
 package org.catrobat.catroid.camera;
 
-import android.graphics.Rect;
+import android.content.Context;
+import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.common.ScreenValues;
+import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.facedetection.FaceDetectionHandler;
 import org.catrobat.catroid.stage.CameraSurface;
 import org.catrobat.catroid.stage.DeviceCameraControl;
 import org.catrobat.catroid.stage.StageActivity;
 import org.catrobat.catroid.utils.FlashUtil;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.KeyPoint;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfFloat;
+import org.opencv.core.MatOfKeyPoint;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Size;
+import org.opencv.core.TermCriteria;
+import org.opencv.features2d.FeatureDetector;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.video.Video;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -66,6 +88,19 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 	private int previewFormat;
 	private int previewWidth;
 	private int previewHeight;
+
+	private Mat prevImg = null;
+	private Mat currImg = null;
+	private boolean initOpticalFlow = true;
+	private MatOfFloat err = new MatOfFloat();
+	private MatOfPoint2f keypointsFound = new MatOfPoint2f();
+	private MatOfByte keypointsStatus = new MatOfByte();
+	private Size winSize = new Size(21, 21);
+	int maxLevel = 0;
+	private MatOfKeyPoint keyPoints;
+	FeatureDetector featureDetector;
+	Thread calculationThread;
+	List<Sprite> sprites = new ArrayList<>();
 
 	private CameraInformation defaultCameraInformation = null;
 	private CameraInformation currentCameraInformation = null;
@@ -204,7 +239,7 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 
 			if (FlashUtil.isOn() && !currentCameraInformation.flashAvailable) {
 				Log.w(TAG, "destroy Stage because flash isOn while changing camera");
-				CameraManager.getInstance().destroyStage();
+				destroyStage();
 				return;
 			}
 
@@ -289,7 +324,6 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 			return false;
 		}
 
-		currentCamera.setPreviewCallbackWithBuffer(this);
 		if (texture != null) {
 			try {
 				setTexture();
@@ -326,10 +360,30 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 
 	@Override
 	public void onPreviewFrame(byte[] data, Camera camera) {
+		byte[] jpgData = getDecodeableBytesFromCameraFrame(data);
+
+		if (initOpticalFlow) {
+			featureDetector = FeatureDetector.create(FeatureDetector.GFTT);
+			keyPoints = new MatOfKeyPoint();
+			prevImg = Imgcodecs.imdecode(new MatOfByte(getDecodeableBytesFromCameraFrame(data)), Imgcodecs
+					.CV_LOAD_IMAGE_GRAYSCALE);
+			currImg = prevImg.clone();
+			startFlowCalculation();
+			initOpticalFlow = false;
+		} else {
+			currImg = Imgcodecs.imdecode(new MatOfByte(getDecodeableBytesFromCameraFrame(data)), Imgcodecs
+					.CV_LOAD_IMAGE_GRAYSCALE);
+		}
+
+		if (cameraSurface == null) {
+			return;
+		}
+		currentCamera.addCallbackBuffer(cameraSurface.buffer);
+
 		if (callbacks.size() == 0) {
 			return;
 		}
-		byte[] jpgData = getDecodeableBytesFromCameraFrame(data);
+
 		for (JpgPreviewCallback callback : callbacks) {
 			callback.onFrame(jpgData);
 		}
@@ -339,9 +393,87 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 		byte[] decodableBytes;
 		YuvImage image = new YuvImage(cameraData, previewFormat, previewWidth, previewHeight, null);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		image.compressToJpeg(new Rect(0, 0, previewWidth, previewHeight), 50, out);
+		image.compressToJpeg(new android.graphics.Rect(0, 0, previewWidth, previewHeight), 50, out);
 		decodableBytes = out.toByteArray();
 		return decodableBytes;
+	}
+
+	private void startFlowCalculation() {
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					if (Thread.interrupted()) {
+						calculationThread = null;
+						return;
+					}
+					try {
+						if (sprites.size() > 0) {
+							calculateOpticalFlow();
+						}
+					} catch (Exception e) {
+						Log.e(TAG, "Optical flow was not calculated! ", e);
+					}
+				}
+			}
+		};
+		calculationThread = new Thread(runnable);
+		calculationThread.start();
+	}
+
+	private synchronized void calculateOpticalFlow() {
+		featureDetector.detect(prevImg, keyPoints);
+		Video.calcOpticalFlowPyrLK(prevImg, currImg, Utils.convertKeypoints(keyPoints), keypointsFound, keypointsStatus, err, winSize, maxLevel);
+		prevImg = currImg.clone();
+
+		for (Sprite sprite : sprites) {
+			Rect viewPort;
+			if (sprite == null) {
+				viewPort = new Rect(0, 0, keypointsFound.width(), keypointsFound.height());
+			} else {
+				viewPort = new Rect((int) sprite.look.getX(), (int) sprite.look.getY() - (int) sprite.look.getHeightInUserInterfaceDimensionUnit(),
+						(int) sprite.look.getWidthInUserInterfaceDimensionUnit(), (int) sprite.look.getHeightInUserInterfaceDimensionUnit());
+			}
+
+			double[] result = Utils.calculateDirectionAndMotionFromMat(Utils.convertKeypoints(keyPoints), keypointsFound, viewPort);
+
+			if (sprite == null) {
+				ProjectManager.getInstance().setVideoDirection(result[0]);
+				ProjectManager.getInstance().setVideoMotion(result[1]);
+			} else {
+				sprite.setVideoDirection(result[0]);
+				sprite.setVideoMotion(result[1]);
+			}
+		}
+	}
+
+	public void registerSpriteForFlowCalculation(Sprite sprite) {
+		if (sprite == null && !ProjectManager.getInstance().isRegisteredInFlowCalculator()) {
+			sprites.add(null);
+			ProjectManager.getInstance().setRegisteredInFlowCalculator(true);
+			return;
+		} else if (sprite == null) {
+			return;
+		}
+
+		if (!sprite.isRegisteredInFlowCalculator()) {
+			sprites.add(sprite);
+			sprite.setRegisteredInFlowCalculator(true);
+		}
+	}
+
+	public void resetOpticalFlowCalculation() {
+		for (Sprite sprite : sprites) {
+			if (sprite == null) {
+				ProjectManager.getInstance().setRegisteredInFlowCalculator(false);
+			} else {
+				sprite.setRegisteredInFlowCalculator(false);
+			}
+		}
+
+		stopOpticalFlowThread();
+		initOpticalFlow = true;
+		sprites.clear();
 	}
 
 	private void createTexture() {
@@ -404,6 +536,12 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 				Log.e(TAG, "reset Texture failed at stopPreview");
 				Log.e(TAG, e.getMessage());
 			}
+		}
+	}
+
+	private void stopOpticalFlowThread() {
+		if (calculationThread != null) {
+			calculationThread.interrupt();
 		}
 	}
 

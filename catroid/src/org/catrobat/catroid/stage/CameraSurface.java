@@ -24,17 +24,20 @@
 package org.catrobat.catroid.stage;
 
 import android.content.Context;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.camera.CameraManager;
 
 public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String TAG = CameraSurface.class.getSimpleName();
 
 	private Camera camera = null;
+	public byte[] buffer;
 
 	public CameraSurface(Context context) {
 		super(context);
@@ -50,6 +53,10 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public void surfaceCreated(SurfaceHolder surfaceHolder) {
 		camera = CameraManager.getInstance().getCurrentCamera();
+		buffer = previewBuffer();
+		camera.addCallbackBuffer(buffer);
+		camera.setPreviewCallbackWithBuffer(CameraManager.getInstance());
+		CameraManager.getInstance().registerSpriteForFlowCalculation(ProjectManager.getInstance().getCurrentSprite());
 	}
 
 	@Override
@@ -63,6 +70,9 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 				if (camera != null) {
 					camera.stopPreview();
 					camera.setPreviewDisplay(holder);
+					buffer = previewBuffer();
+					camera.addCallbackBuffer(buffer);
+					camera.setPreviewCallbackWithBuffer(CameraManager.getInstance());
 					camera.startPreview();
 				}
 			} catch (Exception e) {
@@ -78,5 +88,30 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 		//camera.stopPreview();
 		//camera.release();
 		//camera = null;
+	}
+
+	private byte[] previewBuffer() {
+		int bufferSize;
+		byte buffer[];
+		int bitsPerPixel;
+
+		Camera.Parameters params = camera.getParameters();
+		Camera.Size size = params.getPreviewSize();
+		int imageFormat = params.getPreviewFormat();
+
+		if (imageFormat == ImageFormat.YV12) {
+			int yStride = (int) Math.ceil(size.width / 16.0) * 16;
+			int uvStride = (int) Math.ceil((yStride / 2) / 16.0) * 16;
+			int ySize = yStride * size.height;
+			int uvSize = uvStride * size.height / 2;
+			bufferSize = ySize + uvSize * 2;
+			buffer = new byte[bufferSize];
+			return buffer;
+		}
+
+		bitsPerPixel = ImageFormat.getBitsPerPixel(imageFormat);
+		bufferSize = (int) (size.height * size.width * ((bitsPerPixel / (float) 8)));
+		buffer = new byte[bufferSize];
+		return buffer;
 	}
 }

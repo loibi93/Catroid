@@ -58,6 +58,9 @@ public class Sprite implements Serializable, Cloneable {
 	public transient Look look = new Look(this);
 	public transient boolean isPaused;
 	public transient boolean isBackpackObject = false;
+	private transient double videoMotion = 0d;
+	private transient double videoDirection = 0d;
+	private transient boolean registeredInFlowCalculator = false;
 	@XStreamAsAttribute
 	private String name;
 	private List<Script> scriptList = new ArrayList<>();
@@ -663,5 +666,29 @@ public class Sprite implements Serializable, Cloneable {
 				}
 			}
 		}
+	}
+
+	public double getVideoMotion() {
+		return videoMotion;
+	}
+
+	public void setVideoMotion(double videoMotion) {
+		this.videoMotion = videoMotion;
+	}
+
+	public double getVideoDirection() {
+		return videoDirection;
+	}
+
+	public void setVideoDirection(double videoDirection) {
+		this.videoDirection = videoDirection;
+	}
+
+	public boolean isRegisteredInFlowCalculator() {
+		return registeredInFlowCalculator;
+	}
+
+	public void setRegisteredInFlowCalculator(boolean registeredInFlowCalculator) {
+		this.registeredInFlowCalculator = registeredInFlowCalculator;
 	}
 }

@@ -84,6 +84,9 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 	private boolean comingFromScriptFragmentToSoundFragment;
 	private boolean comingFromScriptFragmentToLooksFragment;
 	private boolean showUploadDialog = false;
+	private double videoMotion = 0d;
+	private double videoDirection = 0d;
+	private boolean registeredInFlowCalculator = false;
 
 	private FileChecksumContainer fileChecksumContainer = new FileChecksumContainer();
 
@@ -658,6 +661,30 @@ public final class ProjectManager implements OnLoadProjectCompleteListener, OnCh
 	public void onFacebookExchangeTokenComplete(Activity fragmentActivity) {
 		Log.d(TAG, "Facebook token refreshed on server");
 		ProjectManager.getInstance().showUploadProjectDialog(fragmentActivity.getFragmentManager(), null);
+	}
+
+	public double getVideoMotion() {
+		return videoMotion;
+	}
+
+	public void setVideoMotion(double videoMotion) {
+		this.videoMotion = videoMotion;
+	}
+
+	public double getVideoDirection() {
+		return videoDirection;
+	}
+
+	public void setVideoDirection(double videoDirection) {
+		this.videoDirection = videoDirection;
+	}
+
+	public boolean isRegisteredInFlowCalculator() {
+		return registeredInFlowCalculator;
+	}
+
+	public void setRegisteredInFlowCalculator(boolean registeredInFlowCalculator) {
+		this.registeredInFlowCalculator = registeredInFlowCalculator;
 	}
 
 	private class SaveProjectAsynchronousTask extends AsyncTask<Void, Void, Void> {

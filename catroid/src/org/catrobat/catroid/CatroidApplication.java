@@ -46,6 +46,7 @@ public class CatroidApplication extends MultiDexApplication {
 		Log.d(TAG, "CatroidApplication onCreate");
 		settings = new ApplicationSettings(this);
 		CatroidApplication.context = getApplicationContext();
+		System.loadLibrary("opencv_java3");
 	}
 
 	@Override
@@ -71,7 +72,6 @@ public class CatroidApplication extends MultiDexApplication {
 			System.loadLibrary("avformat");
 			System.loadLibrary("avdevice");
 			System.loadLibrary("adfreeflight");
-			System.loadLibrary("opencv_java3");
 			parrotLibrariesLoaded = true;
 		} catch (UnsatisfiedLinkError e) {
 			Log.e(TAG, Log.getStackTraceString(e));

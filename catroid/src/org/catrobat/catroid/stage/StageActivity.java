@@ -148,6 +148,7 @@ public class StageActivity extends AndroidApplication {
 		stageAudioFocus.releaseAudioFocus();
 		FlashUtil.pauseFlash();
 		FaceDetectionHandler.pauseFaceDetection();
+		CameraManager.getInstance().resetOpticalFlowCalculation();
 		CameraManager.getInstance().pausePreview();
 		CameraManager.getInstance().releaseCamera();
 		VibratorUtil.pauseVibrator();
@@ -174,6 +175,7 @@ public class StageActivity extends AndroidApplication {
 		FaceDetectionHandler.pauseFaceDetection();
 
 		CameraManager.getInstance().pausePreviewAsync();
+		CameraManager.getInstance().resetOpticalFlowCalculation();
 
 		ServiceProvider.getService(CatroidService.BLUETOOTH_DEVICE_SERVICE).pause();
 	}
@@ -295,6 +297,7 @@ public class StageActivity extends AndroidApplication {
 		FlashUtil.destroy();
 		VibratorUtil.destroy();
 		FaceDetectionHandler.stopFaceDetection();
+		CameraManager.getInstance().resetOpticalFlowCalculation();
 		CameraManager.getInstance().stopPreviewAsync();
 		CameraManager.getInstance().releaseCamera();
 		CameraManager.getInstance().setToDefaultCamera();

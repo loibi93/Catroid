@@ -2,10 +2,16 @@ package org.opencv.android;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.opencv.core.CvException;
 import org.opencv.core.CvType;
+import org.opencv.core.KeyPoint;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfKeyPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.ByteArrayOutputStream;
@@ -71,6 +77,52 @@ public class Utils {
         encoded.release();
 
         return decoded;
+    }
+
+    public static MatOfPoint2f convertKeypoints(MatOfKeyPoint toConvert) {
+        MatOfPoint2f keyPointsConverted = new MatOfPoint2f();
+        KeyPoint[] keyPointArray = toConvert.toArray();
+        Point[] pointArray = new Point[keyPointArray.length];
+        for (int i = 0; i < keyPointArray.length; i++) {
+            pointArray[i] = keyPointArray[i].pt;
+        }
+        keyPointsConverted.fromArray(pointArray);
+        return keyPointsConverted;
+    }
+
+    public static double[] calculateDirectionAndMotionFromMat(Mat oldFeatures, Mat newFeatures, Rect viewPort) {
+        double[] result = new double[2];
+        double motion = 0d;
+        double direction = 0d;
+        int count = 0;
+        for (int col = 0; col < oldFeatures.width(); col++) {
+            for (int row = 0; row < oldFeatures.height(); row++) {
+                if (checkIfPointIsInViewPort(col, row, viewPort)) {
+                    motion += euclideanDistance(oldFeatures.get(row, col), newFeatures.get(row, col));
+                    direction += (newFeatures.get(row, col)[1] - oldFeatures.get(row, col)[1]);
+                    count++;
+                }
+            }
+        }
+
+        motion /= count;
+        direction /= count;
+        result[0] = direction;
+        result[1] = motion;
+        return result;
+    }
+
+    private static boolean checkIfPointIsInViewPort(int x, int y, Rect viewPort) {
+        boolean result = viewPort.x <= x;
+        result |= x <= (viewPort.x + viewPort.width);
+        result |= (viewPort.y - viewPort.height) <= y;
+        result |= y <= viewPort.y;
+        return result;
+    }
+
+    public static double euclideanDistance(double[] one, double[] two) {
+        double[] diff = new double[]{one[0] - two[0], one[1] - two[1]};
+        return Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
     }
 
     /**
