@@ -56,7 +56,6 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 		buffer = previewBuffer();
 		camera.addCallbackBuffer(buffer);
 		camera.setPreviewCallbackWithBuffer(CameraManager.getInstance());
-		CameraManager.getInstance().registerSpriteForFlowCalculation(ProjectManager.getInstance().getCurrentSprite());
 	}
 
 	@Override

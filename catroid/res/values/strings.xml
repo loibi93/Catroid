@@ -1027,6 +1027,7 @@
     <string name="formula_editor_sensor_x_inclination">inclination_x</string>
     <string name="formula_editor_sensor_y_inclination">inclination_y</string>
     <string name="formula_editor_sensor_loudness">loudness</string>
+    <string name="formula_editor_sensor_motion">stage_video_motion</string>
     <string name="formula_editor_sensor_drone_battery_status">drone_battery_status</string>
     <string name="formula_editor_sensor_drone_emergency_state">drone_emergency_state</string>
     <string name="formula_editor_sensor_drone_flying">drone_flying</string>
@@ -1063,6 +1064,7 @@
     <string name="formula_editor_object_x_velocity">x_velocity</string>
     <string name="formula_editor_object_y_velocity">y_velocity</string>
     <string name="formula_editor_object_angular_velocity">angular_velocity</string>
+    <string name="formula_editor_object_motion">object_video_motion</string>
     <string name="formula_editor_compute">Compute</string>
     <string name="formula_editor_object">Object</string>
     <string name="formula_editor_functions">Functions</string>

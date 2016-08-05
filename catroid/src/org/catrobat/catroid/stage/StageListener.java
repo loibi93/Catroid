@@ -710,7 +710,4 @@ public class StageListener implements ApplicationListener {
 		return stage;
 	}
 
-	public void removeActor(Look look) {
-		look.remove();
-	}
 }

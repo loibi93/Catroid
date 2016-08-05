@@ -26,6 +26,7 @@ import android.util.Log;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
+import org.catrobat.catroid.camera.CameraManager;
 import org.catrobat.catroid.common.CatroidService;
 import org.catrobat.catroid.common.ServiceProvider;
 import org.catrobat.catroid.content.Sprite;
@@ -730,6 +731,10 @@ public class FormulaElement implements Serializable {
 			case OBJECT_Y:
 				returnValue = (double) sprite.look.getYInUserInterfaceDimensionUnit();
 				break;
+			case OBJECT_MOTION:
+				CameraManager.getInstance().registerSpriteForFlowCalculation(sprite);
+				returnValue = sprite.getVideoMotion();
+				break;
 			case OBJECT_ANGULAR_VELOCITY:
 				returnValue = (double) sprite.look.getAngularVelocityInUserInterfaceDimensionUnit();
 				break;
@@ -971,6 +976,8 @@ public class FormulaElement implements Serializable {
 				case FACE_SIZE:
 				case FACE_X_POSITION:
 				case FACE_Y_POSITION:
+				case MOTION:
+				case OBJECT_MOTION:
 					resources |= Brick.FACE_DETECTION;
 					break;
 

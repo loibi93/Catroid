@@ -76,7 +76,7 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 			R.string.formula_editor_object_y, R.string.formula_editor_object_size,
 			R.string.formula_editor_object_rotation, R.string.formula_editor_object_layer,
 			R.string.formula_editor_object_x_velocity, R.string.formula_editor_object_y_velocity,
-			R.string.formula_editor_object_angular_velocity };
+			R.string.formula_editor_object_angular_velocity, R.string.formula_editor_object_motion };
 
 	private static final int[] LOGIC_BOOLEAN_OPERATORS_ITEMS = { R.string.formula_editor_logic_and,
 			R.string.formula_editor_logic_or, R.string.formula_editor_logic_not,
@@ -123,7 +123,7 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 	private static final int[] FUNCTIONS_LISTS_PARAMETERS = { R.string.formula_editor_function_number_of_items_parameter,
 			R.string.formula_editor_function_list_item_parameter, R.string.formula_editor_function_contains_parameter };
 
-	private static final int[] DEFAULT_SENSOR_ITEMS = { R.string.formula_editor_sensor_loudness };
+	private static final int[] DEFAULT_SENSOR_ITEMS = { R.string.formula_editor_sensor_loudness, R.string.formula_editor_sensor_motion };
 
 	private static final int[] ACCELERATION_SENSOR_ITEMS = { R.string.formula_editor_sensor_x_acceleration,
 			R.string.formula_editor_sensor_y_acceleration, R.string.formula_editor_sensor_z_acceleration };

@@ -9,6 +9,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.KeyPoint;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfKeyPoint;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
@@ -90,33 +91,38 @@ public class Utils {
         return keyPointsConverted;
     }
 
-    public static double[] calculateDirectionAndMotionFromMat(Mat oldFeatures, Mat newFeatures, Rect viewPort) {
+    public static double[] calculateDirectionAndMotionFromMat(Mat oldFeatures, Mat newFeatures, Rect viewPort, int offsetX, int offsetY) {
         double[] result = new double[2];
         double motion = 0d;
         double direction = 0d;
         int count = 0;
+
         for (int col = 0; col < oldFeatures.width(); col++) {
             for (int row = 0; row < oldFeatures.height(); row++) {
-                if (checkIfPointIsInViewPort(col, row, viewPort)) {
-                    motion += euclideanDistance(oldFeatures.get(row, col), newFeatures.get(row, col));
-                    direction += (newFeatures.get(row, col)[1] - oldFeatures.get(row, col)[1]);
+                double xOld = (oldFeatures.get(row, col)[1] - offsetX) * -1;
+                double yOld = oldFeatures.get(row, col)[0] - offsetY;
+                double xNew = (newFeatures.get(row, col)[1] - offsetX) * -1;
+                double yNew = newFeatures.get(row, col)[0] - offsetY;
+
+                if (checkIfPointIsInViewPort(xOld, yOld, viewPort)) {
+                    motion += euclideanDistance(new double[]{xOld, yOld}, new double[]{xNew, yNew});
+                    direction += (xNew - xOld);
                     count++;
                 }
             }
         }
 
         motion /= count;
-        direction /= count;
         result[0] = direction;
         result[1] = motion;
         return result;
     }
 
-    private static boolean checkIfPointIsInViewPort(int x, int y, Rect viewPort) {
+    private static boolean checkIfPointIsInViewPort(double x, double y, Rect viewPort) {
         boolean result = viewPort.x <= x;
-        result |= x <= (viewPort.x + viewPort.width);
-        result |= (viewPort.y - viewPort.height) <= y;
-        result |= y <= viewPort.y;
+        result &= x <= (viewPort.x + viewPort.width);
+        result &= viewPort.y <= y;
+        result &= y <= viewPort.y + viewPort.height;
         return result;
     }
 

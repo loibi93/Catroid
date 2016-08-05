@@ -33,6 +33,7 @@ import com.parrot.freeflight.service.DroneControlService;
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
 import org.catrobat.catroid.bluetooth.base.BluetoothDeviceService;
+import org.catrobat.catroid.camera.CameraManager;
 import org.catrobat.catroid.common.CatroidService;
 import org.catrobat.catroid.common.ServiceProvider;
 import org.catrobat.catroid.devices.arduino.phiro.Phiro;
@@ -337,6 +338,9 @@ public final class SensorHandler implements SensorEventListener, SensorCustomEve
 				}
 			case LOUDNESS:
 				return Double.valueOf(instance.loudness);
+			case MOTION:
+				CameraManager.getInstance().registerSpriteForFlowCalculation(null);
+				return ProjectManager.getInstance().getVideoMotion();
 
 			case NXT_SENSOR_1:
 			case NXT_SENSOR_2:

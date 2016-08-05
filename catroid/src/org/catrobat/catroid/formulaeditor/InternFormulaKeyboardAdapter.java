@@ -178,6 +178,8 @@ public class InternFormulaKeyboardAdapter {
 				return buildSensor(Sensors.Y_INCLINATION);
 			case R.string.formula_editor_sensor_loudness:
 				return buildSensor(Sensors.LOUDNESS);
+			case R.string.formula_editor_sensor_motion:
+				return buildSensor(Sensors.MOTION);
 			case R.string.formula_editor_sensor_face_detected:
 				return buildSensor(Sensors.FACE_DETECTED);
 			case R.string.formula_editor_sensor_face_size:
@@ -298,6 +300,8 @@ public class InternFormulaKeyboardAdapter {
 				return buildObject(Sensors.OBJECT_Y_VELOCITY);
 			case R.string.formula_editor_object_angular_velocity:
 				return buildObject(Sensors.OBJECT_ANGULAR_VELOCITY);
+			case R.string.formula_editor_object_motion:
+				return buildObject(Sensors.OBJECT_MOTION);
 		}
 		return null;
 	}

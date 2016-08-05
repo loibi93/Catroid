@@ -24,6 +24,7 @@ package org.catrobat.catroid.camera;
 
 import android.content.Context;
 import android.graphics.ImageFormat;
+import android.graphics.PointF;
 import android.graphics.SurfaceTexture;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
@@ -41,6 +42,7 @@ import org.catrobat.catroid.facedetection.FaceDetectionHandler;
 import org.catrobat.catroid.stage.CameraSurface;
 import org.catrobat.catroid.stage.DeviceCameraControl;
 import org.catrobat.catroid.stage.StageActivity;
+import org.catrobat.catroid.stage.StageListener;
 import org.catrobat.catroid.utils.FlashUtil;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -96,8 +98,8 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 	private MatOfPoint2f keypointsFound = new MatOfPoint2f();
 	private MatOfByte keypointsStatus = new MatOfByte();
 	private Size winSize = new Size(21, 21);
-	int maxLevel = 0;
-	private MatOfKeyPoint keyPoints;
+	int maxLevel = 3;
+	private MatOfKeyPoint keyPoints = new MatOfKeyPoint();
 	FeatureDetector featureDetector;
 	Thread calculationThread;
 	List<Sprite> sprites = new ArrayList<>();
@@ -364,7 +366,6 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 
 		if (initOpticalFlow) {
 			featureDetector = FeatureDetector.create(FeatureDetector.GFTT);
-			keyPoints = new MatOfKeyPoint();
 			prevImg = Imgcodecs.imdecode(new MatOfByte(getDecodeableBytesFromCameraFrame(data)), Imgcodecs
 					.CV_LOAD_IMAGE_GRAYSCALE);
 			currImg = prevImg.clone();
@@ -431,12 +432,11 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 			if (sprite == null) {
 				viewPort = new Rect(0, 0, keypointsFound.width(), keypointsFound.height());
 			} else {
-				viewPort = new Rect((int) sprite.look.getX(), (int) sprite.look.getY() - (int) sprite.look.getHeightInUserInterfaceDimensionUnit(),
-						(int) sprite.look.getWidthInUserInterfaceDimensionUnit(), (int) sprite.look.getHeightInUserInterfaceDimensionUnit());
+				viewPort = new Rect((int) sprite.look.getX(), (int) sprite.look.getY(), (int) sprite.look.getWidthInUserInterfaceDimensionUnit(), (int) sprite.look.getHeightInUserInterfaceDimensionUnit());
 			}
 
-			double[] result = Utils.calculateDirectionAndMotionFromMat(Utils.convertKeypoints(keyPoints), keypointsFound, viewPort);
-
+			double[] result = Utils.calculateDirectionAndMotionFromMat(Utils.convertKeypoints(keyPoints), keypointsFound, viewPort, prevImg.height() / 2, prevImg.width() / 2);
+			Log.d("testitest", "result");
 			if (sprite == null) {
 				ProjectManager.getInstance().setVideoDirection(result[0]);
 				ProjectManager.getInstance().setVideoMotion(result[1]);
@@ -448,6 +448,7 @@ public final class CameraManager implements DeviceCameraControl, Camera.PreviewC
 	}
 
 	public void registerSpriteForFlowCalculation(Sprite sprite) {
+		updatePreview(CameraState.prepare);
 		if (sprite == null && !ProjectManager.getInstance().isRegisteredInFlowCalculator()) {
 			sprites.add(null);
 			ProjectManager.getInstance().setRegisteredInFlowCalculator(true);
