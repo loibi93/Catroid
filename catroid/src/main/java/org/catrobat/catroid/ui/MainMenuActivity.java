@@ -23,6 +23,7 @@
 package org.catrobat.catroid.ui;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -150,22 +151,21 @@ public class MainMenuActivity extends BaseActivity implements OnLoadProjectCompl
 
 		SettingsActivity.setDroneChooserEnabled(this, false);
 
-		findViewById(R.id.progress_circle).setVisibility(View.GONE);
-
-		UtilFile.createStandardProjectIfRootDirectoryIsEmpty(this);
-
-		PreStageActivity.shutdownPersistentResources();
-		if (!STANDALONE_MODE) {
-			setMainMenuButtonContinueText();
-			findViewById(R.id.main_menu_button_continue).setEnabled(true);
-		} else {
-			FlashUtil.initializeFlash();
-		}
-		String projectName = getIntent().getStringExtra(StatusBarNotificationManager.EXTRA_PROJECT_NAME);
-		if (projectName != null) {
-			loadProjectInBackground(projectName);
-		}
-		getIntent().removeExtra(StatusBarNotificationManager.EXTRA_PROJECT_NAME);
+		findViewById(R.id.progress_circle).setVisibility(View.VISIBLE);
+		final Activity activity = this;
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				UtilFile.createStandardProjectIfRootDirectoryIsEmpty(activity);
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						finishOnCreateAfterRunnable();
+					}
+				});
+			}
+		};
+		(new Thread(r)).start();
 	}
 
 	@Override
@@ -197,6 +197,22 @@ public class MainMenuActivity extends BaseActivity implements OnLoadProjectCompl
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void finishOnCreateAfterRunnable() {
+		findViewById(R.id.progress_circle).setVisibility(View.GONE);
+		PreStageActivity.shutdownPersistentResources();
+		if (!STANDALONE_MODE) {
+			setMainMenuButtonContinueText();
+			findViewById(R.id.main_menu_button_continue).setEnabled(true);
+		} else {
+			FlashUtil.initializeFlash();
+		}
+		String projectName = getIntent().getStringExtra(StatusBarNotificationManager.EXTRA_PROJECT_NAME);
+		if (projectName != null) {
+			loadProjectInBackground(projectName);
+		}
+		getIntent().removeExtra(StatusBarNotificationManager.EXTRA_PROJECT_NAME);
 	}
 
 	// needed because of android:onClick in activity_main_menu.xml

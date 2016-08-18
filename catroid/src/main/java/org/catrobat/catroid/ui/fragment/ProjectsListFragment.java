@@ -560,14 +560,35 @@ public class ProjectsListFragment extends ListFragment implements OnProjectRenam
 		}
 
 		if (projectList.isEmpty()) {
-			ProjectManager projectManager = ProjectManager.getInstance();
-			projectManager.initializeDefaultProject(getActivity());
+			initializeDefaultProjectAfterDelete();
+			return;
 		} else if (ProjectManager.getInstance().getCurrentProject() == null) {
 			Utils.saveToPreferences(getActivity().getApplicationContext(), Constants.PREF_PROJECTNAME_KEY,
 					projectList.get(0).projectName);
 		}
 
 		initAdapter();
+	}
+
+	private void initializeDefaultProjectAfterDelete() {
+		final ProjectManager projectManager = ProjectManager.getInstance();
+		getActivity().findViewById(R.id.fragment_projects_list).setVisibility(View.GONE);
+		getActivity().findViewById(R.id.progress_circle).setVisibility(View.VISIBLE);
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				projectManager.initializeDefaultProject(getActivity());
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						getActivity().findViewById(R.id.fragment_projects_list).setVisibility(View.VISIBLE);
+						getActivity().findViewById(R.id.progress_circle).setVisibility(View.GONE);
+						initAdapter();
+					}
+				});
+			}
+		};
+		(new Thread(r)).start();
 	}
 
 	private void clearCheckedProjectsAndEnableButtons() {
