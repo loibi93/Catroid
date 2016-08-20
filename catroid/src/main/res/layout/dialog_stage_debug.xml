@@ -30,6 +30,13 @@
     android:layout_gravity="bottom|center"
     android:orientation="horizontal">
 
+    <ImageView
+        android:id="@+id/stage_debug_dialog_background"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/stage_dialog_background_side" />
+
     <LinearLayout
         android:id="@+id/stage_debug_layout_linear"
         android:layout_width="match_parent"
@@ -43,27 +50,35 @@
         <Button
             android:id="@+id/stage_debug_dialog_button_show_code"
             style="@style/StageButton"
+            android:text="@string/stage_debug_dialog_show_code"
+            android:textColor="@color/stage_dialog_text_color"
             android:drawableTop="@drawable/stage_debug_show_code"/>
 
         <Button
             android:id="@+id/stage_debug_dialog_button_step"
             style="@style/StageButton"
+            android:text="@string/stage_debug_dialog_step"
+            android:textColor="@color/stage_dialog_text_color"
             android:drawableTop="@drawable/stage_debug_step"/>
 
         <Button
             android:id="@+id/stage_debug_dialog_button_show_variables"
             style="@style/StageButton"
+            android:text="@string/stage_debug_dialog_show_variables"
+            android:textColor="@color/stage_dialog_text_color"
             android:drawableTop="@drawable/stage_debug_show_variable"/>
     </LinearLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/stage_debug_dialog_button_debug"
         style="@style/StageButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="30dp"
-        android:src="@drawable/stage_dialog_debug_icon" />
+        android:layout_margin="20dp"
+        android:text="@string/debug_on"
+        android:textColor="@color/stage_dialog_background_color"
+        android:drawableTop="@drawable/stage_dialog_debug_icon" />
 
 </RelativeLayout>

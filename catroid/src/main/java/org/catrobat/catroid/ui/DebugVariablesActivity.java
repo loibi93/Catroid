@@ -29,7 +29,6 @@ import android.widget.ExpandableListView;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
-import org.catrobat.catroid.content.Project;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.DataContainer;
 import org.catrobat.catroid.formulaeditor.UserVariable;
@@ -42,7 +41,6 @@ import java.util.List;
 
 public class DebugVariablesActivity extends BaseActivity {
 
-	private static final String TAG = DebugVariablesActivity.class.getSimpleName();
 	private List<String> headers = new ArrayList<>();
 	private HashMap<String, List<String>> childs = new HashMap<>();
 
@@ -102,6 +100,5 @@ public class DebugVariablesActivity extends BaseActivity {
 	public void handlePlayButton(View view) {
 		StageActivity.stageListener.dismissDialogs();
 		finish();
-
 	}
 }

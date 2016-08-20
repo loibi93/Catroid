@@ -35,11 +35,9 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
-import org.catrobat.catroid.content.Project;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.bricks.Brick;
 import org.catrobat.catroid.content.bricks.BrickBaseType;
@@ -85,7 +83,7 @@ public class StageDebugDialog extends Dialog implements View.OnClickListener {
 		((Button) findViewById(R.id.stage_debug_dialog_button_show_code)).setOnClickListener(this);
 		((Button) findViewById(R.id.stage_debug_dialog_button_step)).setOnClickListener(this);
 		((Button) findViewById(R.id.stage_debug_dialog_button_show_variables)).setOnClickListener(this);
-		((ImageButton) findViewById(R.id.stage_debug_dialog_button_debug)).setOnClickListener(this);
+		((Button) findViewById(R.id.stage_debug_dialog_button_debug)).setOnClickListener(this);
 		((Button) findViewById(R.id.stage_debug_dialog_button_step)).setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
@@ -140,7 +138,7 @@ public class StageDebugDialog extends Dialog implements View.OnClickListener {
 	@Override
 	public void dismiss() {
 		resetRunningStatus();
- 		super.dismiss();
+		super.dismiss();
 	}
 
 	public void resumeStage() {
@@ -160,12 +158,12 @@ public class StageDebugDialog extends Dialog implements View.OnClickListener {
 				.getCurrentProject().getSpriteList());
 
 		builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Sprite sprite = arrayAdapter.getItem(which);
-						openScriptForSprite(sprite);
-					}
-				});
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Sprite sprite = arrayAdapter.getItem(which);
+				openScriptForSprite(sprite);
+			}
+		});
 		builder.show();
 	}
 

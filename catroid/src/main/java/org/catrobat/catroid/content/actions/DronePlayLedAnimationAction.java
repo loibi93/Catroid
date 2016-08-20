@@ -22,7 +22,6 @@
  */
 package org.catrobat.catroid.content.actions;
 
-import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import com.parrot.freeflight.drone.DroneProxy.ARDRONE_LED_ANIMATION;
 import com.parrot.freeflight.service.DroneControlService;
 

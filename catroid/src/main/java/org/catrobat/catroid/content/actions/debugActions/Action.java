@@ -33,7 +33,7 @@ public abstract class Action extends com.badlogic.gdx.scenes.scene2d.Action {
 	protected Sprite sprite;
 
 	public void setIndexes(ArrayList<Integer> indexes) {
-		if (indexes != null && indexes.size() == 2 ) {
+		if (indexes != null && indexes.size() == 2) {
 			scriptIndex = indexes.get(0);
 			brickIndex = indexes.get(1);
 		}

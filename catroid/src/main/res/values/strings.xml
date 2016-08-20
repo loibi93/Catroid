@@ -212,6 +212,7 @@
 
     <!-- Script fragment -->
     <string name="fragment_script_text_description">Tap \"+\" to add Scripts</string>
+    <string name="fragment_script_text_description_no_interaction">There are no scripts for this Object.</string>
     <string name="dialog_confirm_delete_brick_title">Delete this Brick?</string>
     <string name="dialog_confirm_delete_script_title">Delete this Script?</string>
     <string name="dialog_confirm_delete_multiple_bricks_title">Delete these Bricks?</string>
@@ -477,6 +478,8 @@
     <string name="no_variables_header_one">Currently</string>
     <string name="no_variables_header_two">no Variables</string>
     <string name="choose_sprite_dialog_title">Choose Sprite:</string>
+    <string name="debug_off">OFF</string>
+    <string name="debug_on">ON</string>
     <!--  -->
 
 

@@ -68,9 +68,9 @@ public class DebugVariablesExpandableListAdapter extends BaseExpandableListAdapt
 		final String childText = (String) getChild(groupPosition, childPosition);
 
 		if (convertView == null) {
-			LayoutInflater infalInflater = (LayoutInflater) this.context
+			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = infalInflater.inflate(R.layout.debug_variables_list_item, null);
+			convertView = inflater.inflate(R.layout.debug_variables_list_item, parent);
 		}
 
 		TextView txtListChild = (TextView) convertView
@@ -106,9 +106,9 @@ public class DebugVariablesExpandableListAdapter extends BaseExpandableListAdapt
 			View convertView, ViewGroup parent) {
 		String headerTitle = (String) getGroup(groupPosition);
 		if (convertView == null) {
-			LayoutInflater infalInflater = (LayoutInflater) this.context
+			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = infalInflater.inflate(R.layout.debug_variables_list_group, null);
+			convertView = inflater.inflate(R.layout.debug_variables_list_group, parent);
 		}
 
 		TextView lblListHeader = (TextView) convertView

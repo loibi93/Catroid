@@ -22,8 +22,6 @@
  */
 package org.catrobat.catroid.physics.content.actions;
 
-import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
-
 import org.catrobat.catroid.physics.PhysicsObject;
 import org.catrobat.catroid.physics.PhysicsObject.Type;
 

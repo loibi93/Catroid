@@ -111,7 +111,9 @@ public class DragAndDropListView extends ListView implements OnLongClickListener
 		//hack: on Android 2.x getView() is not always called when checkbox is checked.
 		//Therefore the action is catched here and does exactly the same as otherwise the
 		//onCheckedChangeListener would do
-		if (noUserInteraction) return true;
+		if (noUserInteraction) {
+			return true;
+		}
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 			int x = (int) event.getX();
 			int y = (int) event.getY();

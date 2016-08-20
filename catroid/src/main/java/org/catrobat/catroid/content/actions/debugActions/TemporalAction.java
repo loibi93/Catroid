@@ -23,8 +23,6 @@
 
 package org.catrobat.catroid.content.actions.debugActions;
 
-import android.util.Log;
-
 import org.catrobat.catroid.content.Sprite;
 
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ public abstract class TemporalAction extends com.badlogic.gdx.scenes.scene2d.act
 	protected Sprite sprite;
 
 	public void setIndexes(ArrayList<Integer> indexes) {
-		if (indexes != null && indexes.size() == 2 ) {
+		if (indexes != null && indexes.size() == 2) {
 			scriptIndex = indexes.get(0);
 			brickIndex = indexes.get(1);
 		}

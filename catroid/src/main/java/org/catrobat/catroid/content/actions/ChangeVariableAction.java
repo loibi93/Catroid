@@ -24,8 +24,6 @@ package org.catrobat.catroid.content.actions;
 
 import android.util.Log;
 
-import com.badlogic.gdx.scenes.scene2d.Action;
-
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.UserVariable;

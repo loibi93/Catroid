@@ -25,7 +25,6 @@ package org.catrobat.catroid.content.actions;
 import android.util.Log;
 
 import org.catrobat.catroid.content.Sprite;
-import org.catrobat.catroid.content.actions.debugActions.*;
 import org.catrobat.catroid.formulaeditor.Formula;
 import org.catrobat.catroid.formulaeditor.InterpretationException;
 

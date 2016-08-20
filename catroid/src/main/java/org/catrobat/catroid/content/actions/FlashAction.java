@@ -22,8 +22,6 @@
  */
 package org.catrobat.catroid.content.actions;
 
-import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
-
 import org.catrobat.catroid.utils.FlashUtil;
 
 public class FlashAction extends org.catrobat.catroid.content.actions.debugActions.TemporalAction {

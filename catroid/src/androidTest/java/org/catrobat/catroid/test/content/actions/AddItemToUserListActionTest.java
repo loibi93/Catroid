@@ -64,7 +64,7 @@ public class AddItemToUserListActionTest extends AndroidTestCase {
 
 	public void testAddNumericalValueToUserList() {
 		actionFactory.createAddItemToUserListAction(testSprite, null, new Formula(DOUBLE_VALUE_ITEM_TO_ADD), userList)
-		.act(1f);
+				.act(1f);
 		Object lastItemOfUserList = userList.getList().get(userList.getList().size() - 1);
 
 		assertEquals("UserList size not changed!", 4, userList.getList().size());

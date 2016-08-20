@@ -31,11 +31,9 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
 import org.catrobat.catroid.common.BroadcastSequenceMap;
 import org.catrobat.catroid.common.BroadcastWaitSequenceMap;
-import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.stage.StageActivity;
 import org.catrobat.catroid.stage.StageListener;
 import org.catrobat.catroid.utils.ToastUtil;
@@ -79,7 +77,7 @@ public class StageDialog extends Dialog implements View.OnClickListener {
 		} else {
 			((ImageButton) findViewById(R.id.stage_dialog_button_maximize)).setVisibility(View.GONE);
 		}
-		((ImageButton) findViewById(R.id.stage_dialog_button_debug)).setOnClickListener(this);
+		((Button) findViewById(R.id.stage_dialog_button_debug)).setOnClickListener(this);
 	}
 
 	@Override

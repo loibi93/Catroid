@@ -22,8 +22,6 @@
  */
 package org.catrobat.catroid.content.actions;
 
-import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
-
 import org.catrobat.catroid.bluetooth.base.BluetoothDevice;
 import org.catrobat.catroid.bluetooth.base.BluetoothDeviceService;
 import org.catrobat.catroid.common.CatroidService;

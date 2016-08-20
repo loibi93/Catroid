@@ -73,7 +73,7 @@ public class AddItemToUserListBrick extends UserListBrick {
 	@Override
 	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
 		sequence.addAction(sprite.getActionFactory().createAddItemToUserListAction(sprite, sprite
-				.getBrickIndexAndScriptIndexForBrick(this),
+						.getBrickIndexAndScriptIndexForBrick(this),
 				getFormulaWithBrickField(BrickField.LIST_ADD_ITEM), userList));
 		return null;
 	}

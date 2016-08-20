@@ -33,7 +33,7 @@ public abstract class RepeatAction extends com.badlogic.gdx.scenes.scene2d.actio
 	protected Sprite sprite;
 
 	public void setIndexes(ArrayList<Integer> indexes) {
-		if (indexes != null && indexes.size() == 2 ) {
+		if (indexes != null && indexes.size() == 2) {
 			scriptIndex = indexes.get(0);
 			brickIndex = indexes.get(1);
 		}

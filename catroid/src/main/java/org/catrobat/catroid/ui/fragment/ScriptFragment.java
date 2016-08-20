@@ -46,8 +46,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
@@ -76,7 +76,6 @@ import org.catrobat.catroid.ui.controller.BackPackListManager;
 import org.catrobat.catroid.ui.dialogs.CustomAlertDialogBuilder;
 import org.catrobat.catroid.ui.dialogs.DeleteLookDialog;
 import org.catrobat.catroid.ui.dragndrop.DragAndDropListView;
-import org.catrobat.catroid.ui.dragndrop.DragAndDropListener;
 import org.catrobat.catroid.ui.fragment.BrickCategoryFragment.OnCategorySelectedListener;
 import org.catrobat.catroid.utils.ToastUtil;
 import org.catrobat.catroid.utils.Utils;
@@ -232,7 +231,10 @@ public class ScriptFragment extends ScriptActivityFragment implements OnCategory
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = View.inflate(getActivity(), R.layout.fragment_script, null);
 		listView = (DragAndDropListView) rootView.findViewById(android.R.id.list);
-
+		if (disableUserInteraction) {
+			TextView emptyScriptListDescription = (TextView) rootView.findViewById(R.id.fragment_script_text_description);
+			emptyScriptListDescription.setText(getText(R.string.fragment_script_text_description_no_interaction));
+		}
 		setupUiForUserBricks();
 		return rootView;
 	}

@@ -22,8 +22,6 @@
  */
 package org.catrobat.catroid.content.actions;
 
-import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
-
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.content.Sprite;
 
